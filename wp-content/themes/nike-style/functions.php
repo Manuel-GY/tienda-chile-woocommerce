@@ -110,39 +110,63 @@ function nike_get_cat_url( $slug ) {
     return function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
 }
 
-// Fallback de Menú de Navegación Limpio para la Ubicación Principal
-add_filter( 'wp_page_menu', 'tienda_chile_custom_page_menu_fallback', 10, 2 );
-function tienda_chile_custom_page_menu_fallback( $menu, $args ) {
+// ------------------------------------------------------------------
+// 3. UNIFICACIÓN DE NAVEGACIÓN ÚNICA EN EL HEADER Y CATALOGO DE TIENDA
+// ------------------------------------------------------------------
+
+// Eliminar la navegación primaria por defecto de Storefront para evitar menús duplicados
+remove_action( 'storefront_header', 'storefront_primary_navigation', 50 );
+
+// Añadir UN ÚNICO Menú de Navegación Principal Limpio en el Header
+function nike_style_single_primary_navigation() {
     $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
     $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
     
     $cat_maq  = nike_get_cat_url( 'maquillaje' );
     $cat_elec = nike_get_cat_url( 'electronica' );
     $cat_ele  = nike_get_cat_url( 'electrodomesticos' );
-
-    $output  = '<div class="menu">';
-    $output .= '<ul class="nav-menu">';
-    $output .= '<li class="page_item ' . ( is_front_page() ? 'current_page_item' : '' ) . '"><a href="' . esc_url( home_url( '/' ) ) . '">Inicio</a></li>';
-    $output .= '<li class="page_item ' . ( ( function_exists('is_shop') && is_shop() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $shop_url ) . '">Tienda</a></li>';
-    $output .= '<li class="page_item"><a href="' . esc_url( $cat_maq ) . '">Maquillaje</a></li>';
-    $output .= '<li class="page_item"><a href="' . esc_url( $cat_elec ) . '">Electrónica</a></li>';
-    $output .= '<li class="page_item"><a href="' . esc_url( $cat_ele ) . '">Electrodomésticos</a></li>';
-    $output .= '<li class="page_item ' . ( ( function_exists('is_account_page') && is_account_page() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $account_url ) . '">Mi Cuenta</a></li>';
-    $output .= '</ul>';
-    $output .= '</div>';
-
-    return $output;
+    ?>
+    <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Navegación Principal">
+        <button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false">
+            <span>Menú</span>
+        </button>
+        <div class="primary-navigation">
+            <ul id="site-navigation-menu" class="nav-menu">
+                <li class="menu-item <?php echo is_front_page() ? 'current-menu-item' : ''; ?>">
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Inicio</a>
+                </li>
+                <li class="menu-item <?php echo ( function_exists('is_shop') && is_shop() ) ? 'current-menu-item' : ''; ?>">
+                    <a href="<?php echo esc_url( $shop_url ); ?>">Tienda</a>
+                </li>
+                <li class="menu-item">
+                    <a href="<?php echo esc_url( $cat_maq ); ?>">Maquillaje</a>
+                </li>
+                <li class="menu-item">
+                    <a href="<?php echo esc_url( $cat_elec ); ?>">Electrónica</a>
+                </li>
+                <li class="menu-item">
+                    <a href="<?php echo esc_url( $cat_ele ); ?>">Electrodomésticos</a>
+                </li>
+                <li class="menu-item <?php echo ( function_exists('is_account_page') && is_account_page() ) ? 'current-menu-item' : ''; ?>">
+                    <a href="<?php echo esc_url( $account_url ); ?>">Mi Cuenta</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <?php
 }
+add_action( 'storefront_header', 'nike_style_single_primary_navigation', 50 );
 
-// Filtro para limpiar ítems duplicados o innecesarios en wp_nav_menu
-add_filter( 'wp_nav_menu_items', 'tienda_chile_clean_primary_menu_items', 10, 2 );
-function tienda_chile_clean_primary_menu_items( $items, $args ) {
-    if ( isset( $args->theme_location ) && 'primary' === $args->theme_location ) {
-        // Eliminar enlaces redundantes al carrito en el menú de navegación (ya que el carrito está en la esquina derecha)
-        $items = preg_replace( '/<li[^>]*class="[^"]*menu-item[^"]*"[^>]*><a[^>]*>(Carrito|Cart)<\/a><\/li>/i', '', $items );
+// Forzar la visualización de los productos en la página de Tienda
+add_action( 'storefront_page', 'tienda_chile_render_shop_page_products', 20 );
+function tienda_chile_render_shop_page_products() {
+    if ( function_exists( 'is_shop' ) && is_shop() ) {
+        echo '<div class="nike-shop-catalog-wrapper" style="max-width: 1250px; margin: 0 auto 48px; padding: 0 16px;">';
+        echo do_shortcode( '[products limit="24" columns="4" paginate="true" orderby="date" order="DESC"]' );
+        echo '</div>';
     }
-    return $items;
 }
+
 
 // ------------------------------------------------------------------
 // 4. LOGO SVG EXCLUSIVO "TIENDA CHILE"
