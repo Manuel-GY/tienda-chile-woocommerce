@@ -1190,54 +1190,51 @@ ul.products li.product .button:hover {
 }
 
 .nike-newsletter-form {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1 1 440px;
-    max-width: 500px;
+    flex: 1 1 460px;
+    max-width: 520px;
 }
 
 .nike-newsletter-input-wrap {
     position: relative;
-    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 4px 4px 4px 44px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .nike-mail-icon {
     position: absolute;
-    left: 14px;
+    left: 16px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--color-text-light);
+    color: #64748b;
 }
 
 .nike-newsletter-input {
-    width: 100%;
-    padding: 13px 16px 13px 44px !important;
-    border-radius: var(--radius-pill) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: var(--color-white) !important;
-    font-size: 13.5px !important;
-    height: 48px;
-}
-
-.nike-newsletter-input:focus {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: var(--color-white) !important;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2) !important;
+    width: 100% !important;
+    padding: 10px 12px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #0f172a !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    height: 42px !important;
+    outline: none !important;
 }
 
 .nike-newsletter-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--color-accent-sale) !important;
-    color: var(--color-white) !important;
+    background: #ef4444 !important;
+    color: #ffffff !important;
     border: none !important;
     padding: 0 24px !important;
-    height: 48px;
-    border-radius: var(--radius-pill) !important;
-    font-size: 13px !important;
+    height: 44px;
+    border-radius: 999px !important;
+    font-size: 12.5px !important;
     font-weight: 800 !important;
     cursor: pointer;
     white-space: nowrap;
@@ -1245,8 +1242,8 @@ ul.products li.product .button:hover {
 }
 
 .nike-newsletter-btn:hover {
-    background: var(--color-accent-hover) !important;
-    transform: translateY(-2px);
+    background: #dc2626 !important;
+    transform: translateY(-1px);
 }
 
 .nike-newsletter-msg {
@@ -1263,10 +1260,14 @@ ul.products li.product .button:hover {
 
 /* Footer Ultra Premium 4 Columnas */
 .site-footer {
-    background-color: var(--color-off-black) !important;
-    color: var(--color-white) !important;
+    background-color: #18181b !important;
+    color: #ffffff !important;
     padding: 64px 0 32px !important;
     margin-top: 0 !important;
+}
+
+.site-footer a {
+    text-decoration: none !important;
 }
 
 .nike-footer-main {
@@ -1277,7 +1278,7 @@ ul.products li.product .button:hover {
 
 .nike-footer-grid {
     display: grid;
-    grid-template-columns: 1.2fr 0.9fr 1.1fr 1fr;
+    grid-template-columns: 1.2fr 0.9fr 1.1fr 1.1fr;
     gap: 40px;
     padding-bottom: 48px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -1292,10 +1293,44 @@ ul.products li.product .button:hover {
 .nike-footer-title {
     font-size: 14px !important;
     font-weight: 800 !important;
-    color: var(--color-white) !important;
+    color: #ffffff !important;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin-bottom: 4px !important;
+}
+
+.nike-footer-tagline {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.nike-footer-social-handles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.nike-footer-social-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #cbd5e1 !important;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.nike-footer-social-pill:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .nike-footer-menu {
@@ -1308,14 +1343,15 @@ ul.products li.product .button:hover {
 }
 
 .nike-footer-menu a {
-    color: var(--color-text-light) !important;
+    color: #cbd5e1 !important;
     font-size: 13.5px;
+    text-decoration: none !important;
     transition: color 0.2s ease, padding-left 0.2s ease;
     display: inline-block;
 }
 
 .nike-footer-menu a:hover {
-    color: var(--color-white) !important;
+    color: #ffffff !important;
     padding-left: 4px;
 }
 
@@ -1327,20 +1363,21 @@ ul.products li.product .button:hover {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: rgba(37, 211, 102, 0.1);
+    background: rgba(37, 211, 102, 0.12);
     border: 1px solid rgba(37, 211, 102, 0.3);
     padding: 12px 16px;
-    border-radius: var(--radius-lg);
-    color: var(--color-white) !important;
+    border-radius: 12px;
+    color: #ffffff !important;
+    text-decoration: none !important;
     transition: background 0.2s ease;
 }
 
 .nike-footer-wa-box:hover {
-    background: rgba(37, 211, 102, 0.2);
+    background: rgba(37, 211, 102, 0.22);
 }
 
 .nike-footer-wa-icon {
-    color: var(--color-whatsapp);
+    color: #25d366;
 }
 
 .nike-footer-wa-info {
@@ -1362,17 +1399,35 @@ ul.products li.product .button:hover {
     display: block;
     font-size: 11px;
     font-weight: 700;
-    color: var(--color-text-light);
+    color: #94a3b8;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.nike-trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.nike-trust-badges .nike-badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #f1f5f9;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: inline-block;
+    letter-spacing: 0.03em;
 }
 
 .nike-footer-bottom {
     padding-top: 28px;
     text-align: center;
     font-size: 12px;
-    color: var(--color-text-light);
+    color: #94a3b8;
 }
 
 /* =========================================================================
