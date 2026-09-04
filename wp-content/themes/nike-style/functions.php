@@ -1070,7 +1070,7 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
             case 'Your order':
                 return 'Resumen de compra';
             case 'Place order':
-                return 'Continuar y Pagar';
+                return 'REALIZAR EL PEDIDO 🔒';
             case 'Have a coupon?':
                 return '¿Tienes un cupón de descuento?';
             case 'Click here to enter your code':
@@ -1419,9 +1419,9 @@ add_action( 'woocommerce_admin_order_data_after_billing_address', function( $ord
     }
 }, 10, 1 );
 
-// Botón Principal de Pago MercadoLibre Style
+// Botón Principal de Pago Primor Style
 add_filter( 'woocommerce_order_button_html', function( $button_html ) {
-    return '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="CONTINUAR Y PAGAR ➔" data-value="CONTINUAR Y PAGAR ➔">CONTINUAR Y PAGAR ➔</button>';
+    return '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="REALIZAR EL PEDIDO 🔒" data-value="REALIZAR EL PEDIDO 🔒">REALIZAR EL PEDIDO 🔒</button>';
 } );
 
 // Sellos de confianza y seguridad MercadoLibre Style bajo el botón
