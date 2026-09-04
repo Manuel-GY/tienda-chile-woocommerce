@@ -214,6 +214,16 @@ add_filter( 'option_woocommerce_shop_page_id', function( $val ) {
     return $val;
 } );
 
+// Filtro para limpiar bloques negros anticuados del contenido de la Home
+add_filter( 'the_content', function( $content ) {
+    if ( ( is_front_page() || is_home() ) && is_string( $content ) ) {
+        if ( strpos( $content, 'has-black-background-color' ) !== false ) {
+            $content = preg_replace( '/<div[^>]*has-black-background-color[^>]*>.*?<\/div>/s', '', $content );
+        }
+    }
+    return $content;
+}, 998 );
+
 // Reemplazar texto dummy de página en obras con el catálogo de productos completo
 add_filter( 'the_content', 'tienda_chile_replace_shop_page_content', 999 );
 function tienda_chile_replace_shop_page_content( $content ) {
