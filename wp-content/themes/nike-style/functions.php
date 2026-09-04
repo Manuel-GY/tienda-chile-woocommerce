@@ -4,7 +4,7 @@
  * Estética de E-commerce Moderno, Elegante, Lujoso y de Alta Conversión (TIENDA CHILE)
  * 
  * @package NikeStyle
- * @version 2.6.0
+ * @version 2.7.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -78,7 +78,6 @@ add_action( 'after_setup_theme', 'nike_style_register_menus' );
 
 // Helper para URLs de Categorías Inteligente con soporte para sinónimos
 function nike_get_cat_url( $slug ) {
-    // Definir posibles slugs/sinónimos para la búsqueda
     $slug_map = array(
         'maquillaje'        => array( 'maquillaje', 'belleza', 'cosmetica', 'skincare' ),
         'belleza'           => array( 'belleza', 'maquillaje', 'cosmetica', 'skincare' ),
@@ -97,7 +96,6 @@ function nike_get_cat_url( $slug ) {
         }
     }
 
-    // Si no se encuentra por slug exacto, buscar por término parcial
     $terms = get_terms( array(
         'taxonomy'   => 'product_cat',
         'hide_empty' => false,
@@ -111,7 +109,7 @@ function nike_get_cat_url( $slug ) {
 }
 
 // ------------------------------------------------------------------
-// 3. MASTER HEADER UNIFICADO (1 SOLO MENÚ Y BOTÓN DE CARRITO)
+// 4. MASTER HEADER UNIFICADO (1 SOLO MENÚ Y BOTÓN DE CARRITO)
 // ------------------------------------------------------------------
 
 // Eliminar todos los hooks por defecto del header de Storefront para evitar menús duplicados o verticales
@@ -149,7 +147,7 @@ function nike_style_master_header_bar() {
         return;
     }
     
-    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/tienda' );
+    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
     $cart_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
     $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
     
@@ -173,9 +171,9 @@ function nike_style_master_header_bar() {
             <ul class="nike-header-nav-list">
                 <li class="<?php echo is_front_page() ? 'active' : ''; ?>"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Inicio</a></li>
                 <li class="<?php echo ( function_exists('is_shop') && is_shop() ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $shop_url ); ?>">Tienda</a></li>
-                <li class="<?php echo ( function_exists('is_product_category') && is_product_category('maquillaje') ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $cat_maq ); ?>">Maquillaje</a></li>
-                <li class="<?php echo ( function_exists('is_product_category') && is_product_category('electronica') ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $cat_elec ); ?>">Electrónica</a></li>
-                <li class="<?php echo ( function_exists('is_product_category') && is_product_category('electrodomesticos') ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $cat_ele ); ?>">Electrodomésticos</a></li>
+                <li class="<?php echo ( function_exists('is_product_category') && is_product_category( array( 'maquillaje', 'belleza', 'cosmetica', 'skincare' ) ) ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $cat_maq ); ?>">Maquillaje</a></li>
+                <li class="<?php echo ( function_exists('is_product_category') && is_product_category( array( 'electronica', 'tecnologia', 'tech', 'gadgets' ) ) ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $cat_elec ); ?>">Electrónica</a></li>
+                <li class="<?php echo ( function_exists('is_product_category') && is_product_category( array( 'electrodomesticos', 'hogar', 'linea-blanca' ) ) ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $cat_ele ); ?>">Electrodomésticos</a></li>
                 <li class="<?php echo ( function_exists('is_account_page') && is_account_page() ) ? 'active' : ''; ?>"><a href="<?php echo esc_url( $account_url ); ?>">Mi Cuenta</a></li>
             </ul>
         </nav>
@@ -243,13 +241,23 @@ add_filter( 'the_content', function( $content ) {
     return $content;
 }, 998 );
 
+// Tracker Helper para evitar renderizado duplicado del catálogo en la página de Tienda
+function nike_style_catalog_rendered( $set = null ) {
+    static $rendered = false;
+    if ( null !== $set ) {
+        $rendered = (bool) $set;
+    }
+    return $rendered;
+}
+
 // Reemplazar texto dummy de página en obras con el catálogo de productos completo
 add_filter( 'the_content', 'tienda_chile_replace_shop_page_content', 999 );
 function tienda_chile_replace_shop_page_content( $content ) {
     $is_tienda_page = is_page( 'tienda' ) || is_page( 'shop' ) || ( function_exists( 'is_shop' ) && is_shop() );
     $has_placeholder = is_string( $content ) && ( strpos( $content, 'grandes proyectos' ) !== false || strpos( $content, 'obras' ) !== false || strpos( $content, 'preparando algo grande' ) !== false );
 
-    if ( $is_tienda_page || $has_placeholder ) {
+    if ( ( $is_tienda_page || $has_placeholder ) && ! nike_style_catalog_rendered() ) {
+        nike_style_catalog_rendered( true );
         return '<div class="nike-shop-catalog-wrapper" style="max-width: 1300px; margin: 32px auto 48px; padding: 0 16px; clear: both;">' . do_shortcode( '[products limit="24" columns="4" paginate="true" orderby="date" order="DESC"]' ) . '</div>';
     }
 
@@ -261,17 +269,14 @@ add_action( 'storefront_page', 'tienda_chile_always_show_shop_products', 20 );
 add_action( 'woocommerce_after_main_content', 'tienda_chile_always_show_shop_products', 20 );
 function tienda_chile_always_show_shop_products() {
     if ( ( function_exists( 'is_shop' ) && is_shop() ) || is_page( 'tienda' ) || is_page( 'shop' ) ) {
-        static $rendered = false;
-        if ( ! $rendered ) {
-            $rendered = true;
+        if ( ! nike_style_catalog_rendered() ) {
+            nike_style_catalog_rendered( true );
             echo '<div class="nike-shop-catalog-wrapper" style="max-width: 1300px; margin: 32px auto 48px; padding: 0 16px; clear: both;">';
             echo do_shortcode( '[products limit="24" columns="4" paginate="true" orderby="date" order="DESC"]' );
             echo '</div>';
         }
     }
 }
-
-
 
 // ------------------------------------------------------------------
 // 4. LOGO SVG EXCLUSIVO "TIENDA CHILE"
@@ -305,7 +310,6 @@ function nike_style_custom_site_branding() {
     echo '</a>';
     echo '</div>';
 }
-// Unhook default storefront branding; nike_style_master_header_bar renders logo, nav & cart in 1 single horizontal bar
 remove_action( 'storefront_header', 'storefront_site_branding', 20 );
 
 add_filter( 'storefront_site_title_or_logo', function() {
@@ -362,7 +366,7 @@ function tienda_chile_fix_cart_url( $url ) {
 
 function nike_style_cart_link_html() {
     $cart_count    = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
-    $cart_subtotal = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_subtotal() : '0 CLP$';
+    $cart_subtotal = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_subtotal() : '$0 CLP';
     $cart_url      = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
     ?>
     <a class="cart-contents" href="<?php echo esc_url( $cart_url ); ?>" title="<?php esc_attr_e( 'Ver mi Carrito de Compras', 'nike-style' ); ?>">
@@ -459,7 +463,7 @@ function nike_style_render_shop_header() {
                             }
                             ?>
                             <a href="<?php echo esc_url( get_term_link( $cat ) ); ?>" class="nike-cat-nav-pill <?php echo $is_active ? 'active' : ''; ?>">
-                                <span class="nike-cat-pill-icon"><?php echo $icon; ?></span>
+                                <span class="nike-cat-pill-icon"><?php echo esc_html( $icon ); ?></span>
                                 <span class="nike-cat-pill-name"><?php echo esc_html( $cat->name ); ?></span>
                             </a>
                         <?php endforeach; ?>
@@ -479,7 +483,6 @@ function nike_style_hide_default_shop_title() {
     }
 }
 add_action( 'woocommerce_before_main_content', 'nike_style_hide_default_shop_title', 5 );
-
 
 function nike_style_render_homepage_elements() {
     if ( is_front_page() || is_home() ) {
@@ -684,6 +687,9 @@ add_filter( 'woocommerce_product_get_image', function( $image, $product, $size, 
     }
     return $image;
 }, 10, 5 );
+
+// Remover rating por defecto de WooCommerce para evitar duplicaciones
+remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating', 5 );
 
 // Estrellas 5.0 (★★★★★) y Badges de Envío Rápido en tarjetas de productos
 function nike_style_product_card_elements() {
@@ -937,7 +943,7 @@ function nike_style_legal_and_cookies_footer() {
         `,
         returns: `
             <h2>🔄 Política de Devoluciones, Garantía y Derecho a Retracto</h2>
-            <p>Cumplimos estrictamente con la Ley N° 19.496 sobre Protección de los Derechos de los Consumidores en Chile.</p>
+            <p>Cumplimos strictly con la Ley N° 19.496 sobre Protección de los Derechos de los Consumidores en Chile.</p>
             <h3>1. Derecho a Retracto (10 días)</h3>
             <p>Tienes un plazo de 10 días desde recibido el producto para retractarte de la compra, siempre que el producto esté sin uso, con sus sellos y empaque original intacto.</p>
             <h3>2. Garantía Legal (6 meses)</h3>
@@ -1361,6 +1367,13 @@ function tienda_chile_checkout_fields_chile( $fields ) {
     return $fields;
 }
 
+// Validar RUT requerido en el proceso de checkout
+add_action( 'woocommerce_checkout_process', function() {
+    if ( isset( $_POST['billing_rut'] ) && '' === trim( sanitize_text_field( $_POST['billing_rut'] ) ) ) {
+        wc_add_notice( __( 'El RUT es un campo obligatorio para procesar tu pedido.', 'nike-style' ), 'error' );
+    }
+} );
+
 // Auto-formateador en tiempo real de RUT (12.345.678-9)
 add_action( 'wp_footer', 'tienda_chile_checkout_rut_mask_js', 99 );
 function tienda_chile_checkout_rut_mask_js() {
@@ -1392,8 +1405,9 @@ function tienda_chile_checkout_rut_mask_js() {
 // Guardar RUT en los metadatos del pedido
 add_action( 'woocommerce_checkout_update_order_meta', function( $order_id ) {
     if ( ! empty( $_POST['billing_rut'] ) ) {
-        update_post_meta( $order_id, '_billing_rut', sanitize_text_field( $_POST['billing_rut'] ) );
-        update_post_meta( $order_id, 'RUT', sanitize_text_field( $_POST['billing_rut'] ) );
+        $rut_val = sanitize_text_field( $_POST['billing_rut'] );
+        update_post_meta( $order_id, '_billing_rut', $rut_val );
+        update_post_meta( $order_id, 'RUT', $rut_val );
     }
 } );
 
