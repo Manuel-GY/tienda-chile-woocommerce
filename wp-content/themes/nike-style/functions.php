@@ -183,7 +183,34 @@ function nike_style_master_header_bar() {
 }
 add_action( 'storefront_header', 'nike_style_master_header_bar', 10 );
 
-// Forzar la visualización de los productos en la página de Tienda
+// Forzar asociación de la página 'tienda' como Shop Page de WooCommerce
+add_filter( 'option_woocommerce_shop_page_id', function( $val ) {
+    if ( ! $val || $val <= 0 ) {
+        $page = get_page_by_path( 'tienda' );
+        if ( ! $page ) {
+            $page = get_page_by_path( 'shop' );
+        }
+        if ( $page ) {
+            return $page->ID;
+        }
+    }
+    return $val;
+} );
+
+// Reemplazar texto dummy de página en obras con el catálogo de productos completo
+add_filter( 'the_content', 'tienda_chile_replace_shop_page_content', 999 );
+function tienda_chile_replace_shop_page_content( $content ) {
+    $is_tienda_page = is_page( 'tienda' ) || is_page( 'shop' ) || ( function_exists( 'is_shop' ) && is_shop() );
+    $has_placeholder = is_string( $content ) && ( strpos( $content, 'grandes proyectos' ) !== false || strpos( $content, 'obras' ) !== false || strpos( $content, 'preparando algo grande' ) !== false );
+
+    if ( $is_tienda_page || $has_placeholder ) {
+        return '<div class="nike-shop-catalog-wrapper" style="max-width: 1300px; margin: 32px auto 48px; padding: 0 16px; clear: both;">' . do_shortcode( '[products limit="24" columns="4" paginate="true" orderby="date" order="DESC"]' ) . '</div>';
+    }
+
+    return $content;
+}
+
+// Forzar la visualización de los productos en la página de Tienda (fallback adicional)
 add_action( 'storefront_page', 'tienda_chile_always_show_shop_products', 20 );
 add_action( 'woocommerce_after_main_content', 'tienda_chile_always_show_shop_products', 20 );
 function tienda_chile_always_show_shop_products() {
@@ -329,7 +356,11 @@ add_action( 'wp_footer', 'nike_style_whatsapp_floating_button' );
 
 // Banner de Cabecera y Filtro por Categorías para la Tienda y Colecciones
 function nike_style_render_shop_header() {
-    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || is_page( 'tienda' ) || is_page( 'shop' ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+        static $rendered_header = false;
+        if ( $rendered_header ) return;
+        $rendered_header = true;
+
         $shop_url     = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
         $current_cat  = is_product_category() ? get_queried_object() : null;
         $current_slug = $current_cat ? $current_cat->slug : '';
@@ -373,10 +404,11 @@ function nike_style_render_shop_header() {
         <?php
     }
 }
+add_action( 'storefront_page', 'nike_style_render_shop_header', 5 );
 add_action( 'woocommerce_before_main_content', 'nike_style_render_shop_header', 12 );
 
 function nike_style_hide_default_shop_title() {
-    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || is_page( 'tienda' ) || is_page( 'shop' ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
         add_filter( 'woocommerce_show_page_title', '__return_false' );
     }
 }
