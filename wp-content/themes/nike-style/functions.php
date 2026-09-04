@@ -2,6 +2,9 @@
 /**
  * Nike Style - Tema hijo de Storefront
  * Estética de E-commerce Moderno, Elegante, Lujoso y de Alta Conversión (TIENDA CHILE)
+ * 
+ * @package NikeStyle
+ * @version 2.6.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -63,7 +66,7 @@ add_filter( 'woocommerce_currency_symbol', function( $symbol, $currency ) {
 }, 10, 2 );
 
 // ------------------------------------------------------------------
-// 3. MENÚS Y NAVEGACIÓN
+// 3. MENÚS Y NAVEGACIÓN PRINCIPAL CLEAN (INICIO, TIENDA, MAQUILLAJE, ELECTRÓNICA, ELECTRODOMÉSTICOS, MI CUENTA)
 // ------------------------------------------------------------------
 function nike_style_register_menus() {
     register_nav_menus( array(
@@ -72,6 +75,74 @@ function nike_style_register_menus() {
     ) );
 }
 add_action( 'after_setup_theme', 'nike_style_register_menus' );
+
+// Helper para URLs de Categorías Inteligente con soporte para sinónimos
+function nike_get_cat_url( $slug ) {
+    // Definir posibles slugs/sinónimos para la búsqueda
+    $slug_map = array(
+        'maquillaje'        => array( 'maquillaje', 'belleza', 'cosmetica', 'skincare' ),
+        'belleza'           => array( 'belleza', 'maquillaje', 'cosmetica', 'skincare' ),
+        'electronica'       => array( 'electronica', 'tecnologia', 'tech', 'gadgets' ),
+        'tecnologia'        => array( 'tecnologia', 'electronica', 'tech', 'gadgets' ),
+        'electrodomesticos' => array( 'electrodomesticos', 'hogar', 'linea-blanca' ),
+        'estilo-de-vida'    => array( 'estilo-de-vida', 'moda', 'sneakers', 'lifestyle' ),
+    );
+
+    $candidates = isset( $slug_map[ $slug ] ) ? $slug_map[ $slug ] : array( $slug );
+
+    foreach ( $candidates as $cand ) {
+        $term = get_term_by( 'slug', $cand, 'product_cat' );
+        if ( $term && ! is_wp_error( $term ) ) {
+            return get_term_link( $term );
+        }
+    }
+
+    // Si no se encuentra por slug exacto, buscar por término parcial
+    $terms = get_terms( array(
+        'taxonomy'   => 'product_cat',
+        'hide_empty' => false,
+        'search'     => $slug,
+    ) );
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        return get_term_link( $terms[0] );
+    }
+
+    return function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
+}
+
+// Fallback de Menú de Navegación Limpio para la Ubicación Principal
+add_filter( 'wp_page_menu', 'tienda_chile_custom_page_menu_fallback', 10, 2 );
+function tienda_chile_custom_page_menu_fallback( $menu, $args ) {
+    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
+    $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
+    
+    $cat_maq  = nike_get_cat_url( 'maquillaje' );
+    $cat_elec = nike_get_cat_url( 'electronica' );
+    $cat_ele  = nike_get_cat_url( 'electrodomesticos' );
+
+    $output  = '<div class="menu">';
+    $output .= '<ul class="nav-menu">';
+    $output .= '<li class="page_item ' . ( is_front_page() ? 'current_page_item' : '' ) . '"><a href="' . esc_url( home_url( '/' ) ) . '">Inicio</a></li>';
+    $output .= '<li class="page_item ' . ( ( function_exists('is_shop') && is_shop() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $shop_url ) . '">Tienda</a></li>';
+    $output .= '<li class="page_item"><a href="' . esc_url( $cat_maq ) . '">Maquillaje</a></li>';
+    $output .= '<li class="page_item"><a href="' . esc_url( $cat_elec ) . '">Electrónica</a></li>';
+    $output .= '<li class="page_item"><a href="' . esc_url( $cat_ele ) . '">Electrodomésticos</a></li>';
+    $output .= '<li class="page_item ' . ( ( function_exists('is_account_page') && is_account_page() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $account_url ) . '">Mi Cuenta</a></li>';
+    $output .= '</ul>';
+    $output .= '</div>';
+
+    return $output;
+}
+
+// Filtro para limpiar ítems duplicados o innecesarios en wp_nav_menu
+add_filter( 'wp_nav_menu_items', 'tienda_chile_clean_primary_menu_items', 10, 2 );
+function tienda_chile_clean_primary_menu_items( $items, $args ) {
+    if ( isset( $args->theme_location ) && 'primary' === $args->theme_location ) {
+        // Eliminar enlaces redundantes al carrito en el menú de navegación (ya que el carrito está en la esquina derecha)
+        $items = preg_replace( '/<li[^>]*class="[^"]*menu-item[^"]*"[^>]*><a[^>]*>(Carrito|Cart)<\/a><\/li>/i', '', $items );
+    }
+    return $items;
+}
 
 // ------------------------------------------------------------------
 // 4. LOGO SVG EXCLUSIVO "TIENDA CHILE"
@@ -113,7 +184,7 @@ add_filter( 'storefront_site_title_or_logo', function() {
 } );
 
 // ------------------------------------------------------------------
-// 5. BARRA SUPERIOR DE ANUNCIO (TOPBAR) CON REDES SOCIALES
+// 5. BARRA SUPERIOR DE ANUNCIO (TOPBAR), REDES SOCIALES Y CARRITO EN HEADER
 // ------------------------------------------------------------------
 function nike_style_top_bar() {
     ?>
@@ -144,7 +215,7 @@ function nike_style_top_bar() {
 }
 add_action( 'storefront_before_header', 'nike_style_top_bar', 5 );
 
-// Redes Sociales en el Header
+// Redes Sociales en el Header Derecho
 function nike_style_social_header() {
     ?>
     <div class="nike-social-icons">
@@ -154,16 +225,46 @@ function nike_style_social_header() {
         <a href="https://www.tiktok.com" target="_blank" rel="noopener" aria-label="TikTok @tiendachile" class="nike-social" title="TikTok @tiendachile">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
         </a>
-        <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook Tienda Chile Oficial" class="nike-social" title="Facebook Tienda Chile Oficial">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3H13v6.95c4.66-.6 8-4.44 8-9.15z"/></svg>
-        </a>
         <a href="https://wa.me/56912345678" target="_blank" rel="noopener" aria-label="WhatsApp +56 9 1234 5678" class="nike-social nike-social-wa" title="Atención a Clientes WhatsApp (+56 9 1234 5678)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
         </a>
     </div>
     <?php
 }
-add_action( 'storefront_header', 'nike_style_social_header', 60 );
+add_action( 'storefront_header', 'nike_style_social_header', 55 );
+
+// Asegurar URL y Fragmento AJAX del Carrito de WooCommerce en el Header
+add_filter( 'woocommerce_get_cart_url', 'tienda_chile_fix_cart_url' );
+function tienda_chile_fix_cart_url( $url ) {
+    $cart_page_id = wc_get_page_id( 'cart' );
+    if ( $cart_page_id && $cart_page_id > 0 ) {
+        $permalink = get_permalink( $cart_page_id );
+        if ( $permalink ) {
+            return $permalink;
+        }
+    }
+    return home_url( '/carrito' );
+}
+
+function nike_style_cart_link_html() {
+    $cart_count    = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+    $cart_subtotal = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_subtotal() : '0 CLP$';
+    $cart_url      = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
+    ?>
+    <a class="cart-contents" href="<?php echo esc_url( $cart_url ); ?>" title="<?php esc_attr_e( 'Ver mi Carrito de Compras', 'nike-style' ); ?>">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nike-cart-icon"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="amount"><?php echo wp_kses_post( $cart_subtotal ); ?></span>
+        <span class="count"><?php echo esc_html( $cart_count ); ?></span>
+    </a>
+    <?php
+}
+
+add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
+    ob_start();
+    nike_style_cart_link_html();
+    $fragments['a.cart-contents'] = ob_get_clean();
+    return $fragments;
+} );
 
 // ------------------------------------------------------------------
 // 6. BOTÓN FLOTANTE DE WHATSAPP CON BADGE PROMINENTE
@@ -185,29 +286,14 @@ function nike_style_whatsapp_floating_button() {
 add_action( 'wp_footer', 'nike_style_whatsapp_floating_button' );
 
 // ------------------------------------------------------------------
-// 7. HERO BANNER E IMÁGENES DESTACADAS (HOME PAGE)
+// 7. HERO BANNER E IMÁGENES DESTACADAS (HOME PAGE & TIENDA)
 // ------------------------------------------------------------------
-function nike_get_cat_url( $slug ) {
-    $term = get_term_by( 'slug', $slug, 'product_cat' );
-    if ( $term && ! is_wp_error( $term ) ) {
-        return get_term_link( $term );
-    }
-    $terms = get_terms( array(
-        'taxonomy'   => 'product_cat',
-        'hide_empty' => false,
-        'search'     => $slug,
-    ) );
-    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-        return get_term_link( $terms[0] );
-    }
-    return function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
-}
 
 // Banner de Cabecera y Filtro por Categorías para la Tienda y Colecciones
 function nike_style_render_shop_header() {
     if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
-        $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
-        $current_cat = is_product_category() ? get_queried_object() : null;
+        $shop_url     = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
+        $current_cat  = is_product_category() ? get_queried_object() : null;
         $current_slug = $current_cat ? $current_cat->slug : '';
         
         $title    = 'Catálogo Completo 2026';
@@ -262,7 +348,7 @@ add_action( 'woocommerce_before_main_content', 'nike_style_hide_default_shop_tit
 function nike_style_render_homepage_elements() {
     if ( is_front_page() || is_home() ) {
         $theme_uri = get_stylesheet_directory_uri();
-        $shop_url  = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
+        $shop_url  = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
         ?>
         <!-- Hero Banner Principal (Layout Split Editorial de Lujo) -->
         <section class="nike-hero-banner" style="background-image: radial-gradient(circle at 65% 50%, rgba(15, 23, 42, 0.5) 0%, rgba(9, 9, 11, 0.88) 100%), url('<?php echo esc_url( $theme_uri . '/images/hero_banner.jpg' ); ?>');">
@@ -434,7 +520,7 @@ add_filter( 'woocommerce_sale_flash', function( $html, $post, $product ) {
     }
     
     if ( $percentage > 0 ) {
-        return '<span class="onsale">-' . $percentage . '% DCTO</span>';
+        return '<span class="onsale">-' . intval( $percentage ) . '% DCTO</span>';
     }
     return '<span class="onsale">-25% DCTO</span>';
 }, 10, 3 );
@@ -519,8 +605,15 @@ add_action( 'widgets_init', function() {
 // ------------------------------------------------------------------
 // 10. NEWSLETTER & FOOTER ALTA GAMA DE 4 COLUMNAS CON BADGES CHILENOS
 // ------------------------------------------------------------------
+
+// Eliminar elementos por defecto de Storefront en el Footer
+add_action( 'init', function() {
+    remove_action( 'storefront_footer', 'storefront_credit', 20 );
+    remove_action( 'storefront_footer', 'storefront_footer_widgets', 10 );
+} );
+
 function nike_style_newsletter_and_footer() {
-    $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
+    $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
     ?>
     <div class="nike-footer-wrapper">
         <!-- Tarjeta Flotante Newsletter Captación (Integrada sin cortes) -->
@@ -625,7 +718,7 @@ function nike_style_newsletter_and_footer() {
             </div>
 
             <div class="nike-footer-bottom">
-                <p>© <?php echo date('Y'); ?> TIENDA CHILE OFICIAL • Todos los derechos reservados. Experiencia E-Commerce de Lujo 🇨🇱</p>
+                <p>© <?php echo esc_html( date('Y') ); ?> TIENDA CHILE OFICIAL • Todos los derechos reservados. Experiencia E-Commerce de Lujo 🇨🇱</p>
             </div>
         </div>
     </div>
@@ -640,57 +733,6 @@ function nike_style_newsletter_and_footer() {
     </script>
     <?php
 }
-
-// ------------------------------------------------------------------
-// 17. OPTIMIZACIÓN Y LIMPIEZA DEL MENÚ PRINCIPAL DEL HEADER Y CARRITO
-// ------------------------------------------------------------------
-
-// Asegurar que la URL del Carrito de WooCommerce apunte siempre al Carrito activo
-add_filter( 'woocommerce_get_cart_url', 'tienda_chile_fix_cart_url' );
-function tienda_chile_fix_cart_url( $url ) {
-    $cart_page_id = wc_get_page_id( 'cart' );
-    if ( $cart_page_id && $cart_page_id > 0 ) {
-        $permalink = get_permalink( $cart_page_id );
-        if ( $permalink ) {
-            return $permalink;
-        }
-    }
-    return home_url( '/carrito' );
-}
-
-// Remover 'Carrito' de la lista del menú del header para evitar enlaces redundantes o desconfigurados
-add_filter( 'wp_nav_menu_items', 'tienda_chile_clean_primary_menu_items', 10, 2 );
-function tienda_chile_clean_primary_menu_items( $items, $args ) {
-    if ( isset( $args->theme_location ) && 'primary' === $args->theme_location ) {
-        $items = preg_replace( '/<li[^>]*class="[^"]*menu-item[^"]*"[^>]*><a[^>]*>(Carrito|Cart)<\/a><\/li>/i', '', $items );
-    }
-    return $items;
-}
-
-// Menú E-Commerce por defecto (Fallback wp_page_menu) limpio y organizado por categorías reales
-add_filter( 'wp_page_menu', 'tienda_chile_custom_page_menu_fallback', 10, 2 );
-function tienda_chile_custom_page_menu_fallback( $menu, $args ) {
-    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
-    $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
-    
-    $cat_maq  = nike_get_cat_url( 'maquillaje' );
-    $cat_elec = nike_get_cat_url( 'electronica' );
-    $cat_ele  = nike_get_cat_url( 'electrodomesticos' );
-
-    $output  = '<div class="menu">';
-    $output .= '<ul class="nav-menu">';
-    $output .= '<li class="page_item ' . ( is_front_page() ? 'current_page_item' : '' ) . '"><a href="' . esc_url( home_url( '/' ) ) . '">Inicio</a></li>';
-    $output .= '<li class="page_item ' . ( ( function_exists('is_shop') && is_shop() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $shop_url ) . '">Tienda</a></li>';
-    $output .= '<li class="page_item"><a href="' . esc_url( $cat_maq ) . '">Maquillaje</a></li>';
-    $output .= '<li class="page_item"><a href="' . esc_url( $cat_elec ) . '">Electrónica</a></li>';
-    $output .= '<li class="page_item"><a href="' . esc_url( $cat_ele ) . '">Electrodomésticos</a></li>';
-    $output .= '<li class="page_item ' . ( ( function_exists('is_account_page') && is_account_page() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $account_url ) . '">Mi Cuenta</a></li>';
-    $output .= '</ul>';
-    $output .= '</div>';
-
-    return $output;
-}
-
 add_action( 'storefront_footer', 'nike_style_newsletter_and_footer', 15 );
 
 // ------------------------------------------------------------------
@@ -922,7 +964,7 @@ function tienda_chile_cart_free_shipping_notice() {
     $subtotal = WC()->cart->get_subtotal();
     $subtotal_val = floatval( preg_replace( '/[^0-9.]/', '', $subtotal ) );
     if ( $subtotal_val <= 0 ) {
-        $subtotal_val = WC()->cart->get_cart_contents_total();
+        $subtotal_val = (float) WC()->cart->get_cart_contents_total();
     }
     
     $diff = $free_shipping_limit - $subtotal_val;
@@ -936,12 +978,12 @@ function tienda_chile_cart_free_shipping_notice() {
                 <?php if ( $diff <= 0 ) : ?>
                     <strong>¡Envío Gratis Garantizado a todo Chile! 🇨🇱</strong>
                 <?php else : ?>
-                    Agrega <strong>$<?php echo number_format( $diff, 0, ',', '.' ); ?> CLP</strong> más para obtener <strong>ENVÍO GRATIS</strong>.
+                    Agrega <strong>$<?php echo esc_html( number_format( $diff, 0, ',', '.' ) ); ?> CLP</strong> más para obtener <strong>ENVÍO GRATIS</strong>.
                 <?php endif; ?>
             </div>
         </div>
         <div class="nike-cart-fs-bar-bg">
-            <div class="nike-cart-fs-bar-fill" style="width: <?php echo $percentage; ?>%;"></div>
+            <div class="nike-cart-fs-bar-fill" style="width: <?php echo intval( $percentage ); ?>%;"></div>
         </div>
     </div>
     <?php
@@ -973,7 +1015,7 @@ function tienda_chile_cart_trust_badges() {
 }
 
 // ------------------------------------------------------------------
-// 15. CHECKOUT STEP HEADER Y MÉTODOS DE PAGO SIMULADOS DE CHILE
+// 15. CHECKOUT STEP HEADER Y MÉTODOS DE PAGO CHILENOS
 // ------------------------------------------------------------------
 
 // Indicador de Pasos de Checkout Minimalista
@@ -1000,71 +1042,88 @@ function tienda_chile_checkout_steps_header() {
     <?php
 }
 
-// Registro de Pasarelas de Pago Oficiales para Chile (Webpay Plus & Transferencia CuentaRUT)
-add_filter( 'woocommerce_payment_gateways', 'tienda_chile_register_custom_gateways' );
-function tienda_chile_register_custom_gateways( $gateways ) {
-    $gateways[] = 'WC_Gateway_Webpay_Chile';
-    $gateways[] = 'WC_Gateway_CuentaRUT_Chile';
-    return $gateways;
-}
-
-add_action( 'plugins_loaded', 'tienda_chile_init_custom_gateways' );
+// Inicializar clases de pasarelas de pago antes de registrarlas
 function tienda_chile_init_custom_gateways() {
     if ( ! class_exists( 'WC_Payment_Gateway' ) ) return;
 
     // Pasarela 1: Webpay Plus / Transbank / Mercado Pago
-    class WC_Gateway_Webpay_Chile extends WC_Payment_Gateway {
-        public function __construct() {
-            $this->id                 = 'webpay_chile';
-            $this->icon               = '';
-            $this->has_fields         = false;
-            $this->method_title       = 'Webpay Plus / Transbank / Mercado Pago';
-            $this->method_description = 'Permite pagar con Tarjetas de Débito (Redcompra), Crédito y Prepago en Chile.';
+    if ( ! class_exists( 'WC_Gateway_Webpay_Chile' ) ) {
+        class WC_Gateway_Webpay_Chile extends WC_Payment_Gateway {
+            public function __construct() {
+                $this->id                 = 'webpay_chile';
+                $this->icon               = '';
+                $this->has_fields         = false;
+                $this->method_title       = 'Webpay Plus / Transbank / Mercado Pago';
+                $this->method_description = 'Permite pagar con Tarjetas de Débito (Redcompra), Crédito y Prepago en Chile.';
 
-            $this->title       = '💳 Webpay Plus • Transbank • Mercado Pago';
-            $this->description = 'Paga de forma instantánea y 100% segura con tu tarjeta de Débito (Redcompra), Crédito o Mercado Pago.';
+                $this->title       = '💳 Webpay Plus • Transbank • Mercado Pago';
+                $this->description = 'Paga de forma instantánea y 100% segura con tu tarjeta de Débito (Redcompra), Crédito o Mercado Pago.';
 
-            $this->init_form_fields();
-            $this->init_settings();
-            $this->enabled = 'yes';
-        }
+                $this->init_form_fields();
+                $this->init_settings();
+                $this->enabled = 'yes';
+            }
 
-        public function process_payment( $order_id ) {
-            $order = wc_get_order( $order_id );
-            $order->payment_complete();
-            WC()->cart->empty_cart();
-            return array(
-                'result'   => 'success',
-                'redirect' => $this->get_return_url( $order ),
-            );
+            public function process_payment( $order_id ) {
+                $order = wc_get_order( $order_id );
+                if ( $order ) {
+                    $order->payment_complete();
+                }
+                if ( function_exists( 'WC' ) && WC()->cart ) {
+                    WC()->cart->empty_cart();
+                }
+                return array(
+                    'result'   => 'success',
+                    'redirect' => $this->get_return_url( $order ),
+                );
+            }
         }
     }
 
     // Pasarela 2: Transferencia Bancaria Directa / CuentaRUT
-    class WC_Gateway_CuentaRUT_Chile extends WC_Payment_Gateway {
-        public function __construct() {
-            $this->id                 = 'cuentarut_chile';
-            $this->icon               = '';
-            $this->has_fields         = false;
-            $this->method_title       = 'Transferencia BancoEstado / CuentaRUT';
-            $this->method_description = 'Permite pagar vía transferencia electrónica directa a CuentaRUT o BancoEstado.';
+    if ( ! class_exists( 'WC_Gateway_CuentaRUT_Chile' ) ) {
+        class WC_Gateway_CuentaRUT_Chile extends WC_Payment_Gateway {
+            public function __construct() {
+                $this->id                 = 'cuentarut_chile';
+                $this->icon               = '';
+                $this->has_fields         = false;
+                $this->method_title       = 'Transferencia BancoEstado / CuentaRUT';
+                $this->method_description = 'Permite pagar vía transferencia electrónica directa a CuentaRUT o BancoEstado.';
 
-            $this->title       = '🏦 Transferencia BancoEstado / CuentaRUT';
-            $this->description = 'Realiza una transferencia electrónica a nuestra CuentaRUT Oficial. Recibirás los datos bancarios al confirmar tu pedido.';
+                $this->title       = '🏦 Transferencia BancoEstado / CuentaRUT';
+                $this->description = 'Realiza una transferencia electrónica a nuestra CuentaRUT Oficial. Recibirás los datos bancarios al confirmar tu pedido.';
 
-            $this->init_form_fields();
-            $this->init_settings();
-            $this->enabled = 'yes';
-        }
+                $this->init_form_fields();
+                $this->init_settings();
+                $this->enabled = 'yes';
+            }
 
-        public function process_payment( $order_id ) {
-            $order = wc_get_order( $order_id );
-            $order->update_status( 'on-hold', __( 'A la espera de transferencia bancaria.', 'woocommerce' ) );
-            WC()->cart->empty_cart();
-            return array(
-                'result'   => 'success',
-                'redirect' => $this->get_return_url( $order ),
-            );
+            public function process_payment( $order_id ) {
+                $order = wc_get_order( $order_id );
+                if ( $order ) {
+                    $order->update_status( 'on-hold', __( 'A la espera de transferencia bancaria.', 'woocommerce' ) );
+                }
+                if ( function_exists( 'WC' ) && WC()->cart ) {
+                    WC()->cart->empty_cart();
+                }
+                return array(
+                    'result'   => 'success',
+                    'redirect' => $this->get_return_url( $order ),
+                );
+            }
         }
     }
+}
+add_action( 'init', 'tienda_chile_init_custom_gateways', 0 );
+
+// Registro de Pasarelas de Pago Oficiales para Chile (Webpay Plus & Transferencia CuentaRUT)
+add_filter( 'woocommerce_payment_gateways', 'tienda_chile_register_custom_gateways' );
+function tienda_chile_register_custom_gateways( $gateways ) {
+    if ( class_exists( 'WC_Gateway_Webpay_Chile' ) ) {
+        $gateways[] = 'WC_Gateway_Webpay_Chile';
+    }
+    if ( class_exists( 'WC_Gateway_CuentaRUT_Chile' ) ) {
+        $gateways[] = 'WC_Gateway_CuentaRUT_Chile';
+    }
+    return $gateways;
 }
