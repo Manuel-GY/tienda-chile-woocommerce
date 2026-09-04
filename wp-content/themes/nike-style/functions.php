@@ -192,8 +192,72 @@ function nike_get_cat_url( $slug ) {
     if ( $term && ! is_wp_error( $term ) ) {
         return get_term_link( $term );
     }
+    $terms = get_terms( array(
+        'taxonomy'   => 'product_cat',
+        'hide_empty' => false,
+        'search'     => $slug,
+    ) );
+    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+        return get_term_link( $terms[0] );
+    }
     return function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
 }
+
+// Banner de Cabecera y Filtro por Categorías para la Tienda y Colecciones
+function nike_style_render_shop_header() {
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+        $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
+        $current_cat = is_product_category() ? get_queried_object() : null;
+        $current_slug = $current_cat ? $current_cat->slug : '';
+        
+        $title    = 'Catálogo Completo 2026';
+        $subtitle = 'Explora nuestra colección exclusiva con envío exprés y garantía oficial a todo Chile 🇨🇱';
+        if ( $current_cat ) {
+            $title    = $current_cat->name;
+            $subtitle = ! empty( $current_cat->description ) ? $current_cat->description : 'Productos seleccionados con la máxima calidad en ' . $current_cat->name;
+        }
+        
+        $categories = get_terms( array(
+            'taxonomy'   => 'product_cat',
+            'hide_empty' => false,
+        ) );
+        ?>
+        <div class="nike-shop-header-banner">
+            <div class="nike-shop-header-container">
+                <span class="nike-shop-badge">COLECCIÓN OFICIAL TIENDA CHILE</span>
+                <h1 class="nike-shop-title"><?php echo esc_html( $title ); ?></h1>
+                <p class="nike-shop-subtitle"><?php echo esc_html( $subtitle ); ?></p>
+                
+                <!-- Barra Navegación por Categorías (Filtros) -->
+                <div class="nike-shop-categories-nav">
+                    <a href="<?php echo esc_url( $shop_url ); ?>" class="nike-cat-nav-pill <?php echo ( ! is_product_category() ) ? 'active' : ''; ?>">
+                        🔥 Todos los Productos
+                    </a>
+                    <?php if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
+                        <?php foreach ( $categories as $cat ) : 
+                            if ( 'uncategorized' === strtolower( $cat->slug ) || 'sin-categoria' === strtolower( $cat->slug ) ) continue;
+                            $is_active = ( $current_slug === $cat->slug );
+                            ?>
+                            <a href="<?php echo esc_url( get_term_link( $cat ) ); ?>" class="nike-cat-nav-pill <?php echo $is_active ? 'active' : ''; ?>">
+                                <?php echo esc_html( $cat->name ); ?> (<?php echo esc_html( $cat->count ); ?>)
+                            </a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+}
+add_action( 'woocommerce_before_main_content', 'nike_style_render_shop_header', 12 );
+
+function nike_style_hide_default_shop_title() {
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+        add_filter( 'woocommerce_show_page_title', '__return_false' );
+    }
+}
+add_action( 'woocommerce_before_main_content', 'nike_style_hide_default_shop_title', 5 );
+
 
 function nike_style_render_homepage_elements() {
     if ( is_front_page() || is_home() ) {

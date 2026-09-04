@@ -3091,6 +3091,86 @@ button:active,
     }
 }
 
+/* =========================================================================
+   17. BANNER DE CABECERA & NAVEGACIÓN POR CATEGORÍAS EN PÁGINA DE TIENDA
+   ========================================================================= */
+.nike-shop-header-banner {
+    background: linear-gradient(135deg, #18181b 0%, #09090b 100%);
+    color: #ffffff;
+    padding: 48px 24px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nike-shop-header-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.nike-shop-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #ef4444;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.nike-shop-title {
+    font-size: clamp(24px, 4vw, 36px) !important;
+    font-weight: 900 !important;
+    color: #ffffff !important;
+    margin-bottom: 10px !important;
+    letter-spacing: -0.02em;
+}
+
+.nike-shop-subtitle {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin: 0 0 28px 0;
+    line-height: 1.5;
+}
+
+.nike-shop-categories-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.nike-cat-nav-pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #f1f5f9 !important;
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+.nike-cat-nav-pill:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+.nike-cat-nav-pill.active {
+    background: #ef4444 !important;
+    border-color: #ef4444 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+
+
 
 
 
