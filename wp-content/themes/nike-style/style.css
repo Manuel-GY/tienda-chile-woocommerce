@@ -3026,7 +3026,10 @@ h3#ship-to-different-address input[type="checkbox"] {
 /* Fix Validation Errors & Notice Banners */
 .woocommerce-checkout .woocommerce-NoticeGroup,
 .woocommerce-checkout .woocommerce-error,
-.woocommerce-checkout .woocommerce-info {
+.woocommerce-checkout .woocommerce-info,
+.woocommerce-error,
+.woocommerce-message,
+.woocommerce-info {
     margin-bottom: 24px !important;
     border-radius: 10px !important;
     border-left: 4px solid #ef4444 !important;
@@ -3038,9 +3041,41 @@ h3#ship-to-different-address input[type="checkbox"] {
     box-shadow: 0 2px 10px rgba(239, 68, 68, 0.08) !important;
 }
 
-.woocommerce-checkout .woocommerce-error li {
+.woocommerce-checkout .woocommerce-error li,
+.woocommerce-error li {
+    color: #991b1b !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
     margin-bottom: 4px !important;
     list-style: none !important;
+}
+
+/* Fix Invisible White-on-White Text in Invalid Validation Fields */
+.woocommerce-checkout .form-row.woocommerce-invalid input[type="text"],
+.woocommerce-checkout .form-row.woocommerce-invalid input[type="email"],
+.woocommerce-checkout .form-row.woocommerce-invalid input[type="tel"],
+.woocommerce-checkout .form-row.woocommerce-invalid select,
+.woocommerce-checkout .form-row.woocommerce-invalid textarea,
+.woocommerce-checkout .form-row.woocommerce-invalid-required-field input,
+.woocommerce-checkout .form-row.woocommerce-invalid-required-field select,
+.woocommerce-invalid input[type="text"],
+.woocommerce-invalid input[type="email"],
+.woocommerce-invalid input[type="tel"],
+.woocommerce-invalid select {
+    color: #18181b !important;
+    background-color: #fef2f2 !important;
+    border: 1.5px solid #ef4444 !important;
+}
+
+.woocommerce-checkout .form-row.woocommerce-invalid label,
+.woocommerce-checkout .form-row.woocommerce-invalid-required-field label {
+    color: #991b1b !important;
+}
+
+.woocommerce-checkout .form-row.woocommerce-invalid input::placeholder,
+.woocommerce-checkout .form-row.woocommerce-invalid textarea::placeholder {
+    color: #991b1b !important;
+    opacity: 0.7 !important;
 }
 
 /* Columna Derecha: Resumen de Pedido y Pasarelas de Pago */

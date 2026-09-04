@@ -1091,12 +1091,28 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
     }
     
     // Limpieza de avisos de validación ("Facturación Región es un campo requerido")
-    if ( is_string( $translated_text ) && strpos( $translated_text, 'Facturación' ) !== false ) {
-        $translated_text = str_replace( 'Facturación ', '', $translated_text );
-        $translated_text = str_replace( ' es un campo requerido.', ' es obligatorio.', $translated_text );
+    if ( is_string( $translated_text ) ) {
+        if ( strpos( $translated_text, 'Facturación' ) !== false ) {
+            $translated_text = str_replace( 'Facturación ', '', $translated_text );
+        }
+        if ( strpos( $translated_text, 'es un campo requerido' ) !== false ) {
+            $translated_text = str_replace( 'es un campo requerido.', 'es un campo obligatorio.', $translated_text );
+        }
     }
 
     return $translated_text;
+}
+
+// Filtro explícito para notificaciones de error del Checkout
+add_filter( 'woocommerce_add_error', 'tienda_chile_clean_checkout_error_notice', 999 );
+function tienda_chile_clean_checkout_error_notice( $error ) {
+    if ( is_string( $error ) ) {
+        $error = str_replace( 'Facturación ', '', $error );
+        $error = str_replace( 'Billing ', '', $error );
+        $error = str_replace( 'es un campo requerido.', 'es un campo obligatorio.', $error );
+        $error = str_replace( 'is a required field.', 'es un campo obligatorio.', $error );
+    }
+    return $error;
 }
 
 // Mostrar Miniaturas de Producto en la Tabla de Resumen del Checkout estilo Mercado Libre
