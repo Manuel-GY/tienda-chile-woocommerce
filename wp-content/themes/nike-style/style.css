@@ -3626,6 +3626,21 @@ h3#ship-to-different-address input[type="checkbox"] {
     float: none !important;
 }
 
+/* Alineación Simétrica Estricta para Región (Columna 1) y Comuna / Ciudad (Columna 2) */
+.woocommerce-checkout #billing_state_field {
+    grid-column: 1 / 2 !important;
+    width: 100% !important;
+    float: none !important;
+    clear: none !important;
+}
+
+.woocommerce-checkout #billing_city_field {
+    grid-column: 2 / 3 !important;
+    width: 100% !important;
+    float: none !important;
+    clear: none !important;
+}
+
 /* 3. Columna Derecha: Tarjeta Flotante Sticky de Resumen del Pedido & Pasarelas de Pago */
 .woocommerce-checkout #order_review_heading {
     display: none !important;

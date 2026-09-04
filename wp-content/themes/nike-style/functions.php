@@ -1589,3 +1589,18 @@ add_action( 'template_redirect', function() {
         }
     }
 } );
+
+// Forzar alineación simétrica en CSS Grid para Región (Columna 1) y Comuna / Ciudad (Columna 2)
+add_filter( 'woocommerce_default_address_fields', 'tienda_chile_override_address_fields', 999 );
+function tienda_chile_override_address_fields( $fields ) {
+    if ( isset( $fields['state'] ) ) {
+        $fields['state']['class']    = array( 'form-row-first' );
+        $fields['state']['priority'] = 60;
+    }
+    if ( isset( $fields['city'] ) ) {
+        $fields['city']['class']    = array( 'form-row-last' );
+        $fields['city']['label']    = 'Comuna / Ciudad';
+        $fields['city']['priority'] = 70;
+    }
+    return $fields;
+}
