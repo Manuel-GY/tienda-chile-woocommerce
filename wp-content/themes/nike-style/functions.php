@@ -120,22 +120,22 @@ function nike_style_top_bar() {
     <div class="nike-topbar">
         <div class="nike-topbar-content">
             <div class="nike-topbar-promo">
-                <span class="nike-topbar-badge">OFERTAS DE HOY</span>
-                <span>⚡ Envío gratis por compras sobre $50.000 CLP &nbsp;|&nbsp; Despacho a todo Chile 🇨🇱</span>
+                <span class="nike-topbar-badge">EDICIÓN 2026</span>
+                <span class="nike-topbar-ticker-text">⚡ Envío gratis por compras sobre $50.000 CLP &nbsp;|&nbsp; Despacho Exprés a todo Chile 🇨🇱 &nbsp;|&nbsp; Pago Seguro Webpay & Transbank</span>
             </div>
             <div class="nike-topbar-social">
                 <span class="topbar-social-label">Síguenos:</span>
                 <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram @tiendachile.cl">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                     <span>@tiendachile.cl</span>
                 </a>
                 <a href="https://www.tiktok.com" target="_blank" rel="noopener" aria-label="TikTok @tiendachile">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
                     <span>@tiendachile</span>
                 </a>
                 <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook Tienda Chile Oficial">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3H13v6.95c4.66-.6 8-4.44 8-9.15z"/></svg>
-                    <span>Tienda Chile Oficial</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3H13v6.95c4.66-.6 8-4.44 8-9.15z"/></svg>
+                    <span>Facebook</span>
                 </a>
             </div>
         </div>
@@ -200,60 +200,121 @@ function nike_style_render_homepage_elements() {
         $theme_uri = get_stylesheet_directory_uri();
         $shop_url  = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
         ?>
-        <!-- Hero Banner Principal -->
-        <section class="nike-hero-banner" style="background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(15, 23, 42, 0.85) 100%), url('<?php echo esc_url( $theme_uri . '/images/hero_banner.jpg' ); ?>');">
-            <div class="nike-hero-content">
-                <span class="nike-hero-tag">⚡ COLECCIÓN 2026 | TIENDA CHILE</span>
-                <h1 class="nike-hero-title">Estilo, Innovación & Clase Mundial</h1>
-                <p class="nike-hero-subtitle">Descubre productos seleccionados de alta gama con despacho rápido a todo Chile y garantía oficial.</p>
-                <div class="nike-hero-actions">
-                    <a href="<?php echo esc_url( $shop_url ); ?>" class="nike-hero-btn nike-hero-btn-primary">Descubrir Colección ➔</a>
-                    <a href="#nike-featured-section" class="nike-hero-btn nike-hero-btn-secondary">Ver Ofertas -25% DCTO</a>
+        <!-- Hero Banner Principal (Layout Split Editorial de Lujo) -->
+        <section class="nike-hero-banner" style="background-image: radial-gradient(circle at 65% 50%, rgba(15, 23, 42, 0.5) 0%, rgba(9, 9, 11, 0.88) 100%), url('<?php echo esc_url( $theme_uri . '/images/hero_banner.jpg' ); ?>');">
+            <div class="nike-hero-container">
+                <div class="nike-hero-split">
+                    <!-- Columna Editorial -->
+                    <div class="nike-hero-editorial">
+                        <div class="nike-hero-badges-wrapper">
+                            <span class="nike-badge-gold">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                EDICIÓN LIMITADA 2026
+                            </span>
+                            <span class="nike-badge-red">EXCLUSIVO CHILE 🇨🇱</span>
+                        </div>
+                        <h1 class="nike-hero-title">Estilo, Innovación & Clase Mundial</h1>
+                        <p class="nike-hero-subtitle">Descubre una curatoría impecable de productos premium. Alta tecnología, cuidado personal y elegancia urbana con despacho exprés y garantía oficial.</p>
+                        <div class="nike-hero-actions">
+                            <a href="<?php echo esc_url( $shop_url ); ?>" class="nike-hero-btn nike-hero-btn-primary">
+                                Descubrir Colección ➔
+                            </a>
+                            <a href="#nike-featured-section" class="nike-hero-btn nike-hero-btn-secondary">
+                                Ver Ofertas -25% DCTO
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Columna Showcase Card -->
+                    <div class="nike-hero-showcase">
+                        <div class="nike-showcase-card">
+                            <div class="nike-showcase-glow"></div>
+                            <img src="<?php echo esc_url( $theme_uri . '/images/beauty.jpg' ); ?>" alt="Colección de Lujo 2026" class="nike-showcase-img" />
+                            <div class="nike-showcase-overlay">
+                                <span class="nike-showcase-pill">DESTACADO DE LA SEMANA</span>
+                                <h3 class="nike-showcase-title">Skincare & Tech Premium</h3>
+                                <p class="nike-showcase-desc">Hasta 25% DCTO en tu primera compra</p>
+                                <span class="nike-showcase-price">Desde CLP$24.990</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="nike-hero-highlights">
-                    <div class="nike-highlight-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                        <span>Envío Exprés Chile 🇨🇱</span>
+
+                <!-- Franja de Beneficios Flotantes en Glassmorphism (4 Pilares) -->
+                <div class="nike-hero-benefits-bar">
+                    <div class="nike-benefit-item">
+                        <div class="nike-benefit-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        </div>
+                        <div class="nike-benefit-text">
+                            <strong>Envío Exprés Chile 🇨🇱</strong>
+                            <span>Despacho 24h a 48h hábiles</span>
+                        </div>
                     </div>
-                    <div class="nike-highlight-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span>Webpay & Transbank</span>
+                    <div class="nike-benefit-divider"></div>
+                    <div class="nike-benefit-item">
+                        <div class="nike-benefit-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        </div>
+                        <div class="nike-benefit-text">
+                            <strong>Webpay & Transbank</strong>
+                            <span>Pago seguro en cuotas</span>
+                        </div>
                     </div>
-                    <div class="nike-highlight-item">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        <span>Garantía Oficial 100%</span>
+                    <div class="nike-benefit-divider"></div>
+                    <div class="nike-benefit-item">
+                        <div class="nike-benefit-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <div class="nike-benefit-text">
+                            <strong>Garantía Oficial 6 Meses</strong>
+                            <span>Protección total al comprador</span>
+                        </div>
+                    </div>
+                    <div class="nike-benefit-divider"></div>
+                    <div class="nike-benefit-item">
+                        <div class="nike-benefit-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        </div>
+                        <div class="nike-benefit-text">
+                            <strong>Soporte WhatsApp 24/7</strong>
+                            <span>Respuesta inmediata en minutos</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Tarjetas de Categorías Destacadas -->
+        <!-- Bento Grid de Categorías Destacadas (Bento Grid Desktop 3 Columnas) -->
         <section id="nike-featured-section" class="nike-categories-section">
             <div class="nike-section-header">
-                <span class="nike-section-badge">CATEGORÍAS DE LUJO</span>
-                <h2 class="nike-section-title">Colecciones Destacadas</h2>
-                <p class="nike-section-subtitle">Explora lo mejor en belleza, tecnología y moda con envío garantizado</p>
+                <span class="nike-section-badge">COLECCIONES EXCLUSIVAS</span>
+                <h2 class="nike-section-title">Categorías Destacadas</h2>
+                <p class="nike-section-subtitle">Explora lo mejor en belleza, tecnología y estilo de vida con despacho exprés a todo Chile</p>
             </div>
-            <div class="nike-cat-grid">
-                <a href="<?php echo esc_url( nike_get_cat_url( 'belleza' ) ); ?>" class="nike-cat-card nike-cat-beauty" style="background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.85) 100%), url('<?php echo esc_url( $theme_uri . '/images/beauty.jpg' ); ?>');">
+            <div class="nike-cat-bento-grid">
+                <a href="<?php echo esc_url( nike_get_cat_url( 'belleza' ) ); ?>" class="nike-cat-card nike-cat-bento-item nike-cat-beauty">
+                    <div class="nike-cat-bg" style="background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.88) 100%), url('<?php echo esc_url( $theme_uri . '/images/beauty.jpg' ); ?>');"></div>
                     <div class="nike-cat-content">
-                        <span class="nike-cat-tag">Skincare & Cosmética</span>
+                        <span class="nike-cat-tag">✨ Skincare & Cosmética</span>
                         <h3>Belleza & Cuidado</h3>
-                        <p>Fórmulas exclusivas y cuidado personal premium</p>
-                        <span class="nike-cat-btn">Ver Productos ➔</span>
+                        <p>Fórmulas exclusivas y cuidado personal de alta gama</p>
+                        <span class="nike-cat-btn">Ver Colección ➔</span>
                     </div>
                 </a>
-                <a href="<?php echo esc_url( nike_get_cat_url( 'tecnologia' ) ); ?>" class="nike-cat-card nike-cat-tech" style="background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.85) 100%), url('<?php echo esc_url( $theme_uri . '/images/tech.jpg' ); ?>');">
+                <a href="<?php echo esc_url( nike_get_cat_url( 'tecnologia' ) ); ?>" class="nike-cat-card nike-cat-bento-item nike-cat-tech">
+                    <div class="nike-cat-bg" style="background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.88) 100%), url('<?php echo esc_url( $theme_uri . '/images/tech.jpg' ); ?>');"></div>
                     <div class="nike-cat-content">
-                        <span class="nike-cat-tag">Gadgets & Audio</span>
+                        <span class="nike-cat-tag">⚡ Gadgets & Audio</span>
                         <h3>Tecnología Premium</h3>
-                        <p>Audio de alta fidelidad y accesorios de vanguardia</p>
+                        <p>Audio de alta fidelidad y dispositivos inteligentes</p>
                         <span class="nike-cat-btn">Explorar Gadgets ➔</span>
                     </div>
                 </a>
-                <a href="<?php echo esc_url( nike_get_cat_url( 'estilo-de-vida' ) ); ?>" class="nike-cat-card nike-cat-lifestyle" style="background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.85) 100%), url('<?php echo esc_url( $theme_uri . '/images/hero_banner.jpg' ); ?>');">
+                <a href="<?php echo esc_url( nike_get_cat_url( 'estilo-de-vida' ) ); ?>" class="nike-cat-card nike-cat-bento-item nike-cat-lifestyle">
+                    <div class="nike-cat-bg" style="background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.88) 100%), url('<?php echo esc_url( $theme_uri . '/images/hero_banner.jpg' ); ?>');"></div>
                     <div class="nike-cat-content">
-                        <span class="nike-cat-tag">Moda & Sneakers</span>
+                        <span class="nike-cat-tag">💎 Moda & Sneakers</span>
                         <h3>Estilo de Vida</h3>
                         <p>Diseños urbanos y calzado con calidad internacional</p>
                         <span class="nike-cat-btn">Descubrir Colección ➔</span>
@@ -392,71 +453,133 @@ add_action( 'widgets_init', function() {
 }, 11 );
 
 // ------------------------------------------------------------------
-// 10. FOOTER CHILENO ESTRUCTURADO CON REDES SOCIALES & BADGES DE CONFIANZA
+// 10. NEWSLETTER & FOOTER ALTA GAMA DE 4 COLUMNAS CON BADGES CHILENOS
 // ------------------------------------------------------------------
-function nike_style_footer_trust_badges() {
+function nike_style_newsletter_and_footer() {
+    $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url('/tienda');
     ?>
-    <div class="nike-footer-branding-col">
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nike-footer-logo-link">
-            <?php echo nike_style_get_svg_logo('footer'); ?>
-        </a>
-        <p class="nike-footer-tagline">Tu tienda online oficial de confianza en Chile. Productos exclusivos con garantía y despacho rápido a todo el país.</p>
-        <div class="nike-footer-social-handles">
-            <a href="https://www.instagram.com" target="_blank" rel="noopener" class="nike-footer-social-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                <span>Instagram: @tiendachile.cl</span>
-            </a>
-            <a href="https://www.tiktok.com" target="_blank" rel="noopener" class="nike-footer-social-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-                <span>TikTok: @tiendachile</span>
-            </a>
-            <a href="https://www.facebook.com" target="_blank" rel="noopener" class="nike-footer-social-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3H13v6.95c4.66-.6 8-4.44 8-9.15z"/></svg>
-                <span>Facebook: Tienda Chile Oficial</span>
-            </a>
-            <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="nike-footer-social-link nike-footer-wa">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                <span>WhatsApp: +56 9 1234 5678</span>
-            </a>
+    <!-- Sección Newsletter Captación -->
+    <section class="nike-newsletter-section">
+        <div class="nike-newsletter-container">
+            <div class="nike-newsletter-content">
+                <span class="nike-newsletter-badge">🎁 BENEFICIO EXCLUSIVO</span>
+                <h2 class="nike-newsletter-title">Únete a la experiencia Tienda Chile</h2>
+                <p class="nike-newsletter-subtitle">Recibe <strong>10% DCTO en tu primera compra</strong> + acceso preferencial a colecciones limitadas y lanzamientos exclusivos.</p>
+            </div>
+            <form class="nike-newsletter-form" onsubmit="event.preventDefault(); nikeSubscribeNewsletter(this);">
+                <div class="nike-newsletter-input-wrap">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nike-mail-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <input type="email" placeholder="Tu correo electrónico..." required class="nike-newsletter-input" />
+                </div>
+                <button type="submit" class="nike-newsletter-btn">
+                    <span>Obtener 10% DCTO</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+            </form>
+            <div id="nike-newsletter-msg" class="nike-newsletter-msg" style="display:none;">
+                🎉 ¡Bienvenido! Te has suscrito exitosamente. Usa el cupón <strong>CHILE10</strong> al finalizar tu compra.
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Columna de Políticas Legales -->
-    <div class="nike-footer-legal-col">
-        <h3 class="nike-footer-legal-title">Información Legal & Políticas</h3>
-        <ul class="nike-footer-legal-links">
-            <li><a href="javascript:void(0)" onclick="nikeOpenModal('privacy')">🔒 Política de Privacidad</a></li>
-            <li><a href="javascript:void(0)" onclick="nikeOpenModal('shipping')">🚚 Política de Envíos y Entregas</a></li>
-            <li><a href="javascript:void(0)" onclick="nikeOpenModal('returns')">🔄 Garantía y Devoluciones</a></li>
-            <li><a href="javascript:void(0)" onclick="nikeOpenModal('terms')">📜 Términos y Condiciones</a></li>
-        </ul>
-    </div>
+    <!-- Footer Ultra Premium 4 Columnas -->
+    <div class="nike-footer-main">
+        <div class="nike-footer-grid">
+            <!-- Columna 1: Brand & Redes -->
+            <div class="nike-footer-col nike-footer-brand-col">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nike-footer-logo-link">
+                    <?php echo nike_style_get_svg_logo('footer'); ?>
+                </a>
+                <p class="nike-footer-tagline">Tu tienda online oficial de confianza en Chile. Productos exclusivos de alta gama con garantía legal y despacho exprés nacional.</p>
+                <div class="nike-footer-social-handles">
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener" class="nike-footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <span>@tiendachile.cl</span>
+                    </a>
+                    <a href="https://www.tiktok.com" target="_blank" rel="noopener" class="nike-footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                        <span>@tiendachile</span>
+                    </a>
+                    <a href="https://www.facebook.com" target="_blank" rel="noopener" class="nike-footer-social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3l-.5 3H13v6.95c4.66-.6 8-4.44 8-9.15z"/></svg>
+                        <span>Tienda Chile Oficial</span>
+                    </a>
+                </div>
+            </div>
 
-    <div class="nike-footer-trust">
-        <!-- Medios de Pago -->
-        <div class="nike-trust-group">
-            <span class="nike-trust-label">Medios de Pago Seguros:</span>
-            <div class="nike-trust-badges">
-                <span class="nike-badge nike-badge-webpay"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Webpay Plus</span>
-                <span class="nike-badge nike-badge-tbk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Transbank</span>
-                <span class="nike-badge nike-badge-mp"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg> Mercado Pago</span>
-                <span class="nike-badge nike-badge-crut"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg> CuentaRUT</span>
+            <!-- Columna 2: Navegación & Categorías -->
+            <div class="nike-footer-col">
+                <h3 class="nike-footer-title">Colecciones & Menú</h3>
+                <ul class="nike-footer-menu">
+                    <li><a href="<?php echo esc_url( nike_get_cat_url( 'belleza' ) ); ?>">✨ Belleza & Cuidado Personal</a></li>
+                    <li><a href="<?php echo esc_url( nike_get_cat_url( 'tecnologia' ) ); ?>">⚡ Tecnología Premium</a></li>
+                    <li><a href="<?php echo esc_url( nike_get_cat_url( 'estilo-de-vida' ) ); ?>">💎 Estilo de Vida</a></li>
+                    <li><a href="<?php echo esc_url( $shop_url ); ?>">🔥 Catálogo Completo 2026</a></li>
+                    <li><a href="#nike-featured-section">🏷️ Ofertas Destacadas -25% DCTO</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Información Legal & Políticas -->
+            <div class="nike-footer-col">
+                <h3 class="nike-footer-title">Políticas & Seguridad</h3>
+                <ul class="nike-footer-menu">
+                    <li><a href="javascript:void(0)" onclick="nikeOpenModal('privacy')">🔒 Política de Privacidad</a></li>
+                    <li><a href="javascript:void(0)" onclick="nikeOpenModal('shipping')">🚚 Tiempos y Zonas de Envío</a></li>
+                    <li><a href="javascript:void(0)" onclick="nikeOpenModal('returns')">🔄 Garantía Oficial 6 Meses</a></li>
+                    <li><a href="javascript:void(0)" onclick="nikeOpenModal('terms')">📜 Términos y Condiciones</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 4: Atención & Medios de Pago / Envíos -->
+            <div class="nike-footer-col">
+                <h3 class="nike-footer-title">Contacto & Sellos</h3>
+                <div class="nike-footer-contact">
+                    <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="nike-footer-wa-box">
+                        <div class="nike-footer-wa-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.572-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        </div>
+                        <div class="nike-footer-wa-info">
+                            <strong>Soporte WhatsApp 24/7</strong>
+                            <span>+56 9 1234 5678</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="nike-footer-trust-mini">
+                    <span class="nike-trust-mini-label">Medios de Pago Seguros:</span>
+                    <div class="nike-trust-badges">
+                        <span class="nike-badge nike-badge-webpay">Webpay Plus</span>
+                        <span class="nike-badge nike-badge-tbk">Transbank</span>
+                        <span class="nike-badge nike-badge-crut">CuentaRUT</span>
+                    </div>
+                </div>
+                <div class="nike-footer-trust-mini" style="margin-top: 10px;">
+                    <span class="nike-trust-mini-label">Despachos Exprés Chile:</span>
+                    <div class="nike-trust-badges">
+                        <span class="nike-badge">Chilexpress</span>
+                        <span class="nike-badge">Starken</span>
+                        <span class="nike-badge">Blue Express</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Despachos -->
-        <div class="nike-trust-group">
-            <span class="nike-trust-label">Despachos a todo Chile 🇨🇱:</span>
-            <div class="nike-trust-badges">
-                <span class="nike-badge nike-badge-shipping"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Chilexpress</span>
-                <span class="nike-badge nike-badge-shipping"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Starken</span>
-                <span class="nike-badge nike-badge-shipping"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Blue Express</span>
-            </div>
+        <div class="nike-footer-bottom">
+            <p>© <?php echo date('Y'); ?> TIENDA CHILE OFICIAL • Todos los derechos reservados. Experiencia E-Commerce de Lujo 🇨🇱</p>
         </div>
     </div>
+
+    <script>
+    function nikeSubscribeNewsletter(form) {
+        var msg = document.getElementById('nike-newsletter-msg');
+        if (msg) {
+            msg.style.display = 'block';
+            form.reset();
+        }
+    }
+    </script>
     <?php
 }
-add_action( 'storefront_footer', 'nike_style_footer_trust_badges', 15 );
+add_action( 'storefront_footer', 'nike_style_newsletter_and_footer', 15 );
 
 // ------------------------------------------------------------------
 // 11. BANNER DE COOKIES Y POPUPS DE POLÍTICAS LEGALES

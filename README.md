@@ -1,12 +1,12 @@
-# Tienda Chile 🇨🇱 - WooCommerce Premium E-Commerce
+# Tienda Chile 🇨🇱 - E-Commerce DTC Ultra Luxury & Mobile Responsive
 
-**Tienda Chile** es una solución e-commerce completa y de alta conversión basada en **WordPress + WooCommerce**, diseñada específicamente para el mercado chileno. Cuenta con un tema hijo personalizado (`nike-style`), diseño DTC de clase mundial, integración de medios de pago locales (Webpay, Transbank, Mercado Pago, CuentaRUT) y opciones de envío (Chilexpress, Starken, Blue Express).
+**Tienda Chile** es una tienda e-commerce de clase mundial construida sobre **WordPress + WooCommerce** con un tema personalizado ultra-luxury (`nike-style`). Ofrece una experiencia de usuario DTC (Direct-To-Consumer) prémium, 100% responsiva tanto en escritorio (PC) como en dispositivos móviles (iOS / Android), optimizada para conversión en el mercado chileno.
 
 ---
 
 ## 🚀 Guía Rápida para Continuar en Casa
 
-Si vas a continuar el trabajo en la computadora de tu casa, sigue estos sencillos pasos:
+Si vas a continuar el trabajo o despliegue en la computadora de tu casa:
 
 ### 1. Clonar el Repositorio
 ```bash
@@ -14,55 +14,48 @@ git clone https://github.com/Manuel-GY/tienda-chile-woocommerce.git
 cd tienda-chile-woocommerce
 ```
 
-### 2. Configurar en Local (LocalWP)
-1. Descarga e instala **Local (LocalWP)** desde [https://localwp.com](https://localwp.com).
+### 2. Configurar en LocalWP (o Servidor Local)
+1. Instala **Local (LocalWP)** desde [https://localwp.com](https://localwp.com).
 2. Crea un nuevo sitio en Local llamado `tienda-online`.
-3. Copia el contenido de la carpeta `wp-content/themes/nike-style` dentro de la carpeta activa de tu sitio en Local:
+3. Copia la carpeta del tema `wp-content/themes/nike-style` a la ruta activa de tu sitio:
    `...\Local Sites\tienda-online\app\public\wp-content\themes\nike-style`
-4. Importa la base de datos `sql/tienda-chile.sql` en MySQL desde la pestaña **Database > Adminer** (o vía terminal con `mysql`).
+4. Importa la base de datos `sql/tienda-chile.sql` usando **Database > Adminer** o mediante la línea de comandos `mysql`.
 
-### 3. Abrir la Tienda
-- En tu navegador, ingresa a: **`http://tienda-online.local`** (o **`http://localhost:10004`**).
+### 3. Visualizar y Probar
+- Abre en el navegador: **`http://localhost:10004`** o **`http://tienda-online.local`**.
 
 ---
 
 ## ✨ Características y Diseño UI/UX
 
-### 1. Identidad de Marca y Logo SVG
-- **Logo Vectorial Oficial**: Monograma SVG exclusivo con la **Estrella de Chile 🇨🇱** e iso-tipo premium adaptado para modo claro y oscuro.
-- **Paleta de Colores**: Off-black elegante (`#18181b`), blanco impoluto (`#ffffff`), grises de superficie suaves (`#f8fafc`) y acentos en rojo de oferta (`#ef4444`).
-- **Esquinas Redondeadas Suaves**: Bordes estilizados (`6px` a `10px`) en tarjetas, badges y botones para una navegación fluida.
+### 💎 Experiencia Desktop PC (Ultra Luxury)
+- **Header Cristal Flotante (Glassmorphism)**: Menú de navegación elevado con `backdrop-filter: blur(12px)`, barra ticker superior con anuncios dinámicos ("⚡ ENVÍO GRATIS EN SANTIAGO"), buscador amplio y accesos directos al carrito y cuenta.
+- **Hero Section Split Editorial**: Diseño asimétrico de revista de moda/tecnología con insignias de edición limitada, banner de estilo de vida en alta resolución y llamadas a la acción (CTA) duales.
+- **Bento Grid de Categorías (3 Columnas)**: Tarjetas interactivas con efecto zoom parallax para **Belleza & Cuidado**, **Tecnología Premium** y **Estilo de Vida**.
+- **Grilla de Productos Catalog (4 Columnas)**: Tarjetas con bordes sutiles, elevación suave en hover, valoraciones con **estrellas doradas (★★★★★ 5.0)**, etiquetas de descuento (`-25% DCTO`) e insignias de despachos 24h.
+- **Sección Newsletter con Captura de Leads**: Formulario exclusivo ofreciendo **10% DCTO** en la primera compra.
+- **Footer de Lujo a 4 Columnas**: Información de marca, enlaces rápidos, redes sociales y sellos de confianza de medios de pago y empresas de courier en Chile.
 
-### 2. Hero Banner e Imágenes de Alta Resolución
-- Banner principal de estilo de vida con overlay degradado oscuro, insignia de temporada (`⚡ COLECCIÓN 2026`) y botones CTA de rápida conversión.
-- Tarjetas visuales de categorías destacadas (**Belleza & Cuidado**, **Tecnología Premium**, **Estilo de Vida**).
+### 📱 Experiencia Móvil (100% Responsive)
+- **Mobile Bottom Navigation Bar**: Barra de navegación táctil fija en la parte inferior para dispositivos móviles (< 768px) con accesos rápidos a **Inicio**, **Tienda**, **Buscar**, **Carrito** (con contador en vivo) y **Mi Cuenta**.
+- **Zonas Táctiles Optimizadas (44px+)**: Botones de compra y navegación ajustados según las especificaciones de Apple iOS Human Interface Guidelines y Android Material Design.
+- **Botón Flotante de WhatsApp**: Atención al cliente 24/7 (`#25d366`) con animación de pulso y distintivo: **`¿Dudas? Chatea con nosotros 💬`**.
 
-### 3. Redes Sociales & WhatsApp Flotante
-- **Barra de Redes Sociales**: Iconos vectoriales de Instagram (`@tiendachile.cl`), TikTok (`@tiendachile`) y Facebook integrados en el topbar y footer.
-- **Botón Flotante de WhatsApp**: Fijo en la esquina inferior derecha en verde oficial (`#25d366`) con animación interactiva y etiqueta: **`¿Dudas? Chatea con nosotros 💬`**.
-
-### 4. Tarjetas de Producto de Alta Conversión
-- Calificaciones con **estrellas de oro** (★★★★★).
-- Badges de descuento automático (`-25% DCTO`).
-- Indicadores de **Despacho Rápido 24h a todo Chile**.
-- Formato de precios nativo en pesos chilenos (`$XX.XXX CLP`).
-
-### 5. Pie de Página (Footer) con Sellos de Confianza
-- **Medios de Pago**: Webpay Plus, Transbank, Mercado Pago, CuentaRUT / BancoEstado.
-- **Despachos**: Chilexpress, Starken, Blue Express.
+### 📜 Legales, Cookies y Cumplimiento Chileno
+- **Banner de Consentimiento de Cookies**: Mensaje emergente con persistencia `localStorage` y aceptación explícita.
+- **Modales de Políticas Legales Integrados**:
+  - 🔒 **Política de Privacidad** (Ley N° 19.628 de Protección de Datos Personales).
+  - 🚚 **Política de Envíos** (Chilexpress, Starken, Blue Express, cobertura nacional y tiempos de entrega).
+  - 🔄 **Política de Devoluciones y Garantía Legal** (Ley N° 19.496 del Consumidor, 6 meses de garantía legal y 10 días de retracto).
 
 ---
 
-## 🛍️ Administración de Productos
+## 🛍️ Gestión de Productos e Importación Masiva
 
-El proyecto incluye 30 productos iniciales distribuidos en las categorías:
-- **Maquillaje**: Labios, Ojos, Rostro, Uñas.
-- **Electrónica**: Auriculares Bluetooth, Cargadores, Cables, Accesorios.
-- **Electrodomésticos**: Cocina, Limpieza, Pequeños electrodomésticos.
-
-Para importar más productos de forma masiva:
-1. Edita la plantilla CSV en `productos/plantilla-30-productos.csv`.
-2. Ejecuta el script `importar-productos.php` vía WP-CLI o navegador.
+El proyecto incluye datos de demostración y soporte para importación masiva de productos:
+- Plantilla CSV prediseñada en `productos/plantilla-30-productos.csv`.
+- Script de importación automática en `importar-productos.php`.
+- Asignación inteligente de fotos fall-back en `functions.php` para productos sin imagen asignada.
 
 ---
 
@@ -79,10 +72,10 @@ proyecto-tienda-chile/
 ├── wp-content/
 │   ├── plugins/                         # WooCommerce + HUP Kit Chile
 │   └── themes/
-│       └── nike-style/                  # Tema hijo personalizado
-│           ├── functions.php            # Lógica PHP, hooks, SVG logos y widgets
-│           ├── style.css                # Diseño UI/UX responsive premium
-│           └── images/                  # Imágenes de alta resolución
+│       └── nike-style/                  # Tema personalizado Ultra Luxury
+│           ├── functions.php            # Lógica PHP, hooks, modales, SVG logos y widgets
+│           ├── style.css                # Estilos CSS responsive ultra luxury & mobile
+│           └── images/                  # Fotografías de alta resolución (Hero, Beauty, Tech)
 ├── wp-config-sample.php
 └── README.md                            # Documentación del proyecto
 ```
@@ -90,8 +83,9 @@ proyecto-tienda-chile/
 ---
 
 ## 🛠️ Tecnologías Utilizadas
-- **WordPress** 7.1
-- **WooCommerce** 11.1.0
-- **PHP** 8.2+
-- **HUP Kit Ecommerce Chile** (RUT, Regiones y Comunas)
+- **WordPress 7.1**
+- **WooCommerce 11.1.0**
+- **PHP 8.2+**
+- **HUP Kit Ecommerce Chile** (RUT, Regiones y Comunas de Chile)
+- **CSS3 Moderno** (Flexbox, CSS Grid, Glassmorphism backdrop-blur, Variables CSS)
 - **LocalWP** (Entorno de desarrollo local)
