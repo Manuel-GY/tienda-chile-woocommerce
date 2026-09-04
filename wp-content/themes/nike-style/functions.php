@@ -553,3 +553,69 @@ function nike_style_legal_and_cookies_footer() {
     <?php
 }
 add_action( 'wp_footer', 'nike_style_legal_and_cookies_footer', 30 );
+
+// ------------------------------------------------------------------
+// 12. BARRA DE NAVEGACIÓN INFERIOR MÓVIL (MOBILE BOTTOM BAR) & FRAGMENTOS DE CARRITO
+// ------------------------------------------------------------------
+function nike_style_mobile_bottom_bar() {
+    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
+    $cart_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
+    $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
+    $cart_count  = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+    ?>
+    <!-- Barra de Navegación Inferior Móvil (Mobile Bottom Bar) -->
+    <nav class="nike-mobile-bottom-bar" aria-label="Navegación Móvil Rápida">
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nike-mob-item <?php echo is_front_page() ? 'active' : ''; ?>" title="Inicio">
+            <div class="nike-mob-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span class="nike-mob-label">Inicio</span>
+        </a>
+        <a href="<?php echo esc_url( $shop_url ); ?>" class="nike-mob-item <?php echo ( function_exists('is_shop') && is_shop() ) ? 'active' : ''; ?>" title="Tienda">
+            <div class="nike-mob-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <span class="nike-mob-label">Tienda</span>
+        </a>
+        <button type="button" class="nike-mob-item nike-mob-search-trigger" onclick="nikeToggleMobileSearch()" aria-label="Buscar productos">
+            <div class="nike-mob-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <span class="nike-mob-label">Buscar</span>
+        </button>
+        <a href="<?php echo esc_url( $cart_url ); ?>" class="nike-mob-item nike-mob-cart-item <?php echo ( function_exists('is_cart') && is_cart() ) ? 'active' : ''; ?>" title="Carrito de Compras">
+            <div class="nike-mob-icon nike-mob-cart-icon-wrap">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                <span class="nike-mobile-cart-badge"><?php echo esc_html( $cart_count ); ?></span>
+            </div>
+            <span class="nike-mob-label">Carrito</span>
+        </a>
+        <a href="<?php echo esc_url( $account_url ); ?>" class="nike-mob-item <?php echo ( function_exists('is_account_page') && is_account_page() ) ? 'active' : ''; ?>" title="Mi Cuenta">
+            <div class="nike-mob-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span class="nike-mob-label">Mi Cuenta</span>
+        </a>
+    </nav>
+
+    <script>
+    function nikeToggleMobileSearch() {
+        var searchInput = document.querySelector('.site-header .site-search input[type="search"]') || document.querySelector('.site-header input.search-field');
+        if (searchInput) {
+            searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(function() {
+                searchInput.focus();
+            }, 350);
+        }
+    }
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'nike_style_mobile_bottom_bar', 25 );
+
+// Fragmentos AJAX de WooCommerce para actualizar el contador del carrito en móviles automáticamente
+add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
+    $cart_count = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
+    $fragments['span.nike-mobile-cart-badge'] = '<span class="nike-mobile-cart-badge">' . esc_html( $cart_count ) . '</span>';
+    return $fragments;
+} );
