@@ -1,107 +1,97 @@
-# Tienda Chile - WooCommerce
+# Tienda Chile 🇨🇱 - WooCommerce Premium E-Commerce
 
-Tienda online con WordPress y WooCommerce para el mercado chileno.
+**Tienda Chile** es una solución e-commerce completa y de alta conversión basada en **WordPress + WooCommerce**, diseñada específicamente para el mercado chileno. Cuenta con un tema hijo personalizado (`nike-style`), diseño DTC de clase mundial, integración de medios de pago locales (Webpay, Transbank, Mercado Pago, CuentaRUT) y opciones de envío (Chilexpress, Starken, Blue Express).
 
-## Instalación en Hosting
+---
 
-### 1. Subir archivos al hosting
+## 🚀 Guía Rápida para Continuar en Casa
+
+Si vas a continuar el trabajo en la computadora de tu casa, sigue estos sencillos pasos:
+
+### 1. Clonar el Repositorio
 ```bash
-# Subir wp-content/ (themes y plugins) vía FTP o SSH
-# Subir sql/tienda-chile.sql para importar la base de datos
+git clone https://github.com/Manuel-GY/tienda-chile-woocommerce.git
+cd tienda-chile-woocommerce
 ```
 
-### 2. Importar base de datos
-```bash
-mysql -u usuario -p base_de_datos < sql/tienda-chile.sql
-```
+### 2. Configurar en Local (LocalWP)
+1. Descarga e instala **Local (LocalWP)** desde [https://localwp.com](https://localwp.com).
+2. Crea un nuevo sitio en Local llamado `tienda-online`.
+3. Copia el contenido de la carpeta `wp-content/themes/nike-style` dentro de la carpeta activa de tu sitio en Local:
+   `...\Local Sites\tienda-online\app\public\wp-content\themes\nike-style`
+4. Importa la base de datos `sql/tienda-chile.sql` en MySQL desde la pestaña **Database > Adminer** (o vía terminal con `mysql`).
 
-### 3. Configurar wp-config.php
-- Copiar `wp-config-sample.php` a `wp-config.php`
-- Editar credenciales de base de datos
-- Configurar claves de autenticación en https://api.wordpress.org/secret-key/1.1/salt/
+### 3. Abrir la Tienda
+- En tu navegador, ingresa a: **`http://tienda-online.local`** (o **`http://localhost:10004`**).
 
-### 4. Plugins instalados
-- **WooCommerce** (11.1.0) - Tienda online
-- **HUP Kit Ecommerce Chile** - Regiones, comunas, RUT, despacho
+---
 
-### 5. Tema y presentación
-- **Idioma:** Español de Chile (es_CL)
-- **Tema:** Nike Style (tema hijo de Storefront) - estética minimalista tipo Nike
-  - Header limpio con barra superior de promoción
-  - Iconos de redes sociales (Facebook, Instagram, TikTok)
-  - Footer negro, tipografía bold, botones negros
-- **Página de inicio:** Hero negro con "TIENDA CHILE"
+## ✨ Características y Diseño UI/UX
 
-### 6. Configuración de WooCommerce
-- País: Chile
-- Moneda: CLP (Peso Chileno)
-- Impuestos: IVA 19% incluido en precios
+### 1. Identidad de Marca y Logo SVG
+- **Logo Vectorial Oficial**: Monograma SVG exclusivo con la **Estrella de Chile 🇨🇱** e iso-tipo premium adaptado para modo claro y oscuro.
+- **Paleta de Colores**: Off-black elegante (`#18181b`), blanco impoluto (`#ffffff`), grises de superficie suaves (`#f8fafc`) y acentos en rojo de oferta (`#ef4444`).
+- **Esquinas Redondeadas Suaves**: Bordes estilizados (`6px` a `10px`) en tarjetas, badges y botones para una navegación fluida.
 
-### 7. Pasarelas de pago
-Las pasarelas chilenas deben configurarse manualmente en WooCommerce > Ajustes > Pagos:
-- **Webpay Plus** (Transbank) - Plugin oficial
-- **Khipu** - Plugin oficial
-- **Mercado Pago** - Plugin oficial
-- **Flow** - Plugin de terceros
+### 2. Hero Banner e Imágenes de Alta Resolución
+- Banner principal de estilo de vida con overlay degradado oscuro, insignia de temporada (`⚡ COLECCIÓN 2026`) y botones CTA de rápida conversión.
+- Tarjetas visuales de categorías destacadas (**Belleza & Cuidado**, **Tecnología Premium**, **Estilo de Vida**).
 
-### 8. Redes sociales
-Ya configuradas en el tema (iconos en el header):
-- Facebook: https://www.facebook.com
-- Instagram: https://www.instagram.com
-- TikTok: https://www.tiktok.com
-(Cambiar por las URLs reales de la tienda)
+### 3. Redes Sociales & WhatsApp Flotante
+- **Barra de Redes Sociales**: Iconos vectoriales de Instagram (`@tiendachile.cl`), TikTok (`@tiendachile`) y Facebook integrados en el topbar y footer.
+- **Botón Flotante de WhatsApp**: Fijo en la esquina inferior derecha en verde oficial (`#25d366`) con animación interactiva y etiqueta: **`¿Dudas? Chatea con nosotros 💬`**.
 
-## Productos (30 iniciales)
+### 4. Tarjetas de Producto de Alta Conversión
+- Calificaciones con **estrellas de oro** (★★★★★).
+- Badges de descuento automático (`-25% DCTO`).
+- Indicadores de **Despacho Rápido 24h a todo Chile**.
+- Formato de precios nativo en pesos chilenos (`$XX.XXX CLP`).
 
-Importados inicialmente con precios en CLP (IVA 19% incluido). Categorías creadas:
+### 5. Pie de Página (Footer) con Sellos de Confianza
+- **Medios de Pago**: Webpay Plus, Transbank, Mercado Pago, CuentaRUT / BancoEstado.
+- **Despachos**: Chilexpress, Starken, Blue Express.
 
-```
-Maquillaje
-├── Labios (MAQ-001)
-├── Ojos (MAQ-002 a MAQ-005, MAQ-010)
-├── Rostro (MAQ-006, MAQ-007, MAQ-009)
-└── Uñas (MAQ-008)
-Electrónica
-├── Auriculares (ELEC-001, ELEC-007)
-├── Cables y Cargadores (ELEC-002, ELEC-003, ELEC-010)
-└── Accesorios (ELEC-004 a ELEC-006, ELEC-008, ELEC-009)
-Electrodomésticos
-├── Cocina (ELE-001, ELE-002, ELE-004, ELE-005)
-├── Limpieza (ELE-003, ELE-010)
-└── Pequeños (ELE-008)
-Otros
-└── Accesorios (OT-001, OT-002, OT-003)
-```
+---
 
-**Para importar más productos:** usar `importar-productos.php` adjuntando el CSV de la plantilla `productos/plantilla-30-productos.csv`.
+## 🛍️ Administración de Productos
 
-## Estructura del proyecto
+El proyecto incluye 30 productos iniciales distribuidos en las categorías:
+- **Maquillaje**: Labios, Ojos, Rostro, Uñas.
+- **Electrónica**: Auriculares Bluetooth, Cargadores, Cables, Accesorios.
+- **Electrodomésticos**: Cocina, Limpieza, Pequeños electrodomésticos.
+
+Para importar más productos de forma masiva:
+1. Edita la plantilla CSV en `productos/plantilla-30-productos.csv`.
+2. Ejecuta el script `importar-productos.php` vía WP-CLI o navegador.
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```
 proyecto-tienda-chile/
 ├── sql/
-│   └── tienda-chile.sql      # Base de datos exportada
+│   └── tienda-chile.sql                  # Dump completo de la base de datos
 ├── productos/
-│   └── plantilla-30-productos.csv  # Plantilla para importar productos
-├── importar-productos.php   # Script de importación de productos
+│   ├── INSTRUCCIONES-COMO-SUBIR-PRODUCTOS.md
+│   └── plantilla-30-productos.csv        # Plantilla CSV para importación
+├── importar-productos.php               # Script PHP de importación masiva
 ├── wp-content/
-│   ├── plugins/              # Plugins instalados
+│   ├── plugins/                         # WooCommerce + HUP Kit Chile
 │   └── themes/
-│       └── child-storefront/ # Tema hijo
-├── wp-config-sample.php      # Plantilla de configuración
-└── README.md                 # Este archivo
+│       └── nike-style/                  # Tema hijo personalizado
+│           ├── functions.php            # Lógica PHP, hooks, SVG logos y widgets
+│           ├── style.css                # Diseño UI/UX responsive premium
+│           └── images/                  # Imágenes de alta resolución
+├── wp-config-sample.php
+└── README.md                            # Documentación del proyecto
 ```
 
-## Desarrollo local
+---
 
-Para desarrollar localmente, usar LocalWP:
-1. Descargar LocalWP: https://localwp.com
-2. Crear sitio "tienda-online"
-3. Importar base de datos desde `sql/tienda-chile.sql`
-4. Acceder a `http://tienda-online.local`
-
-## Soporte
-
-- WooCommerce: https://woocommerce.com/support/
-- WordPress: https://wordpress.org/support/
-- HUP Kit Chile: https://wordpress.org/plugins/hup-kit-ecommerce-chile/
+## 🛠️ Tecnologías Utilizadas
+- **WordPress** 7.1
+- **WooCommerce** 11.1.0
+- **PHP** 8.2+
+- **HUP Kit Ecommerce Chile** (RUT, Regiones y Comunas)
+- **LocalWP** (Entorno de desarrollo local)
