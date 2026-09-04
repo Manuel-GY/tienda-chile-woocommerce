@@ -237,6 +237,19 @@ textarea:focus {
     position: relative;
 }
 
+/* Ocultar definitivamente menús secundarios o duplicados de Storefront fuera del Master Header */
+.site-header > .main-navigation,
+.site-header > .storefront-primary-navigation,
+.site-header > #site-header-cart,
+.site-header > .site-branding,
+.site-header .col-full > .main-navigation,
+.site-header .col-full > .storefront-primary-navigation,
+.site-header .col-full > #site-header-cart,
+.site-header .col-full > .site-branding,
+.storefront-primary-navigation {
+    display: none !important;
+}
+
 /* Master Header Bar Layout (1 Single Row) */
 .nike-master-header-row {
     display: flex;

@@ -115,15 +115,19 @@ function nike_get_cat_url( $slug ) {
 // ------------------------------------------------------------------
 
 // Eliminar todos los hooks por defecto del header de Storefront para evitar menús duplicados o verticales
-remove_action( 'storefront_header', 'storefront_skip_links', 0 );
-remove_action( 'storefront_header', 'storefront_social_icons', 10 );
-remove_action( 'storefront_header', 'storefront_site_branding', 20 );
-remove_action( 'storefront_header', 'storefront_secondary_navigation', 30 );
-remove_action( 'storefront_header', 'storefront_product_search', 40 );
-remove_action( 'storefront_header', 'storefront_primary_navigation_wrapper', 42 );
-remove_action( 'storefront_header', 'storefront_primary_navigation', 50 );
-remove_action( 'storefront_header', 'storefront_header_cart', 60 );
-remove_action( 'storefront_header', 'storefront_primary_navigation_wrapper_close', 68 );
+function nike_style_remove_storefront_header_actions() {
+    remove_action( 'storefront_header', 'storefront_skip_links', 0 );
+    remove_action( 'storefront_header', 'storefront_social_icons', 10 );
+    remove_action( 'storefront_header', 'storefront_site_branding', 20 );
+    remove_action( 'storefront_header', 'storefront_secondary_navigation', 30 );
+    remove_action( 'storefront_header', 'storefront_product_search', 40 );
+    remove_action( 'storefront_header', 'storefront_primary_navigation_wrapper', 42 );
+    remove_action( 'storefront_header', 'storefront_primary_navigation', 50 );
+    remove_action( 'storefront_header', 'storefront_header_cart', 60 );
+    remove_action( 'storefront_header', 'storefront_primary_navigation_wrapper_close', 68 );
+}
+add_action( 'init', 'nike_style_remove_storefront_header_actions', 99 );
+add_action( 'after_setup_theme', 'nike_style_remove_storefront_header_actions', 99 );
 
 function nike_style_master_header_bar() {
     $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
