@@ -338,7 +338,7 @@ function nike_style_translate_add_to_cart( $text, $product = null ) {
     if ( $product && $product->is_type( 'variable' ) ) {
         return __( 'Ver Opciones', 'nike-style' );
     }
-    return __( 'Agregar al Carrito 🛒', 'nike-style' );
+    return __( 'Agregar al Carrito', 'nike-style' );
 }
 
 // Badge de oferta con porcentaje (-25% DCTO)
@@ -408,7 +408,7 @@ function nike_style_product_card_elements() {
     </div>
     <div class="nike-product-fast-ship">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <span>Despacho 24h • Todo Chile 🇨🇱</span>
+        <span>Envío Exprés 24h</span>
     </div>
     <?php
 }
@@ -744,7 +744,7 @@ add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
 } );
 
 // ------------------------------------------------------------------
-// 13. TRADUCCIÓN AL ESPAÑOL CHILENO DEL TEXTO DE PRIVACIDAD EN CHECKOUT
+// 13. TRADUCCIÓN AL ESPAÑOL CHILENO Y LIMPIEZA DE TEXTOS EN CHECKOUT Y CARRITO
 // ------------------------------------------------------------------
 add_filter( 'woocommerce_get_privacy_policy_text', 'tienda_chile_checkout_privacy_text', 20, 2 );
 function tienda_chile_checkout_privacy_text( $text, $type ) {
@@ -754,16 +754,53 @@ function tienda_chile_checkout_privacy_text( $text, $type ) {
     return $text;
 }
 
-add_filter( 'gettext', 'tienda_chile_translate_privacy_gettext', 20, 3 );
-function tienda_chile_translate_privacy_gettext( $translated_text, $text, $domain ) {
-    if ( false !== strpos( $text, 'Your personal data will be used to process your order' ) ) {
-        $translated_text = 'Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en este sitio web y para otros fines descritos en nuestra <a href="javascript:void(0)" onclick="nikeOpenModal(\'privacy\')" class="woocommerce-privacy-policy-link">política de privacidad</a>.';
+add_filter( 'gettext', 'tienda_chile_translate_woocommerce_strings', 20, 3 );
+function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $domain ) {
+    if ( 'woocommerce' === $domain || empty( $domain ) || false !== strpos( $text, 'Your personal data' ) ) {
+        switch ( $text ) {
+            case 'Billing details':
+                return 'Datos de Despacho y Facturación';
+            case 'Shipping details':
+                return 'Dirección de Despacho';
+            case 'Additional information':
+                return 'Información Adicional';
+            case 'Order notes':
+                return 'Notas del pedido (opcional)';
+            case 'Notes about your order, e.g. special notes for delivery.':
+                return 'Indicaciones especiales para la entrega (ej: dejar en conserjería).';
+            case 'Your order':
+                return 'Resumen del Pedido';
+            case 'Place order':
+                return 'Realizar el Pedido';
+            case 'Have a coupon?':
+                return '¿Tienes un cupón de descuento?';
+            case 'Click here to enter your code':
+                return 'Haz clic aquí para ingresarlo';
+            case 'If you have a coupon code, please apply it below.':
+                return 'Si posees un código promocional, ingrésalo a continuación.';
+            case 'Apply coupon':
+                return 'Aplicar Cupón';
+            case 'Update cart':
+                return 'Actualizar Carrito';
+            case 'Proceed to checkout':
+                return 'Finalizar Compra Segura';
+            case 'Return to shop':
+                return 'Volver a la Tienda';
+            case 'Your cart is currently empty.':
+                return 'Tu carrito de compras está vacío.';
+            case 'Product':
+                return 'Producto';
+            case 'Subtotal':
+                return 'Subtotal';
+            case 'Total':
+                return 'Total a Pagar';
+        }
     }
     return $translated_text;
 }
 
 // ------------------------------------------------------------------
-// 14. BARRA DE ENVÍO GRATIS Y MEJORAS VIBRANTES DEL CARRITO DE COMPRAS
+// 14. BARRA DE ENVÍO GRATIS MINIMALISTA Y SELLER BADGES DE CARRITO
 // ------------------------------------------------------------------
 add_action( 'woocommerce_before_cart', 'tienda_chile_cart_free_shipping_notice', 5 );
 function tienda_chile_cart_free_shipping_notice() {
@@ -782,19 +819,17 @@ function tienda_chile_cart_free_shipping_notice() {
     ?>
     <div class="nike-cart-free-shipping-box">
         <div class="nike-cart-fs-header">
-            <span class="nike-cart-fs-icon"><?php echo ( $diff <= 0 ) ? '🎉' : '🚚'; ?></span>
+            <span class="nike-cart-fs-icon"><?php echo ( $diff <= 0 ) ? '✨' : '🚚'; ?></span>
             <div class="nike-cart-fs-text">
                 <?php if ( $diff <= 0 ) : ?>
-                    <strong>¡Felicidades! Tienes ENVÍO GRATIS garantizado a todo Chile 🇨🇱</strong>
+                    <strong>¡Envío Gratis Garantizado a todo Chile! 🇨🇱</strong>
                 <?php else : ?>
-                    ¡Estás a solo <strong>$<?php echo number_format( $diff, 0, ',', '.' ); ?> CLP</strong> de obtener <strong>ENVÍO GRATIS</strong> en tu compra!
+                    Agrega <strong>$<?php echo number_format( $diff, 0, ',', '.' ); ?> CLP</strong> más para obtener <strong>ENVÍO GRATIS</strong>.
                 <?php endif; ?>
             </div>
         </div>
         <div class="nike-cart-fs-bar-bg">
-            <div class="nike-cart-fs-bar-fill" style="width: <?php echo $percentage; ?>%;">
-                <span class="nike-cart-fs-badge"><?php echo $percentage; ?>%</span>
-            </div>
+            <div class="nike-cart-fs-bar-fill" style="width: <?php echo $percentage; ?>%;"></div>
         </div>
     </div>
     <?php
@@ -805,12 +840,12 @@ function tienda_chile_cart_trust_badges() {
     ?>
     <div class="nike-cart-trust-container">
         <div class="nike-cart-trust-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             <span>Compra 100% Protegida y Garantizada</span>
         </div>
         <div class="nike-cart-trust-badges">
             <span class="nike-cart-badge">⚡ Despacho 24-48h</span>
-            <span class="nike-cart-badge">🔒 Pago Cifrado SSL</span>
+            <span class="nike-cart-badge">🔒 Cifrado SSL 256-bit</span>
             <span class="nike-cart-badge">🔄 6 Meses Garantía</span>
         </div>
         <div class="nike-cart-trust-payments">
@@ -818,7 +853,6 @@ function tienda_chile_cart_trust_badges() {
             <div class="nike-cart-pay-icons">
                 <span class="nike-pay-tag">Webpay Plus</span>
                 <span class="nike-pay-tag">Transbank</span>
-                <span class="nike-pay-tag">Mercado Pago</span>
                 <span class="nike-pay-tag">CuentaRUT</span>
             </div>
         </div>
@@ -830,7 +864,7 @@ function tienda_chile_cart_trust_badges() {
 // 15. CHECKOUT STEP HEADER Y MÉTODOS DE PAGO SIMULADOS DE CHILE
 // ------------------------------------------------------------------
 
-// Indicador de Pasos de Checkout
+// Indicador de Pasos de Checkout Minimalista
 add_action( 'woocommerce_before_checkout_form', 'tienda_chile_checkout_steps_header', 5 );
 function tienda_chile_checkout_steps_header() {
     $cart_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
@@ -838,17 +872,17 @@ function tienda_chile_checkout_steps_header() {
     <div class="nike-checkout-steps-bar">
         <a href="<?php echo esc_url( $cart_url ); ?>" class="nike-step nike-step-done">
             <span class="nike-step-num">✓</span>
-            <span class="nike-step-label">1. Carrito de Compras</span>
+            <span class="nike-step-label">Carrito</span>
         </a>
-        <div class="nike-step-divider"></div>
+        <span class="nike-step-chevron">›</span>
         <div class="nike-step nike-step-active">
             <span class="nike-step-num">2</span>
-            <span class="nike-step-label">2. Despacho & Pago</span>
+            <span class="nike-step-label">Despacho & Pago</span>
         </div>
-        <div class="nike-step-divider"></div>
+        <span class="nike-step-chevron">›</span>
         <div class="nike-step nike-step-next">
             <span class="nike-step-num">3</span>
-            <span class="nike-step-label">3. Confirmación</span>
+            <span class="nike-step-label">Confirmación</span>
         </div>
     </div>
     <?php
