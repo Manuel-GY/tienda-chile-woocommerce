@@ -187,6 +187,19 @@ function nike_style_master_header_bar() {
 }
 add_action( 'storefront_header', 'nike_style_master_header_bar', 10 );
 
+// Desactivar permanentemente el modo 'Próximamente / Coming Soon' de WooCommerce
+add_filter( 'option_woocommerce_coming_soon', '__return_false', 999 );
+add_filter( 'pre_option_woocommerce_coming_soon', '__return_false', 999 );
+add_filter( 'option_woocommerce_store_pages_only', '__return_false', 999 );
+add_filter( 'pre_option_woocommerce_store_pages_only', '__return_false', 999 );
+
+add_action( 'init', function() {
+    if ( 'yes' === get_option( 'woocommerce_coming_soon' ) ) {
+        update_option( 'woocommerce_coming_soon', 'no' );
+        update_option( 'woocommerce_store_pages_only', 'no' );
+    }
+} );
+
 // Forzar asociación de la página 'tienda' como Shop Page de WooCommerce
 add_filter( 'option_woocommerce_shop_page_id', function( $val ) {
     if ( ! $val || $val <= 0 ) {
