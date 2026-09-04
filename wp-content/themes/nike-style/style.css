@@ -1,0 +1,193 @@
+/*
+Theme Name: Nike Style
+Theme URI: https://github.com/Manuel-GY/tienda-chile-woocommerce
+Author: Manuel-GY
+Author URI: https://github.com/Manuel-GY
+Description: Tema hijo de Storefront con estética minimalista tipo Nike. Fondo blanco, tipografía bold, botones negros y layout limpio.
+Version: 1.0.0
+Template: storefront
+Requires at least: 5.0
+Tested up to: 7.1
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+Text Domain: nike-style
+*/
+
+/* ===== INICIO CSS TIPO NIKE ===== */
+
+/* Paleta de colores */
+:root {
+    --nike-black: #111111;
+    --nike-dark: #333333;
+    --nike-white: #ffffff;
+    --nike-gray-light: #f5f5f5;
+    --nike-gray: #757575;
+    --nike-accent: #000000;
+}
+
+/* Tipografía global */
+body {
+    font-family: 'Helvetica Neue', 'Arial', sans-serif;
+    background-color: var(--nike-white);
+    color: var(--nike-dark);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+/* Header estilo Nike: limpio, fondo blanco, borde inferior sutil */
+.site-header {
+    background-color: var(--nike-white);
+    border-bottom: 3px solid var(--nike-black);
+    padding: 15px 0;
+}
+
+.site-header .site-branding .site-title,
+.site-header .site-branding .site-description {
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.site-title a {
+    color: var(--nike-black) !important;
+    text-transform: uppercase;
+    font-size: 28px;
+    font-weight: 900;
+}
+
+/* Navegación principal */
+.primary-navigation ul.menu > li > a {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 13px;
+    color: var(--nike-black);
+}
+
+.primary-navigation ul.menu > li > a:hover {
+    color: var(--nike-gray);
+}
+
+/* Enlaces generales */
+a {
+    color: var(--nike-black);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--nike-gray);
+}
+
+/* Titulos sección */
+.woocommerce-products-header__title,
+.page-title,
+.entry-header h1.entry-title {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 40px;
+    color: var(--nike-black);
+}
+
+/* Botones estilo Nike: negro, con hover invertido */
+.button,
+button,
+input[type="submit"],
+input[type="button"],
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button {
+    background-color: var(--nike-black) !important;
+    color: var(--nike-white) !important;
+    border-radius: 0 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 2px solid var(--nike-black);
+    padding: 12px 24px;
+}
+
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+.woocommerce a.button:hover {
+    background-color: var(--nike-white) !important;
+    color: var(--nike-black) !important;
+    border: 2px solid var(--nike-black) !important;
+}
+
+/* Tarjetas de producto */
+.products li.product {
+    background-color: var(--nike-white);
+    border: 1px solid var(--nike-gray-light);
+    padding: 0;
+    text-align: left;
+    transition: box-shadow 0.2s ease;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.products li.product:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.products li.product h2.woocommerce-loop-product__title {
+    font-weight: 800;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--nike-black);
+    padding: 15px 15px 5px 15px;
+}
+
+.products li.product .price {
+    font-weight: 700;
+    color: var(--nike-dark);
+    padding: 0 15px 15px 15px;
+}
+
+/* Etiqueta de producto (imagen placeholder) */
+.woocommerce-loop-product__link img {
+    border-radius: 2px;
+    border-bottom: 3px solid var(--nike-black);
+}
+
+/* Carrito y barras */
+.woocommerce ul.products li.product .button {
+    margin: 0 15px 15px 15px;
+}
+
+/* Footer estilo Nike */
+.site-footer {
+    background-color: var(--nike-black);
+    color: var(--nike-white);
+    padding: 40px 0;
+}
+
+.site-footer a {
+    color: var(--nike-white);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.site-footer a:hover {
+    color: var(--nike-gray);
+}
+
+/* Formularios de búsqueda y filtros */
+.woocommerce .woocommerce-search,
+.woocommerce-search {
+    background-color: var(--nike-gray-light);
+    border: 1px solid var(--nike-black);
+}
+
+/* Respuesta móvil */
+@media (max-width: 768px) {
+    .site-title a {
+        font-size: 22px !important;
+    }
+    .woocommerce-products-header__title,
+    .page-title,
+    .entry-header h1.entry-title {
+        font-size: 28px;
+    }
+}

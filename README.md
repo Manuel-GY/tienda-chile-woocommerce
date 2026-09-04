@@ -24,23 +24,32 @@ mysql -u usuario -p base_de_datos < sql/tienda-chile.sql
 - **WooCommerce** (11.1.0) - Tienda online
 - **HUP Kit Ecommerce Chile** - Regiones, comunas, RUT, despacho
 
-### 5. Configuración de WooCommerce
+### 5. Tema y presentación
+- **Idioma:** Español de Chile (es_CL)
+- **Tema:** Nike Style (tema hijo de Storefront) - estética minimalista tipo Nike
+  - Header limpio con barra superior de promoción
+  - Iconos de redes sociales (Facebook, Instagram, TikTok)
+  - Footer negro, tipografía bold, botones negros
+- **Página de inicio:** Hero negro con "TIENDA CHILE"
+
+### 6. Configuración de WooCommerce
 - País: Chile
 - Moneda: CLP (Peso Chileno)
 - Impuestos: IVA 19% incluido en precios
 
-### 6. Pasarelas de pago
+### 7. Pasarelas de pago
 Las pasarelas chilenas deben configurarse manualmente en WooCommerce > Ajustes > Pagos:
 - **Webpay Plus** (Transbank) - Plugin oficial
 - **Khipu** - Plugin oficial
 - **Mercado Pago** - Plugin oficial
 - **Flow** - Plugin de terceros
 
-### 7. Redes sociales
-Configurar enlace en WooCommerce > Apariencia > Menús:
-- Facebook
-- Instagram
-- TikTok
+### 8. Redes sociales
+Ya configuradas en el tema (iconos en el header):
+- Facebook: https://www.facebook.com
+- Instagram: https://www.instagram.com
+- TikTok: https://www.tiktok.com
+(Cambiar por las URLs reales de la tienda)
 
 ## Productos (30 iniciales)
 

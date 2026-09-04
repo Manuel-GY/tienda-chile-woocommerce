@@ -9,7 +9,8 @@ xmlrpc.php
 
 # WordPress Content (se instala en el hosting)
 wp-content/plugins/
-wp-content/themes/
+wp-content/themes/*
+!wp-content/themes/nike-style/
 wp-content/uploads/
 wp-content/cache/
 
