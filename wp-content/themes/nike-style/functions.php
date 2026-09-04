@@ -391,27 +391,44 @@ function nike_style_render_shop_header() {
         
         $categories = get_terms( array(
             'taxonomy'   => 'product_cat',
-            'hide_empty' => false,
+            'parent'     => 0,
+            'hide_empty' => true,
         ) );
         ?>
         <div class="nike-shop-header-banner">
             <div class="nike-shop-header-container">
-                <span class="nike-shop-badge">COLECCIÓN OFICIAL TIENDA CHILE</span>
+                <div class="nike-shop-badge-wrapper">
+                    <span class="nike-shop-badge">COLECCIÓN OFICIAL TIENDA CHILE 🇨🇱</span>
+                </div>
                 <h1 class="nike-shop-title"><?php echo esc_html( $title ); ?></h1>
                 <p class="nike-shop-subtitle"><?php echo esc_html( $subtitle ); ?></p>
                 
-                <!-- Barra Navegación por Categorías (Filtros) -->
+                <!-- Barra Navegación por Categorías (Filtros Inteligentes DTC) -->
                 <div class="nike-shop-categories-nav">
                     <a href="<?php echo esc_url( $shop_url ); ?>" class="nike-cat-nav-pill <?php echo ( ! is_product_category() ) ? 'active' : ''; ?>">
-                        🔥 Todos los Productos
+                        <span class="nike-cat-pill-icon">🔥</span>
+                        <span class="nike-cat-pill-name">Todos los Productos</span>
                     </a>
                     <?php if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) : ?>
                         <?php foreach ( $categories as $cat ) : 
-                            if ( 'uncategorized' === strtolower( $cat->slug ) || 'sin-categoria' === strtolower( $cat->slug ) ) continue;
+                            $slug_lower = strtolower( $cat->slug );
+                            if ( strpos( $slug_lower, 'uncategorized' ) !== false || strpos( $slug_lower, 'sin-categoria' ) !== false ) continue;
                             $is_active = ( $current_slug === $cat->slug );
+                            $icon = '✨';
+                            $name_lower = strtolower( $cat->name );
+                            if ( strpos( $slug_lower, 'maquillaj' ) !== false || strpos( $name_lower, 'maquillaj' ) !== false || strpos( $slug_lower, 'belleza' ) !== false || strpos( $name_lower, 'belleza' ) !== false ) {
+                                $icon = '💄';
+                            } elseif ( strpos( $slug_lower, 'elec' ) !== false || strpos( $name_lower, 'electr' ) !== false || strpos( $slug_lower, 'tech' ) !== false || strpos( $name_lower, 'tecno' ) !== false ) {
+                                $icon = '⚡';
+                            } elseif ( strpos( $slug_lower, 'electrodom' ) !== false || strpos( $name_lower, 'electrodom' ) !== false || strpos( $slug_lower, 'hogar' ) !== false ) {
+                                $icon = '🏠';
+                            } elseif ( strpos( $slug_lower, 'accesorio' ) !== false || strpos( $name_lower, 'accesorio' ) !== false || strpos( $slug_lower, 'moda' ) !== false ) {
+                                $icon = '🎒';
+                            }
                             ?>
                             <a href="<?php echo esc_url( get_term_link( $cat ) ); ?>" class="nike-cat-nav-pill <?php echo $is_active ? 'active' : ''; ?>">
-                                <?php echo esc_html( $cat->name ); ?> (<?php echo esc_html( $cat->count ); ?>)
+                                <span class="nike-cat-pill-icon"><?php echo $icon; ?></span>
+                                <span class="nike-cat-pill-name"><?php echo esc_html( $cat->name ); ?></span>
                             </a>
                         <?php endforeach; ?>
                     <?php endif; ?>
