@@ -138,6 +138,42 @@ textarea:focus {
     box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.1) !important;
 }
 
+/* Styling Product Quantity Box in Cart & Single Product Pages */
+.quantity,
+.product-quantity .quantity {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.quantity input.qty,
+.woocommerce-cart-form input.qty,
+.cart td.product-quantity input.qty,
+input[type="number"].qty {
+    width: 68px !important;
+    min-width: 68px !important;
+    height: 44px !important;
+    padding: 2px 4px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: var(--color-off-black) !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid var(--color-border-medium) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    line-height: 1.2 !important;
+    margin: 0 auto !important;
+}
+
+.quantity input.qty:focus,
+.woocommerce-cart-form input.qty:focus,
+input[type="number"].qty:focus {
+    border-color: var(--color-off-black) !important;
+    box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.12) !important;
+    background-color: #ffffff !important;
+}
+
 /* =========================================================================
    3. BARRA SUPERIOR DE ANUNCIO (TOPBAR) & REDES SOCIALES
    ========================================================================= */

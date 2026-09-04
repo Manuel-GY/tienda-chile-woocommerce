@@ -1241,3 +1241,24 @@ function tienda_chile_register_custom_gateways( $gateways ) {
     }
     return $gateways;
 }
+
+// Garantizar tarifas de despacho a todo Chile en el Carrito y Checkout
+add_filter( 'woocommerce_package_rates', 'tienda_chile_custom_shipping_rates', 100, 2 );
+function tienda_chile_custom_shipping_rates( $rates, $package ) {
+    if ( empty( $rates ) ) {
+        $cart_subtotal = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_subtotal() : 0;
+        
+        $rate_id = ( $cart_subtotal >= 50000 ) ? 'free_shipping_chile' : 'flat_rate_chile';
+        $label   = ( $cart_subtotal >= 50000 ) ? '🚚 Envío Gratis Garantizado a todo Chile' : '🇨🇱 Despacho Exprés Chile (Starken / Chilexpress)';
+        $cost    = ( $cart_subtotal >= 50000 ) ? 0 : 3990;
+
+        $rates[ $rate_id ] = new WC_Shipping_Rate(
+            $rate_id,
+            $label,
+            $cost,
+            array(),
+            'flat_rate'
+        );
+    }
+    return $rates;
+}
