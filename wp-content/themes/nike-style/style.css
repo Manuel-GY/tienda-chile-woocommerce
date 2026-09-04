@@ -3134,7 +3134,7 @@ button:active,
 }
 
 /* =========================================================================
-   16. CORRECCIÓN DEFINITIVA DE LAYOUT DE CHECKOUT (OVERRIDE STOREFRONT DEFAULTS)
+   16. CORRECCIÓN DEFINITIVA DE LAYOUT DE CHECKOUT (ULTRA-LUJO DTC)
    ========================================================================= */
 
 /* Contenedor principal sin encogimientos */
@@ -3149,22 +3149,110 @@ button:active,
     float: none !important;
 }
 
-/* Indicador de pasos al 100% centrado */
-.nike-checkout-steps-bar {
+/* 1. Banner de Cabecera e Indicador de Pasos de Checkout (Paso 2 de 2) */
+.nike-checkout-header-banner {
     width: 100% !important;
     max-width: 1200px !important;
-    margin: 0 auto 28px auto !important;
+    margin: 0 auto 32px auto !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    padding: 24px 32px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+    text-align: center !important;
+}
+
+.nike-checkout-banner-info {
+    margin-bottom: 16px !important;
+}
+
+.nike-checkout-step-badge {
+    display: inline-block !important;
+    background: #18181b !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    padding: 4px 14px !important;
+    border-radius: 9999px !important;
+    margin-bottom: 8px !important;
+}
+
+.nike-checkout-banner-title {
+    font-size: 24px !important;
+    font-weight: 900 !important;
+    color: #18181b !important;
+    margin: 0 !important;
+    letter-spacing: -0.025em !important;
+}
+
+.nike-checkout-steps-bar {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    background: #ffffff !important;
-    border: 1px solid #e5e7eb !important;
-    border-radius: 12px !important;
-    padding: 14px 24px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+    gap: 16px !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
 }
 
-/* Formulario Coupon y Avisos sin solapamiento de icono */
+.nike-step {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    text-decoration: none !important;
+}
+
+.nike-step-num {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 9999px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+.nike-step-done {
+    color: #10b981 !important;
+}
+
+.nike-step-done .nike-step-num {
+    background: #10b981 !important;
+    color: #ffffff !important;
+}
+
+.nike-step-active {
+    color: #18181b !important;
+}
+
+.nike-step-active .nike-step-num {
+    background: #18181b !important;
+    color: #ffffff !important;
+}
+
+.nike-step-next {
+    color: #94a3b8 !important;
+}
+
+.nike-step-next .nike-step-num {
+    background: #e2e8f0 !important;
+    color: #64748b !important;
+}
+
+.nike-step-chevron {
+    color: #cbd5e1 !important;
+    font-size: 16px !important;
+}
+
+/* Formulario Coupon y Avisos */
 .woocommerce-checkout .woocommerce-info,
 .woocommerce-checkout .woocommerce-message {
     width: 100% !important;
@@ -3187,7 +3275,7 @@ button:active,
     color: #18181b !important;
 }
 
-/* Layout del Formulario Checkout (2 Columnas reales 1200px) */
+/* Layout de 2 Columnas para Checkout (Customer Details + Order Review) */
 .woocommerce-checkout form.checkout {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -3204,19 +3292,19 @@ button:active,
     display: none !important;
 }
 
-/* Overrides para anular los floats y anchos de 48% comprimidos de Storefront */
+/* 2. Columna Izquierda: Formulario de Datos de Cliente */
 .woocommerce-checkout #customer_details,
 .woocommerce-checkout .col2-set {
     flex: 1 1 640px !important;
-    width: 60% !important;
+    width: 58% !important;
     max-width: 100% !important;
     float: none !important;
     margin: 0 !important;
     background: #ffffff !important;
-    border: 1px solid #e5e7eb !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
     padding: 32px !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03) !important;
 }
 
 .woocommerce-checkout .col2-set .col-1,
@@ -3227,7 +3315,61 @@ button:active,
     padding: 0 !important;
 }
 
-/* Campos de Formulario (Nombre y Apellidos lado a lado) */
+.woocommerce-checkout #customer_details h3 {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #18181b !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+/* Campos de Formulario Estilizados (Fondo #f8fafc, Bordes 1px #cbd5e1, Radius 8px, Padding 12px 14px) */
+.woocommerce-checkout #customer_details input[type="text"],
+.woocommerce-checkout #customer_details input[type="email"],
+.woocommerce-checkout #customer_details input[type="tel"],
+.woocommerce-checkout #customer_details input[type="password"],
+.woocommerce-checkout #customer_details select,
+.woocommerce-checkout #customer_details textarea {
+    background-color: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    font-size: 14px !important;
+    color: #18181b !important;
+    height: 46px !important;
+    width: 100% !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease !important;
+}
+
+.woocommerce-checkout #customer_details textarea {
+    height: auto !important;
+    min-height: 80px !important;
+}
+
+.woocommerce-checkout #customer_details input:focus,
+.woocommerce-checkout #customer_details select:focus,
+.woocommerce-checkout #customer_details textarea:focus {
+    background-color: #ffffff !important;
+    border-color: #18181b !important;
+    box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.1) !important;
+    outline: none !important;
+}
+
+.woocommerce-checkout #customer_details label {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #18181b !important;
+    margin-bottom: 6px !important;
+    display: block !important;
+}
+
+/* Organización en 2 Columnas de Campos de Formulario */
+.woocommerce-checkout .form-row {
+    margin-bottom: 18px !important;
+}
+
 .woocommerce-checkout .form-row-first {
     width: 48.5% !important;
     float: left !important;
@@ -3248,7 +3390,7 @@ button:active,
     float: none !important;
 }
 
-/* Columna Derecha (Resumen del Pedido & Pago Sticky) */
+/* 3. Columna Derecha: Tarjeta Flotante Resumen del Pedido & Pasarelas de Pago */
 .woocommerce-checkout #order_review_heading {
     display: none !important;
 }
@@ -3260,12 +3402,173 @@ button:active,
     float: none !important;
     margin: 0 !important;
     background: #ffffff !important;
-    border: 1px solid #e5e7eb !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
     padding: 32px !important;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04) !important;
     position: sticky !important;
     top: 100px !important;
+}
+
+.woocommerce-checkout table.shop_table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 24px !important;
+}
+
+.woocommerce-checkout table.shop_table th {
+    background: transparent !important;
+    color: #64748b !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 8px 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.woocommerce-checkout table.shop_table td {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 13.5px !important;
+    color: #18181b !important;
+}
+
+.woocommerce-checkout table.shop_table td.product-name {
+    font-weight: 600 !important;
+}
+
+.woocommerce-checkout table.shop_table td.product-total {
+    font-weight: 700 !important;
+    text-align: right !important;
+    color: #18181b !important;
+    font-variant-numeric: tabular-nums;
+}
+
+.woocommerce-checkout table.shop_table tr.order-total th,
+.woocommerce-checkout table.shop_table tr.order-total td {
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    color: #18181b !important;
+    border-bottom: none !important;
+    padding-top: 16px !important;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Tarjetas de Opciones de Pago (Webpay Plus, Transbank, CuentaRUT) */
+.woocommerce-checkout #payment {
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 20px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    border-bottom: none !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method:hover,
+.woocommerce-checkout #payment ul.payment_methods li.payment_method.payment_method_active {
+    border-color: #18181b !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(24, 24, 27, 0.06) !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method label {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #18181b !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method input[type="radio"] {
+    accent-color: #18181b !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    cursor: pointer !important;
+}
+
+.woocommerce-checkout #payment div.payment_box {
+    background: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #475569 !important;
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+    border-radius: 8px !important;
+    padding: 12px 14px !important;
+    margin-top: 10px !important;
+}
+
+.woocommerce-checkout #payment div.payment_box::before {
+    display: none !important;
+}
+
+/* Botón Principal Realizar el Pedido (Zinc-900 #18181b, Texto Blanco, Negrita y Candado 🔒) */
+.woocommerce-checkout #place_order {
+    width: 100% !important;
+    height: 52px !important;
+    background: #18181b !important;
+    color: #ffffff !important;
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    border-radius: 8px !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(24, 24, 27, 0.2) !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+    margin-top: 16px !important;
+}
+
+.woocommerce-checkout #place_order:hover {
+    background: #27272a !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(24, 24, 27, 0.3) !important;
+}
+
+/* Sellos de Confianza y Seguridad en Checkout */
+.nike-checkout-trust-footer {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.nike-trust-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.nike-trust-badge {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #64748b;
+    background: #f8fafc;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
 }
 
 /* Adaptación Responsiva para Móviles / Celulares / Tabletas (< 992px) */
@@ -3287,6 +3590,16 @@ button:active,
         width: 100% !important;
         float: none !important;
         margin-right: 0 !important;
+    }
+
+    .nike-checkout-header-banner {
+        padding: 20px 16px !important;
+        margin-bottom: 24px !important;
+    }
+
+    .nike-checkout-steps-bar {
+        flex-wrap: wrap;
+        gap: 8px !important;
     }
 }
 

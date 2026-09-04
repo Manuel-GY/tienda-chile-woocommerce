@@ -1137,24 +1137,181 @@ add_action( 'woocommerce_before_checkout_form', 'tienda_chile_checkout_steps_hea
 function tienda_chile_checkout_steps_header() {
     $cart_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
     ?>
-    <div class="nike-checkout-steps-bar">
-        <a href="<?php echo esc_url( $cart_url ); ?>" class="nike-step nike-step-done">
-            <span class="nike-step-num">✓</span>
-            <span class="nike-step-label">Carrito</span>
-        </a>
-        <span class="nike-step-chevron">›</span>
-        <div class="nike-step nike-step-active">
-            <span class="nike-step-num">2</span>
-            <span class="nike-step-label">Despacho & Pago</span>
+    <div class="nike-checkout-header-banner">
+        <div class="nike-checkout-banner-info">
+            <span class="nike-checkout-step-badge">Paso 2 de 2</span>
+            <h1 class="nike-checkout-banner-title">Paso 2 de 2: Datos de Despacho & Pago Seguro 🔒</h1>
         </div>
-        <span class="nike-step-chevron">›</span>
-        <div class="nike-step nike-step-next">
-            <span class="nike-step-num">3</span>
-            <span class="nike-step-label">Confirmación</span>
+        <div class="nike-checkout-steps-bar">
+            <a href="<?php echo esc_url( $cart_url ); ?>" class="nike-step nike-step-done">
+                <span class="nike-step-num">✓</span>
+                <span class="nike-step-label">Carrito</span>
+            </a>
+            <span class="nike-step-chevron">›</span>
+            <div class="nike-step nike-step-active">
+                <span class="nike-step-num">2</span>
+                <span class="nike-step-label">Despacho & Pago</span>
+            </div>
+            <span class="nike-step-chevron">›</span>
+            <div class="nike-step nike-step-next">
+                <span class="nike-step-num">3</span>
+                <span class="nike-step-label">Confirmación</span>
+            </div>
         </div>
     </div>
     <?php
 }
+
+// Optimización y Estilización de Campos del Formulario de Checkout para Chile
+add_filter( 'woocommerce_checkout_fields', 'tienda_chile_custom_checkout_fields', 999 );
+function tienda_chile_custom_checkout_fields( $fields ) {
+    // 1. Campos de Facturación / Cliente (billing)
+    if ( isset( $fields['billing'] ) ) {
+        // Nombre
+        if ( isset( $fields['billing']['billing_first_name'] ) ) {
+            $fields['billing']['billing_first_name']['label']       = 'Nombre';
+            $fields['billing']['billing_first_name']['placeholder'] = 'Tu nombre';
+            $fields['billing']['billing_first_name']['priority']    = 10;
+            $fields['billing']['billing_first_name']['class']       = array( 'form-row-first' );
+        }
+        // Apellido
+        if ( isset( $fields['billing']['billing_last_name'] ) ) {
+            $fields['billing']['billing_last_name']['label']       = 'Apellido';
+            $fields['billing']['billing_last_name']['placeholder'] = 'Tu apellido';
+            $fields['billing']['billing_last_name']['priority']    = 20;
+            $fields['billing']['billing_last_name']['class']       = array( 'form-row-last' );
+        }
+        // RUT Chileno
+        $fields['billing']['billing_rut'] = array(
+            'type'        => 'text',
+            'label'       => 'RUT (Ej: 12.345.678-9)',
+            'placeholder' => '12.345.678-9',
+            'required'    => true,
+            'class'       => array( 'form-row-wide' ),
+            'priority'    => 25,
+        );
+        // Dirección (Calle y Número)
+        if ( isset( $fields['billing']['billing_address_1'] ) ) {
+            $fields['billing']['billing_address_1']['label']       = 'Dirección (Calle y Número)';
+            $fields['billing']['billing_address_1']['placeholder'] = 'Ej: Av. Providencia 1234';
+            $fields['billing']['billing_address_1']['priority']    = 30;
+            $fields['billing']['billing_address_1']['class']       = array( 'form-row-wide' );
+        }
+        // Depto / Casa / Oficina (Opcional)
+        if ( isset( $fields['billing']['billing_address_2'] ) ) {
+            $fields['billing']['billing_address_2']['label']       = 'Depto / Casa / Oficina (Opcional)';
+            $fields['billing']['billing_address_2']['placeholder'] = 'Ej: Depto 402, Torre B';
+            $fields['billing']['billing_address_2']['priority']    = 40;
+            $fields['billing']['billing_address_2']['class']       = array( 'form-row-wide' );
+        }
+        // Región
+        if ( isset( $fields['billing']['billing_state'] ) ) {
+            $fields['billing']['billing_state']['label']    = 'Región';
+            $fields['billing']['billing_state']['priority'] = 50;
+            $fields['billing']['billing_state']['class']    = array( 'form-row-first' );
+        }
+        // Comuna
+        if ( isset( $fields['billing']['billing_city'] ) ) {
+            $fields['billing']['billing_city']['label']       = 'Comuna';
+            $fields['billing']['billing_city']['placeholder'] = 'Ej: Las Condes, Santiago, Viña del Mar...';
+            $fields['billing']['billing_city']['priority']    = 60;
+            $fields['billing']['billing_city']['class']       = array( 'form-row-last' );
+        }
+        // Teléfono
+        if ( isset( $fields['billing']['billing_phone'] ) ) {
+            $fields['billing']['billing_phone']['label']       = 'Teléfono (WhatsApp / Contacto)';
+            $fields['billing']['billing_phone']['placeholder'] = '+56 9 1234 5678';
+            $fields['billing']['billing_phone']['priority']    = 70;
+            $fields['billing']['billing_phone']['class']       = array( 'form-row-first' );
+        }
+        // Correo
+        if ( isset( $fields['billing']['billing_email'] ) ) {
+            $fields['billing']['billing_email']['label']       = 'Correo Electrónico';
+            $fields['billing']['billing_email']['placeholder'] = 'tu@email.com';
+            $fields['billing']['billing_email']['priority']    = 80;
+            $fields['billing']['billing_email']['class']       = array( 'form-row-last' );
+        }
+        // Unset o hacer opcional Código Postal y Empresa
+        if ( isset( $fields['billing']['billing_company'] ) ) {
+            unset( $fields['billing']['billing_company'] );
+        }
+        if ( isset( $fields['billing']['billing_postcode'] ) ) {
+            $fields['billing']['billing_postcode']['required'] = false;
+            $fields['billing']['billing_postcode']['class']    = array( 'form-row-wide' );
+            $fields['billing']['billing_postcode']['priority'] = 90;
+        }
+    }
+
+    // 2. Ajustar campos de envío (shipping) en caso de activarse
+    if ( isset( $fields['shipping'] ) ) {
+        if ( isset( $fields['shipping']['shipping_first_name'] ) ) {
+            $fields['shipping']['shipping_first_name']['label'] = 'Nombre';
+            $fields['shipping']['shipping_first_name']['class'] = array( 'form-row-first' );
+        }
+        if ( isset( $fields['shipping']['shipping_last_name'] ) ) {
+            $fields['shipping']['shipping_last_name']['label'] = 'Apellido';
+            $fields['shipping']['shipping_last_name']['class'] = array( 'form-row-last' );
+        }
+        if ( isset( $fields['shipping']['shipping_address_1'] ) ) {
+            $fields['shipping']['shipping_address_1']['label'] = 'Dirección (Calle y Número)';
+            $fields['shipping']['shipping_address_1']['class'] = array( 'form-row-wide' );
+        }
+        if ( isset( $fields['shipping']['shipping_address_2'] ) ) {
+            $fields['shipping']['shipping_address_2']['label'] = 'Depto / Casa / Oficina (Opcional)';
+            $fields['shipping']['shipping_address_2']['class'] = array( 'form-row-wide' );
+        }
+        if ( isset( $fields['shipping']['shipping_state'] ) ) {
+            $fields['shipping']['shipping_state']['label'] = 'Región';
+            $fields['shipping']['shipping_state']['class'] = array( 'form-row-first' );
+        }
+        if ( isset( $fields['shipping']['shipping_city'] ) ) {
+            $fields['shipping']['shipping_city']['label'] = 'Comuna';
+            $fields['shipping']['shipping_city']['class'] = array( 'form-row-last' );
+        }
+        if ( isset( $fields['shipping']['shipping_company'] ) ) {
+            unset( $fields['shipping']['shipping_company'] );
+        }
+        if ( isset( $fields['shipping']['shipping_postcode'] ) ) {
+            $fields['shipping']['shipping_postcode']['required'] = false;
+        }
+    }
+
+    return $fields;
+}
+
+// Guardar RUT en los metadatos del pedido
+add_action( 'woocommerce_checkout_update_order_meta', function( $order_id ) {
+    if ( ! empty( $_POST['billing_rut'] ) ) {
+        update_post_meta( $order_id, '_billing_rut', sanitize_text_field( $_POST['billing_rut'] ) );
+        update_post_meta( $order_id, 'RUT', sanitize_text_field( $_POST['billing_rut'] ) );
+    }
+} );
+
+// Mostrar RUT en el detalle del pedido en WP Admin
+add_action( 'woocommerce_admin_order_data_after_billing_address', function( $order ) {
+    $rut = get_post_meta( $order->get_id(), '_billing_rut', true );
+    if ( $rut ) {
+        echo '<p><strong>RUT:</strong> ' . esc_html( $rut ) . '</p>';
+    }
+}, 10, 1 );
+
+// Botón de Pago con Candado de Seguridad
+add_filter( 'woocommerce_order_button_html', function( $button_html ) {
+    return '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="Realizar el Pedido" data-value="Realizar el Pedido">REALIZAR EL PEDIDO 🔒</button>';
+} );
+
+// Sellos de confianza y seguridad bajo el botón de checkout
+add_action( 'woocommerce_review_order_after_submit', function() {
+    ?>
+    <div class="nike-checkout-trust-footer">
+        <div class="nike-trust-badge-row">
+            <span class="nike-trust-badge">🔒 Cifrado SSL 256-bit</span>
+            <span class="nike-trust-badge">🛡️ Compra Protegida</span>
+            <span class="nike-trust-badge">🇨🇱 Despacho Exprés</span>
+        </div>
+    </div>
+    <?php
+} );
 
 // Inicializar clases de pasarelas de pago antes de registrarlas
 function tienda_chile_init_custom_gateways() {
