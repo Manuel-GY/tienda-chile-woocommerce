@@ -640,6 +640,57 @@ function nike_style_newsletter_and_footer() {
     </script>
     <?php
 }
+
+// ------------------------------------------------------------------
+// 17. OPTIMIZACIÓN Y LIMPIEZA DEL MENÚ PRINCIPAL DEL HEADER Y CARRITO
+// ------------------------------------------------------------------
+
+// Asegurar que la URL del Carrito de WooCommerce apunte siempre al Carrito activo
+add_filter( 'woocommerce_get_cart_url', 'tienda_chile_fix_cart_url' );
+function tienda_chile_fix_cart_url( $url ) {
+    $cart_page_id = wc_get_page_id( 'cart' );
+    if ( $cart_page_id && $cart_page_id > 0 ) {
+        $permalink = get_permalink( $cart_page_id );
+        if ( $permalink ) {
+            return $permalink;
+        }
+    }
+    return home_url( '/carrito' );
+}
+
+// Remover 'Carrito' de la lista del menú del header para evitar enlaces redundantes o desconfigurados
+add_filter( 'wp_nav_menu_items', 'tienda_chile_clean_primary_menu_items', 10, 2 );
+function tienda_chile_clean_primary_menu_items( $items, $args ) {
+    if ( isset( $args->theme_location ) && 'primary' === $args->theme_location ) {
+        $items = preg_replace( '/<li[^>]*class="[^"]*menu-item[^"]*"[^>]*><a[^>]*>(Carrito|Cart)<\/a><\/li>/i', '', $items );
+    }
+    return $items;
+}
+
+// Menú E-Commerce por defecto (Fallback wp_page_menu) limpio y organizado por categorías reales
+add_filter( 'wp_page_menu', 'tienda_chile_custom_page_menu_fallback', 10, 2 );
+function tienda_chile_custom_page_menu_fallback( $menu, $args ) {
+    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
+    $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
+    
+    $cat_maq  = nike_get_cat_url( 'maquillaje' );
+    $cat_elec = nike_get_cat_url( 'electronica' );
+    $cat_ele  = nike_get_cat_url( 'electrodomesticos' );
+
+    $output  = '<div class="menu">';
+    $output .= '<ul class="nav-menu">';
+    $output .= '<li class="page_item ' . ( is_front_page() ? 'current_page_item' : '' ) . '"><a href="' . esc_url( home_url( '/' ) ) . '">Inicio</a></li>';
+    $output .= '<li class="page_item ' . ( ( function_exists('is_shop') && is_shop() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $shop_url ) . '">Tienda</a></li>';
+    $output .= '<li class="page_item"><a href="' . esc_url( $cat_maq ) . '">Maquillaje</a></li>';
+    $output .= '<li class="page_item"><a href="' . esc_url( $cat_elec ) . '">Electrónica</a></li>';
+    $output .= '<li class="page_item"><a href="' . esc_url( $cat_ele ) . '">Electrodomésticos</a></li>';
+    $output .= '<li class="page_item ' . ( ( function_exists('is_account_page') && is_account_page() ) ? 'current_page_item' : '' ) . '"><a href="' . esc_url( $account_url ) . '">Mi Cuenta</a></li>';
+    $output .= '</ul>';
+    $output .= '</div>';
+
+    return $output;
+}
+
 add_action( 'storefront_footer', 'nike_style_newsletter_and_footer', 15 );
 
 // ------------------------------------------------------------------
