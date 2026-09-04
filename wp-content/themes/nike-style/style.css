@@ -3023,34 +3023,60 @@ h3#ship-to-different-address input[type="checkbox"] {
     cursor: pointer !important;
 }
 
-/* Fix Validation Errors & Notice Banners */
+/* Fix Checkout Form Layout & Validation Error Notice Banner */
+.woocommerce-checkout form.checkout {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+}
+
 .woocommerce-checkout .woocommerce-NoticeGroup,
+.woocommerce-checkout .woocommerce-NoticeGroup-checkout,
 .woocommerce-checkout .woocommerce-error,
-.woocommerce-checkout .woocommerce-info,
-.woocommerce-error,
-.woocommerce-message,
-.woocommerce-info {
-    margin-bottom: 24px !important;
-    border-radius: 10px !important;
-    border-left: 4px solid #ef4444 !important;
+.woocommerce-checkout .woocommerce-message,
+.woocommerce-checkout .woocommerce-info {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    clear: both !important;
+    margin: 0 0 24px 0 !important;
+    box-sizing: border-box !important;
+}
+
+.woocommerce-checkout .woocommerce-NoticeGroup-checkout .woocommerce-error,
+.woocommerce-checkout .woocommerce-error,
+.woocommerce-error {
+    border-radius: 12px !important;
+    border: 1.5px solid #fca5a5 !important;
+    border-left: 6px solid #ef4444 !important;
     background-color: #fef2f2 !important;
     color: #991b1b !important;
-    padding: 14px 20px !important;
+    padding: 18px 24px !important;
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.1) !important;
+}
+
+.woocommerce-checkout .woocommerce-error *,
+.woocommerce-checkout .woocommerce-error li,
+.woocommerce-checkout .woocommerce-NoticeGroup *,
+.woocommerce-error *,
+.woocommerce-error li,
+.woocommerce-error a {
+    color: #991b1b !important;
+    -webkit-text-fill-color: #991b1b !important;
+    opacity: 1 !important;
     font-size: 13.5px !important;
-    font-weight: 600 !important;
-    box-shadow: 0 2px 10px rgba(239, 68, 68, 0.08) !important;
+    font-weight: 700 !important;
+    line-height: 1.6 !important;
+    text-shadow: none !important;
 }
 
 .woocommerce-checkout .woocommerce-error li,
 .woocommerce-error li {
-    color: #991b1b !important;
-    font-size: 13.5px !important;
-    font-weight: 600 !important;
-    margin-bottom: 4px !important;
+    margin-bottom: 6px !important;
     list-style: none !important;
 }
 
-/* Fix Invisible White-on-White Text in Invalid Validation Fields */
+/* Fix Invalid Input Field Border & Colors */
 .woocommerce-checkout .form-row.woocommerce-invalid input[type="text"],
 .woocommerce-checkout .form-row.woocommerce-invalid input[type="email"],
 .woocommerce-checkout .form-row.woocommerce-invalid input[type="tel"],
@@ -3076,6 +3102,12 @@ h3#ship-to-different-address input[type="checkbox"] {
 .woocommerce-checkout .form-row.woocommerce-invalid textarea::placeholder {
     color: #991b1b !important;
     opacity: 0.7 !important;
+}
+
+/* Ocultar mensajes de error duplicados debajo de cada input individual */
+.woocommerce-checkout .form-row .woocommerce-error,
+.woocommerce-checkout .form-row .woocommerce-invalid-field-message {
+    display: none !important;
 }
 
 /* Columna Derecha: Resumen de Pedido y Pasarelas de Pago */
