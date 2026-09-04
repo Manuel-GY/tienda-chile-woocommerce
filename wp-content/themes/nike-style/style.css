@@ -3224,10 +3224,43 @@ h3#ship-to-different-address input[type="checkbox"] {
 }
 
 /* =========================================================================
-   16. CORRECCIÓN DEFINITIVA DE LAYOUT DE CHECKOUT (ULTRA-LUJO DTC)
+   16. REINGENIERÍA COMPLETA DE CHECKOUT (DISTRACTION-FREE LUXURY CHECKOUT)
    ========================================================================= */
 
-/* Contenedor principal sin encogimientos */
+/* Header Distraction-Free en Checkout */
+.woocommerce-checkout:not(.woocommerce-order-received) .nike-topbar,
+.woocommerce-checkout:not(.woocommerce-order-received) .nike-mobile-bottom-bar,
+.woocommerce-checkout:not(.woocommerce-order-received) .nike-wa-floating {
+    display: none !important;
+}
+
+.nike-checkout-distraction-free-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding: 4px 0 !important;
+}
+
+.nike-checkout-ssl-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: #f0fdf4 !important;
+    border: 1px solid #bbf7d0 !important;
+    color: #15803d !important;
+    padding: 8px 16px !important;
+    border-radius: 9999px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+}
+
+.nike-checkout-ssl-pill svg {
+    flex-shrink: 0;
+}
+
+/* Contenedor principal de Checkout */
 .woocommerce-checkout .site-main,
 .woocommerce-checkout .col-full,
 .woocommerce-checkout #primary,
@@ -3239,7 +3272,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     float: none !important;
 }
 
-/* 1. Banner de Cabecera e Indicador de Pasos de Checkout (Paso 2 de 2) */
+/* 1. Banner de Cabecera e Indicador de Pasos de Checkout (Stepper) */
 .nike-checkout-header-banner {
     width: 100% !important;
     max-width: 1200px !important;
@@ -3277,6 +3310,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     letter-spacing: -0.025em !important;
 }
 
+/* Stepper de Pasos Minimalista */
 .nike-checkout-steps-bar {
     display: flex !important;
     align-items: center !important;
@@ -3339,7 +3373,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 
 .nike-step-chevron {
     color: #cbd5e1 !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
 
 /* Formulario Coupon y Avisos */
@@ -3365,7 +3399,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     color: #18181b !important;
 }
 
-/* Layout de 2 Columnas para Checkout (Customer Details + Order Review) */
+/* Layout de 2 Columnas para Checkout (Formulario Izquierdo + Resumen Derecha) */
 .woocommerce-checkout form.checkout {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -3382,7 +3416,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     display: none !important;
 }
 
-/* 2. Columna Izquierda: Formulario de Datos de Cliente */
+/* 2. Columna Izquierda: Formulario de Datos de Cliente & Despacho */
 .woocommerce-checkout #customer_details,
 .woocommerce-checkout .col2-set {
     flex: 1 1 640px !important;
@@ -3401,7 +3435,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 .woocommerce-checkout .col2-set .col-2 {
     float: none !important;
     width: 100% !important;
-    margin: 0 0 24px 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
 }
 
@@ -3415,7 +3449,11 @@ h3#ship-to-different-address input[type="checkbox"] {
     border-bottom: 1px solid #f1f5f9 !important;
 }
 
-/* Campos de Formulario Estilizados (Fondo #f8fafc, Bordes 1px #cbd5e1, Radius 8px, Padding 12px 14px) */
+.woocommerce-checkout .woocommerce-additional-fields h3 {
+    display: none !important;
+}
+
+/* Inputs en Gris Ultra Suave (#f8fafc) con Bordes Finos (#e2e8f0) y Foco en Zinc-900 (#18181b) */
 .woocommerce-checkout #customer_details input[type="text"],
 .woocommerce-checkout #customer_details input[type="email"],
 .woocommerce-checkout #customer_details input[type="tel"],
@@ -3423,7 +3461,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 .woocommerce-checkout #customer_details select,
 .woocommerce-checkout #customer_details textarea {
     background-color: #f8fafc !important;
-    border: 1px solid #cbd5e1 !important;
+    border: 1px solid #e2e8f0 !important;
     border-radius: 8px !important;
     padding: 12px 14px !important;
     font-size: 14px !important;
@@ -3435,7 +3473,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 
 .woocommerce-checkout #customer_details textarea {
     height: auto !important;
-    min-height: 80px !important;
+    min-height: 84px !important;
 }
 
 .woocommerce-checkout #customer_details input:focus,
@@ -3455,7 +3493,28 @@ h3#ship-to-different-address input[type="checkbox"] {
     display: block !important;
 }
 
-/* Organización en 2 Columnas de Campos de Formulario */
+/* Ocultar campos innecesarios o duplicados */
+.nike-hidden-field,
+#billing_country_field,
+#shipping_country_field,
+#billing_postcode_field,
+#shipping_postcode_field {
+    display: none !important;
+}
+
+/* Organización Simétrica en Cuadrícula de 2 Columnas */
+.woocommerce-checkout .woocommerce-billing-fields__field-wrapper,
+.woocommerce-checkout .woocommerce-shipping-fields__field-wrapper {
+    display: block !important;
+}
+
+.woocommerce-checkout .woocommerce-billing-fields__field-wrapper::after,
+.woocommerce-checkout .col2-set::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .woocommerce-checkout .form-row {
     margin-bottom: 18px !important;
 }
@@ -3464,23 +3523,26 @@ h3#ship-to-different-address input[type="checkbox"] {
     width: 48.5% !important;
     float: left !important;
     margin-right: 3% !important;
-    clear: none !important;
+    margin-bottom: 18px !important;
+    clear: left !important;
 }
 
 .woocommerce-checkout .form-row-last {
     width: 48.5% !important;
     float: right !important;
     margin-right: 0 !important;
-    clear: none !important;
+    margin-bottom: 18px !important;
+    clear: right !important;
 }
 
 .woocommerce-checkout .form-row-wide {
     width: 100% !important;
-    clear: both !important;
     float: none !important;
+    clear: both !important;
+    margin-bottom: 18px !important;
 }
 
-/* 3. Columna Derecha: Tarjeta Flotante Resumen del Pedido & Pasarelas de Pago */
+/* 3. Columna Derecha: Tarjeta Flotante Sticky de Resumen del Pedido & Pasarelas de Pago */
 .woocommerce-checkout #order_review_heading {
     display: none !important;
 }
@@ -3495,9 +3557,22 @@ h3#ship-to-different-address input[type="checkbox"] {
     border: 1px solid #e2e8f0 !important;
     border-radius: 16px !important;
     padding: 32px !important;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03) !important;
     position: sticky !important;
-    top: 100px !important;
+    top: 90px !important;
+}
+
+.woocommerce-checkout #order_review::before {
+    content: "RESUMEN DEL PEDIDO";
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: #18181b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
 }
 
 .woocommerce-checkout table.shop_table {
@@ -3526,6 +3601,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 
 .woocommerce-checkout table.shop_table td.product-name {
     font-weight: 600 !important;
+    color: #18181b !important;
 }
 
 .woocommerce-checkout table.shop_table td.product-total {
@@ -3537,7 +3613,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 
 .woocommerce-checkout table.shop_table tr.order-total th,
 .woocommerce-checkout table.shop_table tr.order-total td {
-    font-size: 18px !important;
+    font-size: 19px !important;
     font-weight: 900 !important;
     color: #18181b !important;
     border-bottom: none !important;
@@ -3545,11 +3621,12 @@ h3#ship-to-different-address input[type="checkbox"] {
     font-variant-numeric: tabular-nums;
 }
 
-/* Tarjetas de Opciones de Pago (Webpay Plus, Transbank, CuentaRUT) */
+/* Tarjetas Independientes de Pasarelas de Pago (Webpay Plus, Transbank, Transferencia CuentaRUT) */
 .woocommerce-checkout #payment {
     background: transparent !important;
     border-radius: 0 !important;
     padding: 0 !important;
+    margin-top: 16px !important;
 }
 
 .woocommerce-checkout #payment ul.payment_methods {
@@ -3564,18 +3641,23 @@ h3#ship-to-different-address input[type="checkbox"] {
 
 .woocommerce-checkout #payment ul.payment_methods li.payment_method {
     background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 10px !important;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 12px !important;
     padding: 14px 16px !important;
-    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     cursor: pointer !important;
 }
 
-.woocommerce-checkout #payment ul.payment_methods li.payment_method:hover,
-.woocommerce-checkout #payment ul.payment_methods li.payment_method.payment_method_active {
+.woocommerce-checkout #payment ul.payment_methods li.payment_method:hover {
+    border-color: #cbd5e1 !important;
+    background: #ffffff !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method.payment_method_active,
+.woocommerce-checkout #payment ul.payment_methods li.payment_method:has(input[type="radio"]:checked) {
     border-color: #18181b !important;
     background: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(24, 24, 27, 0.06) !important;
+    box-shadow: 0 4px 12px rgba(24, 24, 27, 0.08) !important;
 }
 
 .woocommerce-checkout #payment ul.payment_methods li.payment_method label {
@@ -3583,10 +3665,11 @@ h3#ship-to-different-address input[type="checkbox"] {
     font-weight: 700 !important;
     color: #18181b !important;
     cursor: pointer !important;
-    display: inline-flex !important;
+    display: flex !important;
     align-items: center !important;
     gap: 10px !important;
     width: 100% !important;
+    margin: 0 !important;
 }
 
 .woocommerce-checkout #payment ul.payment_methods li.payment_method input[type="radio"] {
@@ -3595,6 +3678,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     height: 18px !important;
     margin: 0 !important;
     cursor: pointer !important;
+    flex-shrink: 0 !important;
 }
 
 .woocommerce-checkout #payment div.payment_box {
@@ -3612,7 +3696,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     display: none !important;
 }
 
-/* Botón Principal Realizar el Pedido (Zinc-900 #18181b, Texto Blanco, Negrita y Candado 🔒) */
+/* Botón Principal Realizar el Pedido (Zinc-900 #18181b, 52px de alto, Texto Blanco en Negrita y Candado 🔒) */
 .woocommerce-checkout #place_order {
     width: 100% !important;
     height: 52px !important;
@@ -3622,18 +3706,22 @@ h3#ship-to-different-address input[type="checkbox"] {
     font-weight: 800 !important;
     letter-spacing: 0.06em !important;
     text-transform: uppercase !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     border: none !important;
-    box-shadow: 0 4px 14px rgba(24, 24, 27, 0.2) !important;
+    box-shadow: 0 4px 14px rgba(24, 24, 27, 0.25) !important;
     cursor: pointer !important;
-    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
-    margin-top: 16px !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    margin-top: 20px !important;
 }
 
 .woocommerce-checkout #place_order:hover {
     background: #27272a !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(24, 24, 27, 0.3) !important;
+    box-shadow: 0 8px 24px rgba(24, 24, 27, 0.35) !important;
+}
+
+.woocommerce-checkout #place_order:active {
+    transform: translateY(0) !important;
 }
 
 /* Sellos de Confianza y Seguridad en Checkout */

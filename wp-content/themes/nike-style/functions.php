@@ -130,7 +130,26 @@ add_action( 'init', 'nike_style_remove_storefront_header_actions', 99 );
 add_action( 'after_setup_theme', 'nike_style_remove_storefront_header_actions', 99 );
 
 function nike_style_master_header_bar() {
-    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
+    if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
+        ?>
+        <div class="nike-master-header-row nike-checkout-distraction-free-row">
+            <!-- 1. Logo Oficial (Izquierda) -->
+            <div class="nike-header-logo-box">
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="nike-logo-link" rel="home" title="TIENDA CHILE - Volver al Inicio">
+                    <?php echo nike_style_get_svg_logo( 'header' ); ?>
+                </a>
+            </div>
+            <!-- 2. Pago 100% Seguro SSL 🔒 (Derecha) -->
+            <div class="nike-checkout-ssl-pill">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span class="nike-ssl-text">Pago 100% Seguro SSL 🔒</span>
+            </div>
+        </div>
+        <?php
+        return;
+    }
+    
+    $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/tienda' );
     $cart_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
     $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
     
@@ -297,6 +316,9 @@ add_filter( 'storefront_site_title_or_logo', function() {
 // 5. BARRA SUPERIOR DE ANUNCIO (TOPBAR) Y CARRITO EN HEADER
 // ------------------------------------------------------------------
 function nike_style_top_bar() {
+    if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
+        return;
+    }
     ?>
     <div class="nike-topbar">
         <div class="nike-topbar-content">
@@ -949,6 +971,9 @@ add_action( 'wp_footer', 'nike_style_legal_and_cookies_footer', 30 );
 // 12. BARRA DE NAVEGACIÓN INFERIOR MÓVIL (MOBILE BOTTOM BAR) & FRAGMENTOS DE CARRITO
 // ------------------------------------------------------------------
 function nike_style_mobile_bottom_bar() {
+    if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
+        return;
+    }
     $shop_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
     $cart_url    = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
     $account_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( '/mi-cuenta' );
@@ -1027,13 +1052,13 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
     if ( 'woocommerce' === $domain || empty( $domain ) || false !== strpos( $text, 'Your personal data' ) ) {
         switch ( $text ) {
             case 'Billing details':
-                return 'Datos de Despacho y Facturación';
+                return 'Datos de Cliente & Despacho 🚚';
             case 'Shipping details':
                 return 'Dirección de Despacho';
             case 'Additional information':
                 return 'Información Adicional';
             case 'Order notes':
-                return 'Notas del pedido / Indicaciones';
+                return 'Notas del pedido / Indicaciones (Opcional)';
             case 'Notes about your order, e.g. special notes for delivery.':
                 return 'Indicaciones especiales para la entrega (ej: dejar en conserjería).';
             case 'Your order':
@@ -1066,58 +1091,17 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
     }
     
     // Limpieza de avisos de validación ("Facturación Región es un campo requerido")
-    if ( is_string( $translated_text ) && strpos( $translated_text, 'Facturación' ) !== false && strpos( $translated_text, 'requerido' ) !== false ) {
-        $translated_text = str_replace( 'Facturación ', 'El campo ', $translated_text );
+    if ( is_string( $translated_text ) && strpos( $translated_text, 'Facturación' ) !== false ) {
+        $translated_text = str_replace( 'Facturación ', '', $translated_text );
         $translated_text = str_replace( ' es un campo requerido.', ' es obligatorio.', $translated_text );
     }
 
     return $translated_text;
 }
 
-// Organización Simétrica en 2 Columnas de Campos del Checkout
-add_filter( 'woocommerce_checkout_fields', 'tienda_chile_optimize_checkout_fields_order', 999 );
-function tienda_chile_optimize_checkout_fields_order( $fields ) {
-    if ( isset( $fields['billing'] ) ) {
-        $fields['billing']['billing_first_name']['priority'] = 10;
-        $fields['billing']['billing_first_name']['class']    = array( 'form-row-first' );
-
-        $fields['billing']['billing_last_name']['priority']  = 20;
-        $fields['billing']['billing_last_name']['class']   = array( 'form-row-last' );
-        
-        if ( isset( $fields['billing']['billing_rut'] ) ) {
-            $fields['billing']['billing_rut']['priority']    = 30;
-            $fields['billing']['billing_rut']['class']       = array( 'form-row-first' );
-            
-            $fields['billing']['billing_phone']['priority']  = 40;
-            $fields['billing']['billing_phone']['class']     = array( 'form-row-last' );
-        } else {
-            $fields['billing']['billing_phone']['priority']  = 30;
-            $fields['billing']['billing_phone']['class']     = array( 'form-row-first' );
-        }
-        $fields['billing']['billing_phone']['required'] = false;
-        
-        $fields['billing']['billing_email']['priority']      = 50;
-        $fields['billing']['billing_email']['class']         = array( 'form-row-wide' );
-        
-        $fields['billing']['billing_state']['priority']      = 60;
-        $fields['billing']['billing_state']['class']         = array( 'form-row-first' );
-
-        $fields['billing']['billing_city']['priority']       = 70;
-        $fields['billing']['billing_city']['class']          = array( 'form-row-last' );
-        
-        $fields['billing']['billing_address_1']['priority']  = 80;
-        $fields['billing']['billing_address_1']['class']     = array( 'form-row-wide' );
-
-        $fields['billing']['billing_address_2']['priority']  = 90;
-        $fields['billing']['billing_address_2']['class']     = array( 'form-row-wide' );
-    }
-
-    if ( isset( $fields['order']['order_comments'] ) ) {
-        $fields['order']['order_comments']['label'] = 'Notas del pedido / Indicaciones';
-    }
-
-    return $fields;
-}
+// Forzar país predeterminado a Chile
+add_filter( 'default_checkout_billing_country', function() { return 'CL'; } );
+add_filter( 'default_checkout_shipping_country', function() { return 'CL'; } );
 
 // ------------------------------------------------------------------
 // 14. BARRA DE ENVÍO GRATIS MINIMALISTA Y SELLER BADGES DE CARRITO
@@ -1181,7 +1165,7 @@ function tienda_chile_cart_trust_badges() {
 }
 
 // ------------------------------------------------------------------
-// 15. CHECKOUT STEP HEADER Y MÉTODOS DE PAGO CHILENOS
+// 15. CHECKOUT STEPPER BAR & REINGENIERÍA DE CAMPOS PARA CHILE
 // ------------------------------------------------------------------
 
 // Indicador de Pasos de Checkout Minimalista
@@ -1191,144 +1175,189 @@ function tienda_chile_checkout_steps_header() {
     ?>
     <div class="nike-checkout-header-banner">
         <div class="nike-checkout-banner-info">
-            <span class="nike-checkout-step-badge">Paso 2 de 2</span>
-            <h1 class="nike-checkout-banner-title">Paso 2 de 2: Datos de Despacho & Pago Seguro 🔒</h1>
+            <span class="nike-checkout-step-badge">Paso 2 de 3</span>
+            <h1 class="nike-checkout-banner-title">Despacho & Pago Seguro 🔒</h1>
         </div>
         <div class="nike-checkout-steps-bar">
-            <a href="<?php echo esc_url( $cart_url ); ?>" class="nike-step nike-step-done">
+            <a href="<?php echo esc_url( $cart_url ); ?>" class="nike-step nike-step-done" title="Volver al Carrito de Compras">
                 <span class="nike-step-num">✓</span>
-                <span class="nike-step-label">Carrito</span>
+                <span class="nike-step-label">1. Carrito ✓</span>
             </a>
-            <span class="nike-step-chevron">›</span>
+            <span class="nike-step-chevron">➔</span>
             <div class="nike-step nike-step-active">
                 <span class="nike-step-num">2</span>
-                <span class="nike-step-label">Despacho & Pago</span>
+                <span class="nike-step-label">2. Despacho & Pago 🔒 (Activo)</span>
             </div>
-            <span class="nike-step-chevron">›</span>
+            <span class="nike-step-chevron">➔</span>
             <div class="nike-step nike-step-next">
                 <span class="nike-step-num">3</span>
-                <span class="nike-step-label">Confirmación</span>
+                <span class="nike-step-label">3. Confirmación</span>
             </div>
         </div>
     </div>
     <?php
 }
 
-// Optimización y Estilización de Campos del Formulario de Checkout para Chile
-add_filter( 'woocommerce_checkout_fields', 'tienda_chile_custom_checkout_fields', 999 );
-function tienda_chile_custom_checkout_fields( $fields ) {
-    // 1. Campos de Facturación / Cliente (billing)
+// Reestructuración en Grid de 2 Columnas de Campos del Checkout
+add_filter( 'woocommerce_checkout_fields', 'tienda_chile_checkout_fields_chile', 999 );
+function tienda_chile_checkout_fields_chile( $fields ) {
     if ( isset( $fields['billing'] ) ) {
-        // Nombre
-        if ( isset( $fields['billing']['billing_first_name'] ) ) {
-            $fields['billing']['billing_first_name']['label']       = 'Nombre';
-            $fields['billing']['billing_first_name']['placeholder'] = 'Tu nombre';
-            $fields['billing']['billing_first_name']['priority']    = 10;
-            $fields['billing']['billing_first_name']['class']       = array( 'form-row-first' );
-        }
-        // Apellido
-        if ( isset( $fields['billing']['billing_last_name'] ) ) {
-            $fields['billing']['billing_last_name']['label']       = 'Apellido';
-            $fields['billing']['billing_last_name']['placeholder'] = 'Tu apellido';
-            $fields['billing']['billing_last_name']['priority']    = 20;
-            $fields['billing']['billing_last_name']['class']       = array( 'form-row-last' );
-        }
-        // RUT Chileno
+        // Fila 1: Nombre | Apellido
+        $fields['billing']['billing_first_name'] = array(
+            'type'        => 'text',
+            'label'       => 'Nombre',
+            'placeholder' => 'Tu nombre',
+            'required'    => true,
+            'class'       => array( 'form-row-first' ),
+            'priority'    => 10,
+        );
+
+        $fields['billing']['billing_last_name'] = array(
+            'type'        => 'text',
+            'label'       => 'Apellido',
+            'placeholder' => 'Tu apellido',
+            'required'    => true,
+            'class'       => array( 'form-row-last' ),
+            'priority'    => 20,
+        );
+
+        // Fila 2: RUT | Teléfono
         $fields['billing']['billing_rut'] = array(
             'type'        => 'text',
-            'label'       => 'RUT (Ej: 12.345.678-9)',
+            'label'       => 'RUT',
             'placeholder' => '12.345.678-9',
             'required'    => true,
-            'class'       => array( 'form-row-wide' ),
-            'priority'    => 25,
+            'class'       => array( 'form-row-first' ),
+            'priority'    => 30,
         );
-        // Dirección (Calle y Número)
-        if ( isset( $fields['billing']['billing_address_1'] ) ) {
-            $fields['billing']['billing_address_1']['label']       = 'Dirección (Calle y Número)';
-            $fields['billing']['billing_address_1']['placeholder'] = 'Ej: Av. Providencia 1234';
-            $fields['billing']['billing_address_1']['priority']    = 30;
-            $fields['billing']['billing_address_1']['class']       = array( 'form-row-wide' );
-        }
-        // Depto / Casa / Oficina (Opcional)
-        if ( isset( $fields['billing']['billing_address_2'] ) ) {
-            $fields['billing']['billing_address_2']['label']       = 'Depto / Casa / Oficina (Opcional)';
-            $fields['billing']['billing_address_2']['placeholder'] = 'Ej: Depto 402, Torre B';
-            $fields['billing']['billing_address_2']['priority']    = 40;
-            $fields['billing']['billing_address_2']['class']       = array( 'form-row-wide' );
-        }
-        // Región
-        if ( isset( $fields['billing']['billing_state'] ) ) {
-            $fields['billing']['billing_state']['label']    = 'Región';
-            $fields['billing']['billing_state']['priority'] = 50;
-            $fields['billing']['billing_state']['class']    = array( 'form-row-first' );
-        }
-        // Comuna
-        if ( isset( $fields['billing']['billing_city'] ) ) {
-            $fields['billing']['billing_city']['label']       = 'Comuna';
-            $fields['billing']['billing_city']['placeholder'] = 'Ej: Las Condes, Santiago, Viña del Mar...';
-            $fields['billing']['billing_city']['priority']    = 60;
-            $fields['billing']['billing_city']['class']       = array( 'form-row-last' );
-        }
-        // Teléfono
-        if ( isset( $fields['billing']['billing_phone'] ) ) {
-            $fields['billing']['billing_phone']['label']       = 'Teléfono (WhatsApp / Contacto)';
-            $fields['billing']['billing_phone']['placeholder'] = '+56 9 1234 5678';
-            $fields['billing']['billing_phone']['priority']    = 70;
-            $fields['billing']['billing_phone']['class']       = array( 'form-row-first' );
-        }
-        // Correo
-        if ( isset( $fields['billing']['billing_email'] ) ) {
-            $fields['billing']['billing_email']['label']       = 'Correo Electrónico';
-            $fields['billing']['billing_email']['placeholder'] = 'tu@email.com';
-            $fields['billing']['billing_email']['priority']    = 80;
-            $fields['billing']['billing_email']['class']       = array( 'form-row-last' );
-        }
-        // Unset o hacer opcional Código Postal y Empresa
-        if ( isset( $fields['billing']['billing_company'] ) ) {
-            unset( $fields['billing']['billing_company'] );
-        }
-        if ( isset( $fields['billing']['billing_postcode'] ) ) {
-            $fields['billing']['billing_postcode']['required'] = false;
-            $fields['billing']['billing_postcode']['class']    = array( 'form-row-wide' );
-            $fields['billing']['billing_postcode']['priority'] = 90;
-        }
+
+        $fields['billing']['billing_phone'] = array(
+            'type'        => 'tel',
+            'label'       => 'Teléfono',
+            'placeholder' => '+56 9 1234 5678',
+            'required'    => true,
+            'class'       => array( 'form-row-last' ),
+            'priority'    => 40,
+        );
+
+        // Fila 3: Correo Electrónico (100% de ancho)
+        $fields['billing']['billing_email'] = array(
+            'type'        => 'email',
+            'label'       => 'Correo Electrónico',
+            'placeholder' => 'tu@email.com',
+            'required'    => true,
+            'class'       => array( 'form-row-wide' ),
+            'priority'    => 50,
+        );
+
+        // Fila 4: Región | Comuna
+        $fields['billing']['billing_state'] = array(
+            'type'        => 'state',
+            'label'       => 'Región',
+            'required'    => true,
+            'class'       => array( 'form-row-first' ),
+            'priority'    => 60,
+        );
+
+        $fields['billing']['billing_city'] = array(
+            'type'        => 'text',
+            'label'       => 'Comuna',
+            'placeholder' => 'Ej: Las Condes, Santiago, Viña del Mar...',
+            'required'    => true,
+            'class'       => array( 'form-row-last' ),
+            'priority'    => 70,
+        );
+
+        // Fila 5: Dirección Calle y Número (100% de ancho)
+        $fields['billing']['billing_address_1'] = array(
+            'type'        => 'text',
+            'label'       => 'Dirección Calle y Número',
+            'placeholder' => 'Ej: Av. Providencia 1234',
+            'required'    => true,
+            'class'       => array( 'form-row-wide' ),
+            'priority'    => 80,
+        );
+
+        // Fila 6: Depto / Casa / Oficina (100% de ancho)
+        $fields['billing']['billing_address_2'] = array(
+            'type'        => 'text',
+            'label'       => 'Depto / Casa / Oficina (Opcional)',
+            'placeholder' => 'Ej: Depto 402, Torre B',
+            'required'    => false,
+            'class'       => array( 'form-row-wide' ),
+            'priority'    => 90,
+        );
+
+        // Campo País (Oculto en UI, por defecto Chile)
+        $fields['billing']['billing_country'] = array(
+            'type'        => 'country',
+            'label'       => 'País',
+            'default'     => 'CL',
+            'required'    => false,
+            'class'       => array( 'form-row-wide', 'nike-hidden-field' ),
+            'priority'    => 999,
+        );
+
+        // Remover campos toscos o irrelevantes
+        unset( $fields['billing']['billing_company'] );
+        unset( $fields['billing']['billing_postcode'] );
     }
 
-    // 2. Ajustar campos de envío (shipping) en caso de activarse
+    // Fila 7: Notas del pedido / Indicaciones (Opcional)
+    if ( isset( $fields['order']['order_comments'] ) ) {
+        $fields['order']['order_comments']['label']       = 'Notas del pedido / Indicaciones (Opcional)';
+        $fields['order']['order_comments']['placeholder'] = 'Indicaciones especiales para la entrega (ej: dejar en conserjería).';
+        $fields['order']['order_comments']['class']       = array( 'form-row-wide' );
+        $fields['order']['order_comments']['priority']    = 100;
+    }
+
+    // Adaptar shipping si está activo
     if ( isset( $fields['shipping'] ) ) {
-        if ( isset( $fields['shipping']['shipping_first_name'] ) ) {
-            $fields['shipping']['shipping_first_name']['label'] = 'Nombre';
-            $fields['shipping']['shipping_first_name']['class'] = array( 'form-row-first' );
-        }
-        if ( isset( $fields['shipping']['shipping_last_name'] ) ) {
-            $fields['shipping']['shipping_last_name']['label'] = 'Apellido';
-            $fields['shipping']['shipping_last_name']['class'] = array( 'form-row-last' );
-        }
-        if ( isset( $fields['shipping']['shipping_address_1'] ) ) {
-            $fields['shipping']['shipping_address_1']['label'] = 'Dirección (Calle y Número)';
-            $fields['shipping']['shipping_address_1']['class'] = array( 'form-row-wide' );
-        }
-        if ( isset( $fields['shipping']['shipping_address_2'] ) ) {
-            $fields['shipping']['shipping_address_2']['label'] = 'Depto / Casa / Oficina (Opcional)';
-            $fields['shipping']['shipping_address_2']['class'] = array( 'form-row-wide' );
-        }
-        if ( isset( $fields['shipping']['shipping_state'] ) ) {
-            $fields['shipping']['shipping_state']['label'] = 'Región';
-            $fields['shipping']['shipping_state']['class'] = array( 'form-row-first' );
-        }
-        if ( isset( $fields['shipping']['shipping_city'] ) ) {
-            $fields['shipping']['shipping_city']['label'] = 'Comuna';
-            $fields['shipping']['shipping_city']['class'] = array( 'form-row-last' );
-        }
-        if ( isset( $fields['shipping']['shipping_company'] ) ) {
-            unset( $fields['shipping']['shipping_company'] );
-        }
-        if ( isset( $fields['shipping']['shipping_postcode'] ) ) {
-            $fields['shipping']['shipping_postcode']['required'] = false;
-        }
+        $fields['shipping']['shipping_first_name']['label'] = 'Nombre';
+        $fields['shipping']['shipping_first_name']['class'] = array( 'form-row-first' );
+        $fields['shipping']['shipping_last_name']['label']  = 'Apellido';
+        $fields['shipping']['shipping_last_name']['class']  = array( 'form-row-last' );
+        $fields['shipping']['shipping_state']['label']      = 'Región';
+        $fields['shipping']['shipping_state']['class']      = array( 'form-row-first' );
+        $fields['shipping']['shipping_city']['label']       = 'Comuna';
+        $fields['shipping']['shipping_city']['class']       = array( 'form-row-last' );
+        $fields['shipping']['shipping_address_1']['label']  = 'Dirección Calle y Número';
+        $fields['shipping']['shipping_address_1']['class']  = array( 'form-row-wide' );
+        $fields['shipping']['shipping_address_2']['label']  = 'Depto / Casa / Oficina (Opcional)';
+        $fields['shipping']['shipping_address_2']['class']  = array( 'form-row-wide' );
+        unset( $fields['shipping']['shipping_company'] );
+        unset( $fields['shipping']['shipping_postcode'] );
     }
 
     return $fields;
+}
+
+// Auto-formateador en tiempo real de RUT (12.345.678-9)
+add_action( 'wp_footer', 'tienda_chile_checkout_rut_mask_js', 99 );
+function tienda_chile_checkout_rut_mask_js() {
+    if ( ! function_exists( 'is_checkout' ) || ! is_checkout() || is_wc_endpoint_url( 'order-received' ) ) {
+        return;
+    }
+    ?>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var rutInput = document.getElementById('billing_rut');
+        if (rutInput) {
+            rutInput.addEventListener('input', function(e) {
+                var val = e.target.value.replace(/[^0-9kK]/g, '');
+                if (val.length > 1) {
+                    var cuerpo = val.slice(0, -1);
+                    var dv = val.slice(-1).toUpperCase();
+                    cuerpo = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    e.target.value = cuerpo + '-' + dv;
+                } else {
+                    e.target.value = val.toUpperCase();
+                }
+            });
+        }
+    });
+    </script>
+    <?php
 }
 
 // Guardar RUT en los metadatos del pedido
