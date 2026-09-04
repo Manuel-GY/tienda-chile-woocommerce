@@ -1033,7 +1033,7 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
             case 'Additional information':
                 return 'Información Adicional';
             case 'Order notes':
-                return 'Notas del pedido (opcional)';
+                return 'Notas del pedido / Indicaciones';
             case 'Notes about your order, e.g. special notes for delivery.':
                 return 'Indicaciones especiales para la entrega (ej: dejar en conserjería).';
             case 'Your order':
@@ -1064,7 +1064,45 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
                 return 'Total a Pagar';
         }
     }
+    
+    // Limpieza de avisos de validación ("Facturación Región es un campo requerido")
+    if ( is_string( $translated_text ) && strpos( $translated_text, 'Facturación' ) !== false && strpos( $translated_text, 'requerido' ) !== false ) {
+        $translated_text = str_replace( 'Facturación ', 'El campo ', $translated_text );
+        $translated_text = str_replace( ' es un campo requerido.', ' es obligatorio.', $translated_text );
+    }
+
     return $translated_text;
+}
+
+// Organización Simétrica en 2 Columnas de Campos del Checkout
+add_filter( 'woocommerce_checkout_fields', 'tienda_chile_optimize_checkout_fields_order', 999 );
+function tienda_chile_optimize_checkout_fields_order( $fields ) {
+    if ( isset( $fields['billing'] ) ) {
+        $fields['billing']['billing_first_name']['class'] = array( 'form-row-first' );
+        $fields['billing']['billing_last_name']['class']  = array( 'form-row-last' );
+        
+        if ( isset( $fields['billing']['billing_rut'] ) ) {
+            $fields['billing']['billing_rut']['class']    = array( 'form-row-first' );
+            $fields['billing']['billing_phone']['class']  = array( 'form-row-last' );
+        } else {
+            $fields['billing']['billing_phone']['class']  = array( 'form-row-first' );
+        }
+        $fields['billing']['billing_phone']['required'] = false;
+        
+        $fields['billing']['billing_email']['class']      = array( 'form-row-wide' );
+        
+        $fields['billing']['billing_state']['class']      = array( 'form-row-first' );
+        $fields['billing']['billing_city']['class']       = array( 'form-row-last' );
+        
+        $fields['billing']['billing_address_1']['class']  = array( 'form-row-wide' );
+        $fields['billing']['billing_address_2']['class']  = array( 'form-row-wide' );
+    }
+
+    if ( isset( $fields['order']['order_comments'] ) ) {
+        $fields['order']['order_comments']['label'] = 'Notas del pedido / Indicaciones';
+    }
+
+    return $fields;
 }
 
 // ------------------------------------------------------------------
