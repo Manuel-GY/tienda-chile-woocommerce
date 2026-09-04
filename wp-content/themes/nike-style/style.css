@@ -2493,4 +2493,381 @@ button:active,
     }
 }
 
+/* =========================================================================
+   15. REDISEÑO ULTRA LUXURY DE LA PÁGINA DE CHECKOUT (FINALIZAR COMPRA)
+   ========================================================================= */
+
+/* Indicador de Pasos de Checkout */
+.nike-checkout-steps-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.nike-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none !important;
+}
+
+.nike-step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.nike-step-done .nike-step-num {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.nike-step-active .nike-step-num {
+    background: #0f172a;
+    color: #ffffff;
+}
+
+.nike-step-next .nike-step-num {
+    background: #e2e8f0;
+    color: #64748b;
+}
+
+.nike-step-label {
+    font-size: 13.5px;
+    font-weight: 800;
+}
+
+.nike-step-done .nike-step-label { color: #10b981; }
+.nike-step-active .nike-step-label { color: #0f172a; }
+.nike-step-next .nike-step-label { color: #94a3b8; }
+
+.nike-step-divider {
+    height: 2px;
+    width: 40px;
+    background: #cbd5e1;
+    border-radius: 2px;
+}
+
+/* Aviso de Cupón en Checkout */
+.woocommerce-checkout .woocommerce-info {
+    background: #f8fafc !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 14px !important;
+    padding: 14px 20px !important;
+    color: #0f172a !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    margin-bottom: 28px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.woocommerce-checkout .woocommerce-info::before {
+    color: #3b82f6 !important;
+}
+
+.woocommerce-checkout .woocommerce-info a {
+    color: #ef4444 !important;
+    font-weight: 800 !important;
+    text-decoration: underline !important;
+}
+
+/* Formulario de Cupón Desplegable */
+.woocommerce-checkout form.checkout_coupon {
+    background: #ffffff !important;
+    border: 1.5px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    padding: 20px !important;
+    margin-bottom: 28px !important;
+    display: flex;
+    gap: 12px;
+}
+
+.woocommerce-checkout form.checkout_coupon input[type="text"] {
+    height: 46px !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+    flex: 1;
+}
+
+.woocommerce-checkout form.checkout_coupon button[type="submit"] {
+    height: 46px !important;
+    border-radius: 10px !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    padding: 0 24px !important;
+    border: none !important;
+    text-transform: uppercase !important;
+    cursor: pointer;
+}
+
+/* Layout del Formulario de Checkout (2 Columnas) */
+.woocommerce-checkout form.checkout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+}
+
+@media (min-width: 992px) {
+    .woocommerce-checkout form.checkout {
+        grid-template-columns: 1fr 440px;
+        align-items: start;
+    }
+}
+
+/* Columna Izquierda: Datos de Facturación / Despacho */
+.woocommerce-checkout #customer_details {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.woocommerce-checkout #customer_details h3 {
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    color: #0f172a !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 24px !important;
+    padding-bottom: 12px !important;
+    border-bottom: 2px solid #f1f5f9 !important;
+}
+
+/* Campos de Formulario de Checkout */
+.woocommerce-checkout .form-row {
+    margin-bottom: 18px !important;
+    padding: 0 !important;
+}
+
+.woocommerce-checkout .form-row label {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    color: #1e293b !important;
+    margin-bottom: 6px !important;
+    display: block;
+}
+
+.woocommerce-checkout .form-row input[type="text"],
+.woocommerce-checkout .form-row input[type="email"],
+.woocommerce-checkout .form-row input[type="tel"],
+.woocommerce-checkout .form-row select,
+.woocommerce-checkout .form-row textarea {
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    padding: 0 16px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    transition: all 0.2s ease !important;
+}
+
+.woocommerce-checkout .form-row textarea {
+    height: 100px !important;
+    padding: 12px 16px !important;
+}
+
+.woocommerce-checkout .form-row input:focus,
+.woocommerce-checkout .form-row select:focus,
+.woocommerce-checkout .form-row textarea:focus {
+    background: #ffffff !important;
+    border-color: #0f172a !important;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1) !important;
+    outline: none !important;
+}
+
+/* Columna Derecha: Resumen de Pedido y Pasarelas de Pago */
+.woocommerce-checkout #order_review_heading {
+    display: none !important;
+}
+
+.woocommerce-checkout #order_review {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 100px;
+}
+
+.woocommerce-checkout #order_review::before {
+    content: "TU PEDIDO & PAGO";
+    display: block;
+    font-size: 20px;
+    font-weight: 900;
+    color: #0f172a;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+/* Tabla de Resumen de Pedido */
+.woocommerce-checkout table.shop_table.woocommerce-checkout-review-order-table {
+    border: none !important;
+    margin-bottom: 24px !important;
+}
+
+.woocommerce-checkout table.shop_table th {
+    background: transparent !important;
+    color: #64748b !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    padding: 10px 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.woocommerce-checkout table.shop_table td {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 14px !important;
+    color: #1e293b !important;
+}
+
+.woocommerce-checkout table.shop_table td.product-name {
+    font-weight: 700 !important;
+}
+
+.woocommerce-checkout table.shop_table td.product-total {
+    font-weight: 800 !important;
+    text-align: right !important;
+    color: #0f172a !important;
+}
+
+.woocommerce-checkout table.shop_table tr.order-total th,
+.woocommerce-checkout table.shop_table tr.order-total td {
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    color: #0f172a !important;
+    border-bottom: none !important;
+    padding-top: 16px !important;
+}
+
+/* Pasarelas de Pago en Checkout */
+.woocommerce-checkout #payment {
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 24px 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: none !important;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method {
+    background: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method:hover {
+    border-color: #cbd5e1;
+    background: #ffffff;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method label {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.woocommerce-checkout #payment ul.payment_methods li.payment_method input[type="radio"] {
+    accent-color: #0f172a !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.woocommerce-checkout #payment div.payment_box {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
+    margin-top: 10px !important;
+}
+
+.woocommerce-checkout #payment div.payment_box::before {
+    display: none !important;
+}
+
+/* Botón Realizar Pedido */
+.woocommerce-checkout #place_order {
+    width: 100% !important;
+    height: 56px !important;
+    background: linear-gradient(135deg, #18181b 0%, #27272a 100%) !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    border-radius: 14px !important;
+    border: none !important;
+    box-shadow: 0 10px 25px -5px rgba(24, 24, 27, 0.4) !important;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    margin-top: 16px !important;
+}
+
+.woocommerce-checkout #place_order:hover {
+    background: linear-gradient(135deg, #27272a 0%, #3f3f46 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -5px rgba(24, 24, 27, 0.5) !important;
+}
+
+/* Adaptación Móvil del Checkout (< 768px) */
+@media (max-width: 768px) {
+    .nike-checkout-steps-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 16px;
+    }
+
+    .nike-step-divider {
+        display: none;
+    }
+
+    .woocommerce-checkout #customer_details,
+    .woocommerce-checkout #order_review {
+        padding: 20px;
+    }
+}
+
+
 

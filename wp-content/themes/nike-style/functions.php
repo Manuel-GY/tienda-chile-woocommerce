@@ -825,3 +825,100 @@ function tienda_chile_cart_trust_badges() {
     </div>
     <?php
 }
+
+// ------------------------------------------------------------------
+// 15. CHECKOUT STEP HEADER Y MÉTODOS DE PAGO SIMULADOS DE CHILE
+// ------------------------------------------------------------------
+
+// Indicador de Pasos de Checkout
+add_action( 'woocommerce_before_checkout_form', 'tienda_chile_checkout_steps_header', 5 );
+function tienda_chile_checkout_steps_header() {
+    $cart_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
+    ?>
+    <div class="nike-checkout-steps-bar">
+        <a href="<?php echo esc_url( $cart_url ); ?>" class="nike-step nike-step-done">
+            <span class="nike-step-num">✓</span>
+            <span class="nike-step-label">1. Carrito de Compras</span>
+        </a>
+        <div class="nike-step-divider"></div>
+        <div class="nike-step nike-step-active">
+            <span class="nike-step-num">2</span>
+            <span class="nike-step-label">2. Despacho & Pago</span>
+        </div>
+        <div class="nike-step-divider"></div>
+        <div class="nike-step nike-step-next">
+            <span class="nike-step-num">3</span>
+            <span class="nike-step-label">3. Confirmación</span>
+        </div>
+    </div>
+    <?php
+}
+
+// Registro de Pasarelas de Pago Oficiales para Chile (Webpay Plus & Transferencia CuentaRUT)
+add_filter( 'woocommerce_payment_gateways', 'tienda_chile_register_custom_gateways' );
+function tienda_chile_register_custom_gateways( $gateways ) {
+    $gateways[] = 'WC_Gateway_Webpay_Chile';
+    $gateways[] = 'WC_Gateway_CuentaRUT_Chile';
+    return $gateways;
+}
+
+add_action( 'plugins_loaded', 'tienda_chile_init_custom_gateways' );
+function tienda_chile_init_custom_gateways() {
+    if ( ! class_exists( 'WC_Payment_Gateway' ) ) return;
+
+    // Pasarela 1: Webpay Plus / Transbank / Mercado Pago
+    class WC_Gateway_Webpay_Chile extends WC_Payment_Gateway {
+        public function __construct() {
+            $this->id                 = 'webpay_chile';
+            $this->icon               = '';
+            $this->has_fields         = false;
+            $this->method_title       = 'Webpay Plus / Transbank / Mercado Pago';
+            $this->method_description = 'Permite pagar con Tarjetas de Débito (Redcompra), Crédito y Prepago en Chile.';
+
+            $this->title       = '💳 Webpay Plus • Transbank • Mercado Pago';
+            $this->description = 'Paga de forma instantánea y 100% segura con tu tarjeta de Débito (Redcompra), Crédito o Mercado Pago.';
+
+            $this->init_form_fields();
+            $this->init_settings();
+            $this->enabled = 'yes';
+        }
+
+        public function process_payment( $order_id ) {
+            $order = wc_get_order( $order_id );
+            $order->payment_complete();
+            WC()->cart->empty_cart();
+            return array(
+                'result'   => 'success',
+                'redirect' => $this->get_return_url( $order ),
+            );
+        }
+    }
+
+    // Pasarela 2: Transferencia Bancaria Directa / CuentaRUT
+    class WC_Gateway_CuentaRUT_Chile extends WC_Payment_Gateway {
+        public function __construct() {
+            $this->id                 = 'cuentarut_chile';
+            $this->icon               = '';
+            $this->has_fields         = false;
+            $this->method_title       = 'Transferencia BancoEstado / CuentaRUT';
+            $this->method_description = 'Permite pagar vía transferencia electrónica directa a CuentaRUT o BancoEstado.';
+
+            $this->title       = '🏦 Transferencia BancoEstado / CuentaRUT';
+            $this->description = 'Realiza una transferencia electrónica a nuestra CuentaRUT Oficial. Recibirás los datos bancarios al confirmar tu pedido.';
+
+            $this->init_form_fields();
+            $this->init_settings();
+            $this->enabled = 'yes';
+        }
+
+        public function process_payment( $order_id ) {
+            $order = wc_get_order( $order_id );
+            $order->update_status( 'on-hold', __( 'A la espera de transferencia bancaria.', 'woocommerce' ) );
+            WC()->cart->empty_cart();
+            return array(
+                'result'   => 'success',
+                'redirect' => $this->get_return_url( $order ),
+            );
+        }
+    }
+}
