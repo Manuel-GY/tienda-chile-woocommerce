@@ -314,6 +314,30 @@ add_filter( 'woocommerce_sale_flash', function( $html, $post, $product ) {
     return '<span class="onsale">-25% DCTO</span>';
 }, 10, 3 );
 
+// Asignar imágenes reales a productos de WooCommerce sin imagen asignada
+add_filter( 'woocommerce_placeholder_img_src', function( $src ) {
+    return get_stylesheet_directory_uri() . '/images/beauty.jpg';
+} );
+
+add_filter( 'woocommerce_product_get_image', function( $image, $product, $size, $attr, $placeholder ) {
+    if ( $product && ! $product->get_image_id() ) {
+        $theme_uri = get_stylesheet_directory_uri();
+        $sku       = $product->get_sku();
+        $img_url   = $theme_uri . '/images/beauty.jpg';
+        
+        if ( strpos( $sku, 'ELEC' ) !== false || strpos( $sku, 'ELE' ) !== false ) {
+            $img_url = $theme_uri . '/images/tech.jpg';
+        } elseif ( strpos( $sku, 'MAQ' ) !== false ) {
+            $img_url = $theme_uri . '/images/beauty.jpg';
+        } else {
+            $img_url = $theme_uri . '/images/hero_banner.jpg';
+        }
+        
+        return '<img src="' . esc_url( $img_url ) . '" alt="' . esc_attr( $product->get_name() ) . '" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail wp-post-image" loading="lazy" style="width: 100%; aspect-ratio: 1/1; object-fit: cover;" />';
+    }
+    return $image;
+}, 10, 5 );
+
 // Estrellas 5.0 (★★★★★) y Badges de Envío Rápido en tarjetas de productos
 function nike_style_product_card_elements() {
     ?>
@@ -397,6 +421,17 @@ function nike_style_footer_trust_badges() {
         </div>
     </div>
 
+    <!-- Columna de Políticas Legales -->
+    <div class="nike-footer-legal-col">
+        <h3 class="nike-footer-legal-title">Información Legal & Políticas</h3>
+        <ul class="nike-footer-legal-links">
+            <li><a href="javascript:void(0)" onclick="nikeOpenModal('privacy')">🔒 Política de Privacidad</a></li>
+            <li><a href="javascript:void(0)" onclick="nikeOpenModal('shipping')">🚚 Política de Envíos y Entregas</a></li>
+            <li><a href="javascript:void(0)" onclick="nikeOpenModal('returns')">🔄 Garantía y Devoluciones</a></li>
+            <li><a href="javascript:void(0)" onclick="nikeOpenModal('terms')">📜 Términos y Condiciones</a></li>
+        </ul>
+    </div>
+
     <div class="nike-footer-trust">
         <!-- Medios de Pago -->
         <div class="nike-trust-group">
@@ -415,10 +450,106 @@ function nike_style_footer_trust_badges() {
             <div class="nike-trust-badges">
                 <span class="nike-badge nike-badge-shipping"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Chilexpress</span>
                 <span class="nike-badge nike-badge-shipping"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Starken</span>
-                <span class="nike-badge nike-badge-shipping"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Blue Express</span>
+                <span class="nike-badge nike-badge-shipping"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg> Blue Express</span>
             </div>
         </div>
     </div>
     <?php
 }
 add_action( 'storefront_footer', 'nike_style_footer_trust_badges', 15 );
+
+// ------------------------------------------------------------------
+// 11. BANNER DE COOKIES Y POPUPS DE POLÍTICAS LEGALES
+// ------------------------------------------------------------------
+function nike_style_legal_and_cookies_footer() {
+    ?>
+    <!-- Banner de Cookies -->
+    <div id="nike-cookie-banner" class="nike-cookie-banner">
+        <div class="nike-cookie-content">
+            <span class="nike-cookie-icon">🍪</span>
+            <p class="nike-cookie-text">
+                En <strong>Tienda Chile</strong> utilizamos cookies para mejorar tu experiencia de compra, personalizar ofertas y analizar el tráfico de navegación. Al continuar navegando aceptas nuestra <a href="javascript:void(0)" onclick="nikeOpenModal('privacy')">Política de Privacidad</a>.
+            </p>
+            <div class="nike-cookie-actions">
+                <button type="button" class="nike-cookie-btn-accept" onclick="nikeAcceptCookies()">Aceptar y Continuar</button>
+                <button type="button" class="nike-cookie-btn-more" onclick="nikeOpenModal('privacy')">Más Información</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Políticas Legales -->
+    <div id="nike-legal-modal" class="nike-legal-modal" style="display: none;">
+        <div class="nike-modal-overlay" onclick="nikeCloseModal()"></div>
+        <div class="nike-modal-container">
+            <button type="button" class="nike-modal-close" onclick="nikeCloseModal()">&times;</button>
+            <div class="nike-modal-body" id="nike-modal-body-content">
+                <!-- Contenido dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function nikeAcceptCookies() {
+        localStorage.setItem('nike_cookie_consent', 'true');
+        var banner = document.getElementById('nike-cookie-banner');
+        if (banner) banner.style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('nike_cookie_consent') === 'true') {
+            var banner = document.getElementById('nike-cookie-banner');
+            if (banner) banner.style.display = 'none';
+        }
+    });
+
+    var nikeModalData = {
+        privacy: `
+            <h2>🔒 Política de Privacidad y Protección de Datos</h2>
+            <p>En <strong>Tienda Chile</strong> (conforme a la Ley N° 19.628 sobre Protección de la Vida Privada de Chile), nos comprometemos solemnemente a resguardar la confidencialidad de tus datos personales.</p>
+            <h3>1. Uso de la Información</h3>
+            <p>Los datos ingresados durante el proceso de compra (Nombre, RUT, Dirección, Correo y Teléfono) son utilizados exclusivamente para la facturación, emisión de boleta electrónica y gestión de despacho a través de Chilexpress, Starken o Blue Express.</p>
+            <h3>2. Seguridad en Pagos</h3>
+            <p>No almacenamos datos de tarjetas de crédito o débito. Todas las transacciones son procesadas a través de servidores seguros cifrados de Webpay Plus (Transbank) y Mercado Pago.</p>
+        `,
+        shipping: `
+            <h2>🚚 Política de Envíos y Entregas (Chile 🇨🇱)</h2>
+            <p>Realizamos despachos a todas las regiones y comunas de Chile de Arica a Punta Arenas.</p>
+            <h3>1. Plazos de Entrega</h3>
+            <ul>
+                <li><strong>Región Metropolitana:</strong> Entregas en 24 a 48 horas hábiles.</li>
+                <li><strong>Otras Regiones:</strong> Entregas en 2 a 4 días hábiles dependiendo del courier elegido (Chilexpress, Starken, Blue Express).</li>
+            </ul>
+            <h3>2. Envío Gratis</h3>
+            <p>Ofrecemos <strong>Envío Gratuito</strong> para compras superiores a $50.000 CLP a todo el territorio nacional.</p>
+        `,
+        returns: `
+            <h2>🔄 Política de Devoluciones, Garantía y Derecho a Retracto</h2>
+            <p>Cumplimos estrictamente con la Ley N° 19.496 sobre Protección de los Derechos de los Consumidores en Chile.</p>
+            <h3>1. Derecho a Retracto (10 días)</h3>
+            <p>Tienes un plazo de 10 días desde recibido el producto para retractarte de la compra, siempre que el producto esté sin uso, con sus sellos y empaque original intacto.</p>
+            <h3>2. Garantía Legal (6 meses)</h3>
+            <p>Todos nuestros productos cuentan con garantía legal de 6 meses frente a fallas o defectos de fabricación. Puedes solicitar cambio, reparación gratuita o devolución del dinero.</p>
+        `,
+        terms: `
+            <h2>📜 Términos y Condiciones Generales</h2>
+            <p>Al realizar una compra en Tienda Chile aceptas las condiciones de venta, precios exhibidos en CLP (con IVA 19% incluido) y emisión de boleta o factura electrónica oficial.</p>
+        `
+    };
+
+    function nikeOpenModal(key) {
+        var modal = document.getElementById('nike-legal-modal');
+        var body = document.getElementById('nike-modal-body-content');
+        if (modal && body && nikeModalData[key]) {
+            body.innerHTML = nikeModalData[key];
+            modal.style.display = 'flex';
+        }
+    }
+
+    function nikeCloseModal() {
+        var modal = document.getElementById('nike-legal-modal');
+        if (modal) modal.style.display = 'none';
+    }
+    </script>
+    <?php
+}
+add_action( 'wp_footer', 'nike_style_legal_and_cookies_footer', 30 );

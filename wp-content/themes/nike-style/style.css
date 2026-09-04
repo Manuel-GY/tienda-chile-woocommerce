@@ -1162,3 +1162,177 @@ ul.products li.product .button:hover {
         font-size: 32px;
     }
 }
+
+/* =========================================================================
+   12. BANNER DE COOKIES & MODALES LEGALES (POLÍTICAS Y PRIVACIDAD)
+   ========================================================================= */
+.nike-cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #18181b;
+    color: #ffffff;
+    padding: 16px 24px;
+    z-index: 999999;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.nike-cookie-content {
+    max-width: 1250px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.nike-cookie-icon {
+    font-size: 24px;
+}
+
+.nike-cookie-text {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+    flex: 1;
+    color: #cbd5e1;
+}
+
+.nike-cookie-text a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.nike-cookie-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nike-cookie-btn-accept {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.nike-cookie-btn-accept:hover {
+    background: #dc2626 !important;
+}
+
+.nike-cookie-btn-more {
+    background: transparent !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    padding: 10px 18px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    cursor: pointer;
+}
+
+/* Modales Legales */
+.nike-legal-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.nike-modal-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.nike-modal-container {
+    position: relative;
+    background: #ffffff;
+    color: #09090b;
+    width: 100%;
+    max-width: 680px;
+    max-height: 85vh;
+    border-radius: 12px;
+    overflow-y: auto;
+    padding: 36px 32px 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.nike-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #64748b;
+    line-height: 1;
+}
+
+.nike-modal-body h2 {
+    font-size: 22px;
+    font-weight: 900;
+    margin-top: 0;
+    color: #18181b;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 12px;
+}
+
+.nike-modal-body h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 20px 0 8px;
+    color: #18181b;
+}
+
+.nike-modal-body p, .nike-modal-body li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #475569;
+}
+
+.nike-footer-legal-col {
+    margin-top: 16px;
+}
+
+.nike-footer-legal-title {
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    color: #ffffff !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px !important;
+}
+
+.nike-footer-legal-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nike-footer-legal-links li {
+    margin-bottom: 8px;
+}
+
+.nike-footer-legal-links a {
+    color: #94a3b8 !important;
+    font-size: 13px;
+    transition: color 0.2s ease;
+}
+
+.nike-footer-legal-links a:hover {
+    color: #ffffff !important;
+}
