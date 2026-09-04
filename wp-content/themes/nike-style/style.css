@@ -3884,7 +3884,9 @@ h3#ship-to-different-address input[type="checkbox"] {
 /* Adaptación Responsiva para Móviles / Celulares / Tabletas (< 992px) */
 @media (max-width: 991px) {
     .woocommerce-checkout form.checkout {
+        display: flex !important;
         flex-direction: column !important;
+        gap: 24px !important;
     }
 
     .woocommerce-checkout #customer_details,
@@ -3893,6 +3895,7 @@ h3#ship-to-different-address input[type="checkbox"] {
         width: 100% !important;
         flex: 1 1 100% !important;
         position: static !important;
+        grid-column: auto !important;
     }
 
     .woocommerce-checkout .woocommerce-billing-fields__field-wrapper,
@@ -4108,5 +4111,226 @@ h3#ship-to-different-address input[type="checkbox"] {
 .select2-container--default .select2-results__option--highlighted[aria-selected],
 .select2-container--default .select2-results__option--highlighted[data-selected] {
     background-color: #18181b !important;
+    color: #ffffff !important;
+}
+
+/* =========================================================================
+   19. REINGENIERÍA DTC DE LUJO DE LA FICHA DE PRODUCTO (SINGLE PRODUCT PAGE)
+   ========================================================================= */
+.single-product .site-main,
+.single-product .col-full,
+.single-product #primary,
+.single-product article.product {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 16px !important;
+    float: none !important;
+}
+
+.single-product div.product {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 48px !important;
+    align-items: start !important;
+    margin-top: 24px !important;
+    margin-bottom: 48px !important;
+}
+
+@media (max-width: 991px) {
+    .single-product div.product {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+}
+
+/* Galería de Imágenes de Producto */
+.single-product div.product div.images {
+    width: 100% !important;
+    float: none !important;
+    margin-bottom: 0 !important;
+}
+
+.single-product div.product div.images img {
+    border-radius: 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+    object-fit: cover !important;
+    width: 100% !important;
+}
+
+/* Resumen e Información de Producto */
+.single-product div.product div.summary {
+    width: 100% !important;
+    float: none !important;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.single-product div.product .product_title {
+    font-size: clamp(24px, 3.5vw, 36px) !important;
+    font-weight: 900 !important;
+    color: #18181b !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.025em !important;
+    margin-bottom: 4px !important;
+}
+
+.single-product div.product p.price,
+.single-product div.product span.price {
+    font-size: clamp(22px, 3vw, 28px) !important;
+    font-weight: 900 !important;
+    color: #18181b !important;
+    margin-bottom: 8px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.single-product div.product p.price del,
+.single-product div.product span.price del {
+    color: #94a3b8 !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+}
+
+.single-product div.product p.price ins,
+.single-product div.product span.price ins {
+    text-decoration: none !important;
+    color: #ef4444 !important;
+    font-weight: 900 !important;
+}
+
+.single-product div.product .woocommerce-product-details__short-description {
+    font-size: 14.5px !important;
+    color: #475569 !important;
+    line-height: 1.6 !important;
+    margin-bottom: 8px !important;
+}
+
+/* Formulario Agregar al Carrito en Ficha */
+.single-product div.product form.cart {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    margin-top: 12px !important;
+    margin-bottom: 20px !important;
+    flex-wrap: wrap !important;
+}
+
+.single-product div.product form.cart .quantity input.qty {
+    width: 72px !important;
+    height: 48px !important;
+    border-radius: 10px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+
+.single-product div.product form.cart .single_add_to_cart_button {
+    height: 48px !important;
+    padding: 0 36px !important;
+    background: #18181b !important;
+    color: #ffffff !important;
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    border-radius: 10px !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(24, 24, 27, 0.2) !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    flex: 1;
+    min-width: 200px;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.single-product div.product form.cart .single_add_to_cart_button:hover {
+    background: #27272a !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(24, 24, 27, 0.3) !important;
+}
+
+/* Caja de Confianza y Sellos Chilenos en Ficha */
+.nike-single-trust-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nike-single-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #18181b;
+}
+
+.nike-single-trust-item svg {
+    flex-shrink: 0;
+    color: #18181b;
+}
+
+.nike-single-trust-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.nike-single-trust-info strong {
+    font-size: 13px;
+    font-weight: 800;
+    color: #18181b;
+    line-height: 1.3;
+}
+
+.nike-single-trust-info span {
+    font-size: 11.5px;
+    color: #64748b;
+}
+
+/* Pestañas de Descripción / Valoraciones */
+.single-product div.product .woocommerce-tabs {
+    grid-column: 1 / -1 !important;
+    margin-top: 32px !important;
+    border-top: 1px solid #e5e7eb !important;
+    padding-top: 32px !important;
+}
+
+.single-product div.product .woocommerce-tabs ul.tabs {
+    display: flex !important;
+    gap: 12px !important;
+    border-bottom: 2px solid #e5e7eb !important;
+    padding: 0 0 12px 0 !important;
+    margin: 0 0 24px 0 !important;
+    list-style: none !important;
+}
+
+.single-product div.product .woocommerce-tabs ul.tabs li {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.single-product div.product .woocommerce-tabs ul.tabs li a {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+}
+
+.single-product div.product .woocommerce-tabs ul.tabs li.active a,
+.single-product div.product .woocommerce-tabs ul.tabs li a:hover {
+    background: #18181b !important;
     color: #ffffff !important;
 }

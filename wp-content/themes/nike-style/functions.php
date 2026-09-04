@@ -706,6 +706,36 @@ function nike_style_product_card_elements() {
 }
 add_action( 'woocommerce_after_shop_loop_item_title', 'nike_style_product_card_elements', 15 );
 
+// Sellos de confianza y envío en Ficha de Producto (Single Product)
+function nike_style_single_product_trust_box() {
+    ?>
+    <div class="nike-single-trust-box">
+        <div class="nike-single-trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <div class="nike-single-trust-info">
+                <strong>Envío Exprés Chile 🇨🇱</strong>
+                <span>Despacho 24h a 48h hábiles por Chilexpress / Starken</span>
+            </div>
+        </div>
+        <div class="nike-single-trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div class="nike-single-trust-info">
+                <strong>Garantía Oficial 6 Meses</strong>
+                <span>Protección total al consumidor en Chile</span>
+            </div>
+        </div>
+        <div class="nike-single-trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <div class="nike-single-trust-info">
+                <strong>Pago 100% Seguro</strong>
+                <span>Webpay Plus, Transbank & CuentaRUT BancoEstado</span>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+add_action( 'woocommerce_single_product_summary', 'nike_style_single_product_trust_box', 35 );
+
 // ------------------------------------------------------------------
 // 9. ELIMINAR SIDEBAR Y FORZAR DISEÑO FULL-WIDTH (LIMPIEZA DE BLOG)
 // ------------------------------------------------------------------
