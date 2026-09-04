@@ -1,0 +1,35 @@
+# WordPress Core (no incluido - se instala en el hosting)
+wp-admin/
+wp-includes/
+wp-login.php
+wp-cron.php
+wp-load.php
+wp-settings.php
+xmlrpc.php
+
+# WordPress Content (se instala en el hosting)
+wp-content/plugins/
+wp-content/themes/
+wp-content/uploads/
+wp-content/cache/
+
+# Configuración real con credenciales (nunca subir)
+wp-config.php
+
+# LocalWP Specific (entorno local, no compartir)
+Local Sites/
+app/
+conf/
+logs/
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
