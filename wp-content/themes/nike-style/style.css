@@ -2870,5 +2870,163 @@ button:active,
     }
 }
 
+/* =========================================================================
+   16. CORRECCIÓN DEFINITIVA DE LAYOUT DE CHECKOUT (OVERRIDE STOREFRONT DEFAULTS)
+   ========================================================================= */
+
+/* Contenedor principal sin encogimientos */
+.woocommerce-checkout .site-main,
+.woocommerce-checkout .col-full,
+.woocommerce-checkout #primary,
+.woocommerce-checkout article {
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 16px !important;
+    float: none !important;
+}
+
+/* Indicador de pasos al 100% centrado */
+.nike-checkout-steps-bar {
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto 28px auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 12px !important;
+    padding: 14px 24px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Formulario Coupon y Avisos sin solapamiento de icono */
+.woocommerce-checkout .woocommerce-info,
+.woocommerce-checkout .woocommerce-message {
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto 24px auto !important;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 14px 20px 14px 44px !important;
+    color: #18181b !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    position: relative !important;
+}
+
+.woocommerce-checkout .woocommerce-info::before {
+    position: absolute !important;
+    left: 16px !important;
+    top: 14px !important;
+    color: #18181b !important;
+}
+
+/* Layout del Formulario Checkout (2 Columnas reales 1200px) */
+.woocommerce-checkout form.checkout {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 32px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+}
+
+.woocommerce-checkout form.checkout::before,
+.woocommerce-checkout form.checkout::after {
+    display: none !important;
+}
+
+/* Overrides para anular los floats y anchos de 48% comprimidos de Storefront */
+.woocommerce-checkout #customer_details,
+.woocommerce-checkout .col2-set {
+    flex: 1 1 640px !important;
+    width: 60% !important;
+    max-width: 100% !important;
+    float: none !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+}
+
+.woocommerce-checkout .col2-set .col-1,
+.woocommerce-checkout .col2-set .col-2 {
+    float: none !important;
+    width: 100% !important;
+    margin: 0 0 24px 0 !important;
+    padding: 0 !important;
+}
+
+/* Campos de Formulario (Nombre y Apellidos lado a lado) */
+.woocommerce-checkout .form-row-first {
+    width: 48.5% !important;
+    float: left !important;
+    margin-right: 3% !important;
+    clear: none !important;
+}
+
+.woocommerce-checkout .form-row-last {
+    width: 48.5% !important;
+    float: right !important;
+    margin-right: 0 !important;
+    clear: none !important;
+}
+
+.woocommerce-checkout .form-row-wide {
+    width: 100% !important;
+    clear: both !important;
+    float: none !important;
+}
+
+/* Columna Derecha (Resumen del Pedido & Pago Sticky) */
+.woocommerce-checkout #order_review_heading {
+    display: none !important;
+}
+
+.woocommerce-checkout #order_review {
+    flex: 0 0 440px !important;
+    width: 440px !important;
+    max-width: 100% !important;
+    float: none !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04) !important;
+    position: sticky !important;
+    top: 100px !important;
+}
+
+/* Adaptación Responsiva para Móviles / Celulares / Tabletas (< 992px) */
+@media (max-width: 991px) {
+    .woocommerce-checkout form.checkout {
+        flex-direction: column !important;
+    }
+
+    .woocommerce-checkout #customer_details,
+    .woocommerce-checkout .col2-set,
+    .woocommerce-checkout #order_review {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        position: static !important;
+    }
+
+    .woocommerce-checkout .form-row-first,
+    .woocommerce-checkout .form-row-last {
+        width: 100% !important;
+        float: none !important;
+        margin-right: 0 !important;
+    }
+}
+
+
 
 
