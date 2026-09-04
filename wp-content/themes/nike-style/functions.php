@@ -1262,3 +1262,19 @@ function tienda_chile_custom_shipping_rates( $rates, $package ) {
     }
     return $rates;
 }
+
+// Ocultar campo de calle y código postal en la Calculadora de Envíos del Carrito (solo solicitar Región y Comuna)
+add_filter( 'woocommerce_shipping_calculator_enable_address', '__return_false', 999 );
+add_filter( 'woocommerce_shipping_calculator_enable_postcode', '__return_false', 999 );
+
+// Limpiar dirección de prueba heredada en la sesión del cliente
+add_action( 'template_redirect', function() {
+    if ( function_exists( 'WC' ) && WC()->customer ) {
+        $addr = (string) WC()->customer->get_shipping_address();
+        if ( strpos( strtolower( $addr ), 'suspiros' ) !== false ) {
+            WC()->customer->set_shipping_address( '' );
+            WC()->customer->set_shipping_address_1( '' );
+            WC()->customer->set_shipping_address_2( '' );
+        }
+    }
+} );
