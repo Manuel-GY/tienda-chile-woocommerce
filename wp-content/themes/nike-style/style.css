@@ -2908,11 +2908,42 @@ button:active,
     border-bottom: 1px solid #f1f5f9 !important;
 }
 
-/* Campos de Formulario de Checkout */
+/* Layout de Grilla 2 Columnas para Campos de Checkout */
+.woocommerce-checkout .woocommerce-billing-fields__field-wrapper,
+.woocommerce-checkout .woocommerce-shipping-fields__field-wrapper {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+    width: 100% !important;
+}
+
 .woocommerce-checkout .form-row {
-    margin-bottom: 16px !important;
+    grid-column: span 1 !important;
+    width: 100% !important;
+    float: none !important;
+    clear: none !important;
+    margin-bottom: 0 !important;
     padding: 0 !important;
 }
+
+/* Campos a 100% de Ancho (Correo, Dirección, Notas) */
+.woocommerce-checkout .form-row-wide,
+.woocommerce-checkout #billing_email_field,
+.woocommerce-checkout #billing_address_1_field,
+.woocommerce-checkout #billing_address_2_field,
+.woocommerce-checkout #order_comments_field {
+    grid-column: span 2 !important;
+    width: 100% !important;
+}
+
+.woocommerce-checkout #billing_first_name_field { grid-column: 1 !important; }
+.woocommerce-checkout #billing_last_name_field  { grid-column: 2 !important; }
+
+.woocommerce-checkout #billing_rut_field        { grid-column: 1 !important; }
+.woocommerce-checkout #billing_phone_field      { grid-column: 2 !important; }
+
+.woocommerce-checkout #billing_state_field      { grid-column: 1 !important; }
+.woocommerce-checkout #billing_city_field       { grid-column: 2 !important; }
 
 .woocommerce-checkout .form-row label {
     font-size: 12.5px !important;

@@ -1078,24 +1078,38 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
 add_filter( 'woocommerce_checkout_fields', 'tienda_chile_optimize_checkout_fields_order', 999 );
 function tienda_chile_optimize_checkout_fields_order( $fields ) {
     if ( isset( $fields['billing'] ) ) {
-        $fields['billing']['billing_first_name']['class'] = array( 'form-row-first' );
-        $fields['billing']['billing_last_name']['class']  = array( 'form-row-last' );
+        $fields['billing']['billing_first_name']['priority'] = 10;
+        $fields['billing']['billing_first_name']['class']    = array( 'form-row-first' );
+
+        $fields['billing']['billing_last_name']['priority']  = 20;
+        $fields['billing']['billing_last_name']['class']   = array( 'form-row-last' );
         
         if ( isset( $fields['billing']['billing_rut'] ) ) {
-            $fields['billing']['billing_rut']['class']    = array( 'form-row-first' );
-            $fields['billing']['billing_phone']['class']  = array( 'form-row-last' );
+            $fields['billing']['billing_rut']['priority']    = 30;
+            $fields['billing']['billing_rut']['class']       = array( 'form-row-first' );
+            
+            $fields['billing']['billing_phone']['priority']  = 40;
+            $fields['billing']['billing_phone']['class']     = array( 'form-row-last' );
         } else {
-            $fields['billing']['billing_phone']['class']  = array( 'form-row-first' );
+            $fields['billing']['billing_phone']['priority']  = 30;
+            $fields['billing']['billing_phone']['class']     = array( 'form-row-first' );
         }
         $fields['billing']['billing_phone']['required'] = false;
         
-        $fields['billing']['billing_email']['class']      = array( 'form-row-wide' );
+        $fields['billing']['billing_email']['priority']      = 50;
+        $fields['billing']['billing_email']['class']         = array( 'form-row-wide' );
         
-        $fields['billing']['billing_state']['class']      = array( 'form-row-first' );
-        $fields['billing']['billing_city']['class']       = array( 'form-row-last' );
+        $fields['billing']['billing_state']['priority']      = 60;
+        $fields['billing']['billing_state']['class']         = array( 'form-row-first' );
+
+        $fields['billing']['billing_city']['priority']       = 70;
+        $fields['billing']['billing_city']['class']          = array( 'form-row-last' );
         
-        $fields['billing']['billing_address_1']['class']  = array( 'form-row-wide' );
-        $fields['billing']['billing_address_2']['class']  = array( 'form-row-wide' );
+        $fields['billing']['billing_address_1']['priority']  = 80;
+        $fields['billing']['billing_address_1']['class']     = array( 'form-row-wide' );
+
+        $fields['billing']['billing_address_2']['priority']  = 90;
+        $fields['billing']['billing_address_2']['class']     = array( 'form-row-wide' );
     }
 
     if ( isset( $fields['order']['order_comments'] ) ) {
