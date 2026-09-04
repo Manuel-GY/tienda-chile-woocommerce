@@ -139,10 +139,10 @@ function nike_style_master_header_bar() {
                     <?php echo nike_style_get_svg_logo( 'header' ); ?>
                 </a>
             </div>
-            <!-- 2. Pago 100% Seguro SSL 🔒 (Derecha) -->
+            <!-- 2. Compra 100% Protegida & Garantizada MercadoLibre Style (Derecha) -->
             <div class="nike-checkout-ssl-pill">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                <span class="nike-ssl-text">Pago 100% Seguro SSL 🔒</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span class="nike-ssl-text">🔒 Compra 100% Protegida & Garantizada</span>
             </div>
         </div>
         <?php
@@ -1052,7 +1052,7 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
     if ( 'woocommerce' === $domain || empty( $domain ) || false !== strpos( $text, 'Your personal data' ) ) {
         switch ( $text ) {
             case 'Billing details':
-                return 'Datos de Cliente & Despacho 🚚';
+                return '📍 1. ¿Dónde enviamos tu compra?';
             case 'Shipping details':
                 return 'Dirección de Despacho';
             case 'Additional information':
@@ -1062,9 +1062,9 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
             case 'Notes about your order, e.g. special notes for delivery.':
                 return 'Indicaciones especiales para la entrega (ej: dejar en conserjería).';
             case 'Your order':
-                return 'Resumen del Pedido';
+                return 'Resumen de compra';
             case 'Place order':
-                return 'Realizar el Pedido';
+                return 'Continuar y Pagar';
             case 'Have a coupon?':
                 return '¿Tienes un cupón de descuento?';
             case 'Click here to enter your code':
@@ -1097,6 +1097,19 @@ function tienda_chile_translate_woocommerce_strings( $translated_text, $text, $d
     }
 
     return $translated_text;
+}
+
+// Mostrar Miniaturas de Producto en la Tabla de Resumen del Checkout estilo Mercado Libre
+add_filter( 'woocommerce_cart_item_name', 'tienda_chile_checkout_product_thumbnails', 20, 3 );
+function tienda_chile_checkout_product_thumbnails( $product_name, $cart_item, $cart_item_key ) {
+    if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
+        $_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+        if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 ) {
+            $thumbnail = $_product->get_image( array( 48, 48 ) );
+            return '<div class="nike-checkout-item-thumb-row">' . $thumbnail . '<div class="nike-checkout-item-info"><span class="nike-item-title">' . esc_html( $_product->get_name() ) . '</span><span class="nike-item-qty-tag">Cantidad: ' . intval( $cart_item['quantity'] ) . '</span></div></div>';
+        }
+    }
+    return $product_name;
 }
 
 // Forzar país predeterminado a Chile
@@ -1376,19 +1389,19 @@ add_action( 'woocommerce_admin_order_data_after_billing_address', function( $ord
     }
 }, 10, 1 );
 
-// Botón de Pago con Candado de Seguridad
+// Botón Principal de Pago MercadoLibre Style
 add_filter( 'woocommerce_order_button_html', function( $button_html ) {
-    return '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="Realizar el Pedido" data-value="Realizar el Pedido">REALIZAR EL PEDIDO 🔒</button>';
+    return '<button type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="CONTINUAR Y PAGAR ➔" data-value="CONTINUAR Y PAGAR ➔">CONTINUAR Y PAGAR ➔</button>';
 } );
 
-// Sellos de confianza y seguridad bajo el botón de checkout
+// Sellos de confianza y seguridad MercadoLibre Style bajo el botón
 add_action( 'woocommerce_review_order_after_submit', function() {
     ?>
     <div class="nike-checkout-trust-footer">
         <div class="nike-trust-badge-row">
+            <span class="nike-trust-badge">🛡️ Compra Protegida con Devolución Gratis</span>
             <span class="nike-trust-badge">🔒 Cifrado SSL 256-bit</span>
-            <span class="nike-trust-badge">🛡️ Compra Protegida</span>
-            <span class="nike-trust-badge">🇨🇱 Despacho Exprés</span>
+            <span class="nike-trust-badge">🇨🇱 Despacho Exprés Chile</span>
         </div>
     </div>
     <?php
