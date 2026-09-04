@@ -742,3 +742,86 @@ add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
     $fragments['span.nike-mobile-cart-badge'] = '<span class="nike-mobile-cart-badge">' . esc_html( $cart_count ) . '</span>';
     return $fragments;
 } );
+
+// ------------------------------------------------------------------
+// 13. TRADUCCIÓN AL ESPAÑOL CHILENO DEL TEXTO DE PRIVACIDAD EN CHECKOUT
+// ------------------------------------------------------------------
+add_filter( 'woocommerce_get_privacy_policy_text', 'tienda_chile_checkout_privacy_text', 20, 2 );
+function tienda_chile_checkout_privacy_text( $text, $type ) {
+    if ( 'checkout' === $type ) {
+        $text = 'Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en este sitio web y para otros fines descritos en nuestra <a href="javascript:void(0)" onclick="nikeOpenModal(\'privacy\')" class="woocommerce-privacy-policy-link">política de privacidad</a>.';
+    }
+    return $text;
+}
+
+add_filter( 'gettext', 'tienda_chile_translate_privacy_gettext', 20, 3 );
+function tienda_chile_translate_privacy_gettext( $translated_text, $text, $domain ) {
+    if ( false !== strpos( $text, 'Your personal data will be used to process your order' ) ) {
+        $translated_text = 'Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en este sitio web y para otros fines descritos en nuestra <a href="javascript:void(0)" onclick="nikeOpenModal(\'privacy\')" class="woocommerce-privacy-policy-link">política de privacidad</a>.';
+    }
+    return $translated_text;
+}
+
+// ------------------------------------------------------------------
+// 14. BARRA DE ENVÍO GRATIS Y MEJORAS VIBRANTES DEL CARRITO DE COMPRAS
+// ------------------------------------------------------------------
+add_action( 'woocommerce_before_cart', 'tienda_chile_cart_free_shipping_notice', 5 );
+function tienda_chile_cart_free_shipping_notice() {
+    if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) return;
+    
+    $free_shipping_limit = 50000;
+    $subtotal = WC()->cart->get_subtotal();
+    $subtotal_val = floatval( preg_replace( '/[^0-9.]/', '', $subtotal ) );
+    if ( $subtotal_val <= 0 ) {
+        $subtotal_val = WC()->cart->get_cart_contents_total();
+    }
+    
+    $diff = $free_shipping_limit - $subtotal_val;
+    $percentage = min( 100, max( 0, round( ( $subtotal_val / $free_shipping_limit ) * 100 ) ) );
+    
+    ?>
+    <div class="nike-cart-free-shipping-box">
+        <div class="nike-cart-fs-header">
+            <span class="nike-cart-fs-icon"><?php echo ( $diff <= 0 ) ? '🎉' : '🚚'; ?></span>
+            <div class="nike-cart-fs-text">
+                <?php if ( $diff <= 0 ) : ?>
+                    <strong>¡Felicidades! Tienes ENVÍO GRATIS garantizado a todo Chile 🇨🇱</strong>
+                <?php else : ?>
+                    ¡Estás a solo <strong>$<?php echo number_format( $diff, 0, ',', '.' ); ?> CLP</strong> de obtener <strong>ENVÍO GRATIS</strong> en tu compra!
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="nike-cart-fs-bar-bg">
+            <div class="nike-cart-fs-bar-fill" style="width: <?php echo $percentage; ?>%;">
+                <span class="nike-cart-fs-badge"><?php echo $percentage; ?>%</span>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+add_action( 'woocommerce_after_cart_totals', 'tienda_chile_cart_trust_badges', 10 );
+function tienda_chile_cart_trust_badges() {
+    ?>
+    <div class="nike-cart-trust-container">
+        <div class="nike-cart-trust-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Compra 100% Protegida y Garantizada</span>
+        </div>
+        <div class="nike-cart-trust-badges">
+            <span class="nike-cart-badge">⚡ Despacho 24-48h</span>
+            <span class="nike-cart-badge">🔒 Pago Cifrado SSL</span>
+            <span class="nike-cart-badge">🔄 6 Meses Garantía</span>
+        </div>
+        <div class="nike-cart-trust-payments">
+            <span>Medios de Pago Oficiales Chile:</span>
+            <div class="nike-cart-pay-icons">
+                <span class="nike-pay-tag">Webpay Plus</span>
+                <span class="nike-pay-tag">Transbank</span>
+                <span class="nike-pay-tag">Mercado Pago</span>
+                <span class="nike-pay-tag">CuentaRUT</span>
+            </div>
+        </div>
+    </div>
+    <?php
+}
