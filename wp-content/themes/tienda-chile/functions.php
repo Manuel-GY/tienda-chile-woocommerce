@@ -46,12 +46,13 @@ add_action( 'after_setup_theme', function () {
 } );
 
 // ------------------------------------------------------------------
-// 1b. SISTEMA DE SKINS (LUJO / MARKETPLACE) CON TOGGLE INSTANTÁNEO
+// 1b. SISTEMA DE SKINS (LUJO / MARKETPLACE / BOUTIQUE) CON TOGGLE INSTANTÁNEO
 // ------------------------------------------------------------------
 require get_stylesheet_directory() . '/skin-mercado-libre.php';
+require get_stylesheet_directory() . '/skin-pastel.php';
 
 /**
- * Look activo: 'lujo' (default) o 'marketplace'.
+ * Look activo: 'lujo' (default), 'marketplace' o 'pastel'.
  * Prioridad: ?look=ml en URL > cookie tc_look > default lujo.
  */
 function tienda_chile_get_look() {
@@ -60,18 +61,24 @@ function tienda_chile_get_look() {
         return $look;
     }
 
+    $valid = array( 'lujo', 'marketplace', 'pastel' );
+
     if ( isset( $_GET['look'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         $val = sanitize_key( wp_unslash( $_GET['look'] ) );
         if ( in_array( $val, array( 'ml', 'marketplace' ), true ) ) {
             $look = 'marketplace';
             return $look;
         }
+        if ( in_array( $val, array( 'pastel', 'boutique' ), true ) ) {
+            $look = 'pastel';
+            return $look;
+        }
         $look = 'lujo';
         return $look;
     }
 
-    if ( isset( $_COOKIE['tc_look'] ) && 'marketplace' === $_COOKIE['tc_look'] ) {
-        $look = 'marketplace';
+    if ( isset( $_COOKIE['tc_look'] ) && in_array( $_COOKIE['tc_look'], $valid, true ) ) {
+        $look = $_COOKIE['tc_look']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
         return $look;
     }
 
@@ -87,17 +94,30 @@ function tienda_chile_is_marketplace() {
 }
 
 /**
+ * ¿Look boutique pastel activo?
+ */
+function tienda_chile_is_pastel() {
+    return 'pastel' === tienda_chile_get_look();
+}
+
+/**
+ * ¿Look lujo (default) activo?
+ */
+function tienda_chile_is_lujo() {
+    return 'lujo' === tienda_chile_get_look();
+}
+
+/**
  * Añadir clase de skin al <body>.
  */
 function tienda_chile_skin_body_class( $classes ) {
-    $classes[] = tienda_chile_is_marketplace() ? 'tc-skin-marketplace' : 'tc-skin-lujo';
+    $classes[] = 'tc-skin-' . tienda_chile_get_look();
     return $classes;
 }
 add_filter( 'body_class', 'tienda_chile_skin_body_class', 5 );
 
 /**
  * Inyectar el header ML cuando el look marketplace está activo.
- * El .site-header de Storefront se oculta vía CSS bajo .tc-skin-marketplace.
  */
 function tienda_chile_marketplace_header() {
     if ( ! tienda_chile_is_marketplace() ) {
@@ -108,16 +128,132 @@ function tienda_chile_marketplace_header() {
 add_action( 'storefront_before_content', 'tienda_chile_marketplace_header', 2 );
 
 /**
- * Home: mosaico de categorías + beneficios estilo ML.
+ * Home: slider hero + mosaico + rails estilo ML.
  */
 function tienda_chile_marketplace_home_sections() {
     if ( ! tienda_chile_is_marketplace() ) {
         return;
     }
+    tc_ml_hero_slider();
     tc_ml_home_category_strip();
+    tc_ml_home_rail();
     tc_ml_home_products();
 }
 add_action( 'storefront_before_content', 'tienda_chile_marketplace_home_sections', 4 );
+
+/**
+ * Inyectar el header Boutique cuando el look pastel está activo.
+ */
+function tienda_chile_pastel_header() {
+    if ( ! tienda_chile_is_pastel() ) {
+        return;
+    }
+    tc_pastel_header();
+}
+add_action( 'storefront_before_content', 'tienda_chile_pastel_header', 2 );
+
+/**
+ * Home boutique.
+ */
+function tienda_chile_pastel_home_sections() {
+    if ( ! tienda_chile_is_pastel() ) {
+        return;
+    }
+    tc_pastel_home();
+}
+add_action( 'storefront_before_content', 'tienda_chile_pastel_home_sections', 4 );
+
+// ------------------------------------------------------------------
+// HOOKS ESPECIALES DEL SKIN MARKETPLACE (TOOLBAR, FILTROS, BUY BOX)
+// ------------------------------------------------------------------
+
+/**
+ * Tienda ML: abrir layout (sidebar + main) en tienda/categoría.
+ */
+function tienda_chile_ml_shop_layout_open() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+        echo '<div class="tc-ml-shop-layout">';
+        echo '<aside class="tc-ml-filter-side">';
+        tc_ml_shop_filters();
+        echo '</aside>';
+        echo '<div class="tc-ml-shop-main">';
+    }
+}
+add_action( 'woocommerce_before_main_content', 'tienda_chile_ml_shop_layout_open', 25 );
+
+/**
+ * Tienda ML: cerrar layout después del grid.
+ */
+function tienda_chile_ml_shop_layout_close() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+        echo '</div></div>';
+    }
+}
+add_action( 'woocommerce_after_main_content', 'tienda_chile_ml_shop_layout_close', 35 );
+
+/**
+ * Tienda ML: toolbar superior (conteo + ordenar).
+ */
+function tienda_chile_ml_shop_toolbar_open() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+        remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+        remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+        echo '<div class="tc-ml-shop-toolbar">';
+        echo '<div class="tc-ml-count">';
+    }
+}
+add_action( 'woocommerce_before_shop_loop', 'tienda_chile_ml_shop_toolbar_open', 5 );
+
+function tienda_chile_ml_shop_toolbar_close() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    if ( ( function_exists( 'is_shop' ) && is_shop() ) || ( function_exists( 'is_product_category' ) && is_product_category() ) ) {
+        if ( function_exists( 'woocommerce_result_count' ) ) {
+            woocommerce_result_count();
+        }
+        echo '</div>';
+        if ( function_exists( 'woocommerce_catalog_ordering' ) ) {
+            woocommerce_catalog_ordering();
+        }
+        echo '</div>';
+    }
+}
+add_action( 'woocommerce_before_shop_loop', 'tienda_chile_ml_shop_toolbar_close', 31 );
+
+/**
+ * Ficha de producto ML: extras del buy box (cuotas, compra protegida, vendido por).
+ */
+function tienda_chile_ml_buybox_extras() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    tc_ml_buybox_extras();
+}
+add_action( 'woocommerce_single_product_summary', 'tienda_chile_ml_buybox_extras', 24 );
+
+/**
+ * Móvil ML: barra fija de compra en la ficha de producto.
+ */
+function tienda_chile_ml_mobile_sticky_buy() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    if ( ! function_exists( 'is_product' ) || ! is_product() ) {
+        return;
+    }
+    tc_ml_mobile_sticky_buy();
+}
+add_action( 'wp_footer', 'tienda_chile_ml_mobile_sticky_buy', 40 );
 
 /**
  * Cache-buster para los estilos y el JS del skin.
@@ -132,14 +268,24 @@ function tienda_chile_skin_asset_version() {
 }
 
 /**
- * Cargar el JS del toggle de skin en el footer.
+ * Cargar el JS del toggle de skin y del skin activo en el footer.
  */
 function tienda_chile_marketplace_toggle_js() {
-    $js_url = get_stylesheet_directory_uri() . '/js/skin-toggle.js';
-    $v      = tienda_chile_skin_asset_version();
-    echo '<script id="tc-skin-toggle-js" src="' . esc_url( $js_url ) . '?v=' . esc_attr( $v ) . '" defer></script>' . "\n";
+    $v = tienda_chile_skin_asset_version();
+    echo '<script id="tc-skin-toggle-js" src="' . esc_url( get_stylesheet_directory_uri() . '/js/skin-toggle.js' ) . '?v=' . esc_attr( $v ) . '" defer></script>' . "\n";
+
+    if ( tienda_chile_is_marketplace() ) {
+        echo '<script id="tc-skin-ml-js" src="' . esc_url( get_stylesheet_directory_uri() . '/js/skin-marketplace.js' ) . '?v=' . esc_attr( $v ) . '" defer></script>' . "\n";
+    }
 }
 add_action( 'wp_footer', 'tienda_chile_marketplace_toggle_js', 5 );
+
+/**
+ * Traducir el título de "Productos relacionados" en la ficha de producto.
+ */
+add_filter( 'woocommerce_product_related_products_heading', function() {
+    return 'Productos similares';
+} );
 
 // ------------------------------------------------------------------
 // 2. FORMATO DE PRECIOS EN CLP (Peso Chileno)
@@ -224,7 +370,7 @@ add_action( 'init', 'nike_style_remove_storefront_header_actions', 99 );
 add_action( 'after_setup_theme', 'nike_style_remove_storefront_header_actions', 99 );
 
 function nike_style_master_header_bar() {
-    if ( tienda_chile_is_marketplace() ) {
+    if ( ! tienda_chile_is_lujo() ) {
         return;
     }
     if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
@@ -422,7 +568,7 @@ function nike_style_top_bar() {
     if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
         return;
     }
-    if ( tienda_chile_is_marketplace() ) {
+    if ( tienda_chile_is_marketplace() || tienda_chile_is_pastel() ) {
         return;
     }
     ?>
@@ -587,7 +733,7 @@ function nike_style_hide_default_shop_title() {
 add_action( 'woocommerce_before_main_content', 'nike_style_hide_default_shop_title', 5 );
 
 function nike_style_render_homepage_elements() {
-    if ( ( is_front_page() || is_home() ) && ! tienda_chile_is_marketplace() ) {
+    if ( ( is_front_page() || is_home() ) && tienda_chile_is_lujo() ) {
         $theme_uri = get_stylesheet_directory_uri();
         $shop_url  = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
         ?>
@@ -799,6 +945,10 @@ function nike_style_product_card_elements() {
         tc_ml_product_card_elements();
         return;
     }
+    if ( tienda_chile_is_pastel() ) {
+        tc_pastel_product_card_elements();
+        return;
+    }
     ?>
     <div class="nike-product-rating-box">
         <div class="nike-stars" aria-label="Calificación 5 de 5 estrellas">★★★★★</div>
@@ -893,6 +1043,10 @@ add_action( 'init', function() {
 function nike_style_newsletter_and_footer() {
     if ( tienda_chile_is_marketplace() ) {
         tc_ml_footer();
+        return;
+    }
+    if ( tienda_chile_is_pastel() ) {
+        tc_pastel_footer();
         return;
     }
     $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );

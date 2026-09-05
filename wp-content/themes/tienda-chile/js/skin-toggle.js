@@ -1,4 +1,4 @@
-/* Tienda Chile - Toggle de skin (Lujo / Marketplace) */
+/* Tienda Chile - Toggle de skin (Lujo / Marketplace / Boutique Pastel) */
 (function () {
     'use strict';
 
@@ -8,8 +8,15 @@
         if (look === 'ml' || look === 'marketplace') {
             return 'marketplace';
         }
+        if (look === 'pastel' || look === 'boutique') {
+            return 'pastel';
+        }
+        if (look === 'lujo') {
+            return 'lujo';
+        }
         var m = document.cookie.match(/(?:^|;\s*)tc_look=([^;]*)/);
-        return (m && m[1] === 'marketplace') ? 'marketplace' : 'lujo';
+        var c = m ? decodeURIComponent(m[1]) : '';
+        return (c === 'marketplace') ? 'marketplace' : (c === 'pastel' ? 'pastel' : 'lujo');
     }
 
     function setLook(look) {
@@ -28,22 +35,22 @@
         toggle.setAttribute('role', 'group');
         toggle.setAttribute('aria-label', 'Cambiar apariencia del sitio');
 
-        var reset = document.createElement('button');
-        reset.type = 'button';
-        reset.className = 'tc-skin-toggle-btn tc-skin-toggle-reset' + (current === 'lujo' ? ' tc-skin-on' : '');
-        reset.setAttribute('aria-pressed', current === 'lujo' ? 'true' : 'false');
-        reset.innerHTML = '<span class="tc-skin-toggle-dot"></span> Estilo Lujo';
-        reset.addEventListener('click', function () { setLook('lujo'); });
+        var options = [
+            { look: 'lujo', label: 'Lujo', cls: 'tc-skin-toggle-lujo' },
+            { look: 'marketplace', label: 'MercadoLibre', cls: 'tc-skin-toggle-ml' },
+            { look: 'pastel', label: 'Boutique Pastel', cls: 'tc-skin-toggle-pastel' }
+        ];
 
-        var ml = document.createElement('button');
-        ml.type = 'button';
-        ml.className = 'tc-skin-toggle-btn tc-skin-toggle-ml' + (current === 'marketplace' ? ' tc-skin-on' : '');
-        ml.setAttribute('aria-pressed', current === 'marketplace' ? 'true' : 'false');
-        ml.innerHTML = '<span class="tc-skin-toggle-dot"></span> Estilo MercadoLibre';
-        ml.addEventListener('click', function () { setLook('marketplace'); });
+        options.forEach(function (opt) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'tc-skin-toggle-btn ' + opt.cls + (current === opt.look ? ' tc-skin-on' : '');
+            btn.setAttribute('aria-pressed', current === opt.look ? 'true' : 'false');
+            btn.innerHTML = '<span class="tc-skin-toggle-dot"></span> ' + opt.label;
+            btn.addEventListener('click', function () { setLook(opt.look); });
+            toggle.appendChild(btn);
+        });
 
-        toggle.appendChild(reset);
-        toggle.appendChild(ml);
         document.body.appendChild(toggle);
     }
 

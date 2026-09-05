@@ -48,14 +48,24 @@ cd tienda-chile-woocommerce
   - 🚚 **Política de Envíos** (Chilexpress, Starken, Blue Express, cobertura nacional y tiempos de entrega).
   - 🔄 **Política de Devoluciones y Garantía Legal** (Ley N° 19.496 del Consumidor, 6 meses de garantía legal y 10 días de retracto).
 
-### 🛒 Skin Alternativo "Marketplace" (Inspirado en Mercado Libre)
-El tema incluye **dos apariencias intercambiables al instante** sin duplicar código ni perder la lógica de e-commerce chilena (RUT, Región/Comuna, Webpay, CuentaRUT):
+### 🛒 Sistema de 3 Skins Intercambiables (Toggle Instantáneo)
+El tema incluye **tres apariencias intercambiables al instante** sin duplicar lógica de e-commerce chilena (RUT, Región/Comuna, Webpay, CuentaRUT):
 
-- **Toggle instantáneo**: botón flotante abajo a la izquierda (`Estilo Lujo` / `Estilo MercadoLibre`) que persiste en cookie `tc_look`.
-- **Compartible por URL**: `?look=ml` fuerza el look marketplace y `?look=lujo` el look clásico, ideal para demostraciones al cliente.
-- **Look Marketplace**: header amarillo `#FFE600` con buscador grande de productos, barra de categorías, mosaico de categorías + beneficios (`Envío gratis desde CLP$50.000`, `Compra Protegida`), tarjetas de producto con **precio azul `#3483FA`**, descuento en verde y "Envío gratis", botones azules, stepper de checkout con acentos amarillos y footer oscuro con newsletter.
-- **Estilo inspirado, no clon**: mantiene la marca **Tienda Chile**, sin logos ni identificadores de Mercado Libre (evita conflicto de marca registrada).
-- Implementación: `skin-mercado-libre.php` (renders), bloque CSS `SKIN MARKETPLACE` en `style.css` (todo prefijado `.tc-skin-marketplace`), `js/skin-toggle.js` (toggle).
+- **Toggle instantáneo**: botón flotante abajo a la izquierda (`Estilo Lujo` / `MercadoLibre` / `Boutique Pastel`) que persiste en cookie `tc_look` por 365 días.
+- **Compartible por URL**: `?look=lujo`, `?look=ml`, `?look=pastel` (también `marketplace`/`boutique`), ideal para demostraciones al cliente.
+- **body class dinámico**: `tc-skin-lujo` / `tc-skin-marketplace` / `tc-skin-pastel`; cada skin inyecta su propio header, home, tarjetas y footer (`skin-mercado-libre.php`, `skin-pastel.php`) y oculta el header de Storefront.
+
+#### 🟡 Look Marketplace (Inspirado en Mercado Libre)
+Header amarillo `#FFE600` con buscador grande de productos, barra de categorías, **hero slider con autoplay y dots**, mosaico de categorías + franja de beneficios (**Envío gratis desde CLP$50.000**, **Compra Protegida**), rail horizontal "Nuevos ingresos" con flechas, **sidebar de filtros** en tienda/categoría (categorías + rango de precio CLP), toolbar con conteo y ordenamiento, tarjetas con **precio azul `#3483FA`**, descuento en verde, "Nuevo / Más vendido" y "Vendido por Tienda Chile", buy box con **6 cuotas Webpay y Compra Protegida**, **barra sticky móvil de compra** y footer oscuro con newsletter.
+- *Estilo inspirado, no clon*: mantiene la marca **Tienda Chile**, sin logos ni identificadores de Mercado Libre.
+- Implementación: `skin-mercado-libre.php` (renders), bloque CSS `SKIN MARKETPLACE` en `style.css`, `js/skin-toggle.js` (toggle), `js/skin-marketplace.js` (slider/rail/sticky).
+
+#### 🌸 Look Boutique Pastel (Editorial de Diseño)
+Estética boutique editorial: fondo marfil `#FBF7F3`, tipografía serif (Georgia) en títulos, acentos terracota `#C97064` y salvia `#8FA58C`. Header minimalista con wordmark + nav horizontal, **hero editorial** con imagen en marco orgánico y sello, categorías en tarjetas pastel redondeadas, favoritos con botones pill, footer con newsletter oscuro y badges de pago/despacho.
+- Implementación: `skin-pastel.php` (renders), bloque CSS `SKIN BOUTIQUE PASTEL` (todo prefijado `.tc-skin-pastel`).
+
+#### 📸 Fotos reales de productos
+Los 30 productos tienen foto real asignada (`_thumbnail_id`) descargada desde **Picsum Photos** (fotos libres, 600×600, deterministas por SKU). Script re-ejecutable e idempotente en `importar-imagenes-productos.php` (CLI), con mapeo SKU→imagen y modo `--force` para re-importar.
 
 ---
 
@@ -78,15 +88,18 @@ proyecto-tienda-chile/
 │   ├── INSTRUCCIONES-COMO-SUBIR-PRODUCTOS.md
 │   └── plantilla-30-productos.csv        # Plantilla CSV para importación
 ├── importar-productos.php               # Script PHP de importación masiva
+├── importar-imagenes-productos.php      # Script PHP CLI: fotos reales por SKU (Picsum, idempotente)
 ├── wp-content/
 │   ├── plugins/                         # WooCommerce + HUP Kit Chile
 │   └── themes/
-│       └── tienda-chile/                  # Tema personalizado Ultra Luxury
+│       └── tienda-chile/                  # Tema personalizado con sistema de 3 skins
 │           ├── functions.php            # Lógica PHP, hooks, modales, SVG logos y widgets
 │           ├── skin-mercado-libre.php   # Renders del look Marketplace (toggle)
-│           ├── style.css                # Estilos CSS responsive ultra luxury & mobile (+ skin ML)
+│           ├── skin-pastel.php          # Renders del look Boutique Pastel (toggle)
+│           ├── style.css                # Estilos CSS responsive ultra luxury & mobile (+ skins)
 │           ├── js/
-│           │   └── skin-toggle.js       # Botón flotante de cambio de apariencia
+│           │   ├── skin-toggle.js       # Botón flotante de cambio de apariencia (3 skins)
+│           │   └── skin-marketplace.js  # Slider hero, rail horizontal y sticky buy ML
 │           └── images/                  # Fotografías de alta resolución (Hero, Beauty, Tech)
 ├── wp-config-sample.php
 └── README.md                            # Documentación del proyecto
@@ -106,13 +119,18 @@ Capturas de referencia del diseño actual en `capturas-portafolio/`:
 | `04-carrito.png` | Carrito con producto (total CLP, envío, sellos de confianza) |
 | `04-cuenta.png` | Mi Cuenta (login/registro) |
 | `05-checkout.png` | Checkout chileno (RUT, Región/Comuna, Webpay Plus, CuentaRUT) |
-| `ml-01-home.png` | Home look Marketplace (header amarillo, mosaico de categorías) |
-| `ml-02-tienda.png` | Catálogo look Marketplace (tarjetas azules, envío gratis) |
-| `ml-03-producto.png` | Ficha de producto look Marketplace |
+| `ml-01-home.png` | Home look Marketplace (hero slider, mosaico de categorías, rails) |
+| `ml-02-tienda.png` | Catálogo look Marketplace (sidebar de filtros, toolbar, tarjetas) |
+| `ml-03-producto.png` | Ficha de producto look Marketplace (cuotas Webpay, Compra Protegida) |
 | `ml-04-carrito.png` | Carrito look Marketplace |
 | `ml-05-checkout.png` | Checkout look Marketplace (RUT, Webpay, stepper amarillo) |
+| `pastel-01-home.png` | Home Boutique Pastel (hero editorial, categorías pastel, favoritos) |
+| `pastel-02-tienda.png` | Catálogo Boutique Pastel (tarjetas blancas redondeadas, botones pill) |
+| `pastel-03-producto.png` | Ficha de producto Boutique Pastel |
+| `pastel-04-carrito.png` | Carrito Boutique Pastel |
+| `pastel-05-checkout.png` | Checkout Boutique Pastel |
 
-*(Las capturas fueron tomadas a 1440×900 con navegador headless.)*
+*(Las capturas fueron tomadas a 1440×1000 con navegador headless.)*
 
 ---
 
