@@ -28,7 +28,7 @@ function nike_style_enqueue_styles() {
         'tienda-chile',
         get_stylesheet_directory_uri() . '/style.css',
         array( $parent_style ),
-        wp_get_theme()->get( 'Version' )
+        tienda_chile_skin_asset_version()
     );
 }
 add_action( 'wp_enqueue_scripts', 'nike_style_enqueue_styles' );
@@ -44,6 +44,102 @@ add_action( 'after_setup_theme', function () {
     add_theme_support( 'wc-product-gallery-lightbox' );
     add_theme_support( 'wc-product-gallery-slider' );
 } );
+
+// ------------------------------------------------------------------
+// 1b. SISTEMA DE SKINS (LUJO / MARKETPLACE) CON TOGGLE INSTANTÁNEO
+// ------------------------------------------------------------------
+require get_stylesheet_directory() . '/skin-mercado-libre.php';
+
+/**
+ * Look activo: 'lujo' (default) o 'marketplace'.
+ * Prioridad: ?look=ml en URL > cookie tc_look > default lujo.
+ */
+function tienda_chile_get_look() {
+    static $look = null;
+    if ( null !== $look ) {
+        return $look;
+    }
+
+    if ( isset( $_GET['look'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $val = sanitize_key( wp_unslash( $_GET['look'] ) );
+        if ( in_array( $val, array( 'ml', 'marketplace' ), true ) ) {
+            $look = 'marketplace';
+            return $look;
+        }
+        $look = 'lujo';
+        return $look;
+    }
+
+    if ( isset( $_COOKIE['tc_look'] ) && 'marketplace' === $_COOKIE['tc_look'] ) {
+        $look = 'marketplace';
+        return $look;
+    }
+
+    $look = 'lujo';
+    return $look;
+}
+
+/**
+ * ¿Look marketplace (estilo Mercado Libre) activo?
+ */
+function tienda_chile_is_marketplace() {
+    return 'marketplace' === tienda_chile_get_look();
+}
+
+/**
+ * Añadir clase de skin al <body>.
+ */
+function tienda_chile_skin_body_class( $classes ) {
+    $classes[] = tienda_chile_is_marketplace() ? 'tc-skin-marketplace' : 'tc-skin-lujo';
+    return $classes;
+}
+add_filter( 'body_class', 'tienda_chile_skin_body_class', 5 );
+
+/**
+ * Inyectar el header ML cuando el look marketplace está activo.
+ * El .site-header de Storefront se oculta vía CSS bajo .tc-skin-marketplace.
+ */
+function tienda_chile_marketplace_header() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    tc_ml_header();
+}
+add_action( 'storefront_before_content', 'tienda_chile_marketplace_header', 2 );
+
+/**
+ * Home: mosaico de categorías + beneficios estilo ML.
+ */
+function tienda_chile_marketplace_home_sections() {
+    if ( ! tienda_chile_is_marketplace() ) {
+        return;
+    }
+    tc_ml_home_category_strip();
+    tc_ml_home_products();
+}
+add_action( 'storefront_before_content', 'tienda_chile_marketplace_home_sections', 4 );
+
+/**
+ * Cache-buster para los estilos y el JS del skin.
+ */
+function tienda_chile_skin_asset_version() {
+    static $version = null;
+    if ( null === $version ) {
+        $style_file = get_stylesheet_directory() . '/style.css';
+        $version    = file_exists( $style_file ) ? (string) filemtime( $style_file ) : '3.0.0';
+    }
+    return $version;
+}
+
+/**
+ * Cargar el JS del toggle de skin en el footer.
+ */
+function tienda_chile_marketplace_toggle_js() {
+    $js_url = get_stylesheet_directory_uri() . '/js/skin-toggle.js';
+    $v      = tienda_chile_skin_asset_version();
+    echo '<script id="tc-skin-toggle-js" src="' . esc_url( $js_url ) . '?v=' . esc_attr( $v ) . '" defer></script>' . "\n";
+}
+add_action( 'wp_footer', 'tienda_chile_marketplace_toggle_js', 5 );
 
 // ------------------------------------------------------------------
 // 2. FORMATO DE PRECIOS EN CLP (Peso Chileno)
@@ -128,6 +224,9 @@ add_action( 'init', 'nike_style_remove_storefront_header_actions', 99 );
 add_action( 'after_setup_theme', 'nike_style_remove_storefront_header_actions', 99 );
 
 function nike_style_master_header_bar() {
+    if ( tienda_chile_is_marketplace() ) {
+        return;
+    }
     if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
         ?>
         <div class="nike-master-header-row nike-checkout-distraction-free-row">
@@ -323,6 +422,9 @@ function nike_style_top_bar() {
     if ( function_exists( 'is_checkout' ) && is_checkout() && ! is_wc_endpoint_url( 'order-received' ) ) {
         return;
     }
+    if ( tienda_chile_is_marketplace() ) {
+        return;
+    }
     ?>
     <div class="nike-topbar">
         <div class="nike-topbar-content">
@@ -485,7 +587,7 @@ function nike_style_hide_default_shop_title() {
 add_action( 'woocommerce_before_main_content', 'nike_style_hide_default_shop_title', 5 );
 
 function nike_style_render_homepage_elements() {
-    if ( is_front_page() || is_home() ) {
+    if ( ( is_front_page() || is_home() ) && ! tienda_chile_is_marketplace() ) {
         $theme_uri = get_stylesheet_directory_uri();
         $shop_url  = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
         ?>
@@ -693,6 +795,10 @@ remove_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_l
 
 // Estrellas 5.0 (★★★★★) y Badges de Envío Rápido en tarjetas de productos
 function nike_style_product_card_elements() {
+    if ( tienda_chile_is_marketplace() ) {
+        tc_ml_product_card_elements();
+        return;
+    }
     ?>
     <div class="nike-product-rating-box">
         <div class="nike-stars" aria-label="Calificación 5 de 5 estrellas">★★★★★</div>
@@ -785,6 +891,10 @@ add_action( 'init', function() {
 } );
 
 function nike_style_newsletter_and_footer() {
+    if ( tienda_chile_is_marketplace() ) {
+        tc_ml_footer();
+        return;
+    }
     $shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/tienda' );
     ?>
     <div class="nike-footer-wrapper">
@@ -1122,7 +1232,7 @@ function nike_style_mobile_bottom_bar() {
 
     <script>
     function nikeToggleMobileSearch() {
-        var searchInput = document.querySelector('.site-header .site-search input[type="search"]') || document.querySelector('.site-header input.search-field');
+        var searchInput = document.querySelector('.tc-ml-search-input') || document.querySelector('.site-header .site-search input[type="search"]') || document.querySelector('.site-header input.search-field');
         if (searchInput) {
             searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
             setTimeout(function() {

@@ -48,6 +48,15 @@ cd tienda-chile-woocommerce
   - 🚚 **Política de Envíos** (Chilexpress, Starken, Blue Express, cobertura nacional y tiempos de entrega).
   - 🔄 **Política de Devoluciones y Garantía Legal** (Ley N° 19.496 del Consumidor, 6 meses de garantía legal y 10 días de retracto).
 
+### 🛒 Skin Alternativo "Marketplace" (Inspirado en Mercado Libre)
+El tema incluye **dos apariencias intercambiables al instante** sin duplicar código ni perder la lógica de e-commerce chilena (RUT, Región/Comuna, Webpay, CuentaRUT):
+
+- **Toggle instantáneo**: botón flotante abajo a la izquierda (`Estilo Lujo` / `Estilo MercadoLibre`) que persiste en cookie `tc_look`.
+- **Compartible por URL**: `?look=ml` fuerza el look marketplace y `?look=lujo` el look clásico, ideal para demostraciones al cliente.
+- **Look Marketplace**: header amarillo `#FFE600` con buscador grande de productos, barra de categorías, mosaico de categorías + beneficios (`Envío gratis desde CLP$50.000`, `Compra Protegida`), tarjetas de producto con **precio azul `#3483FA`**, descuento en verde y "Envío gratis", botones azules, stepper de checkout con acentos amarillos y footer oscuro con newsletter.
+- **Estilo inspirado, no clon**: mantiene la marca **Tienda Chile**, sin logos ni identificadores de Mercado Libre (evita conflicto de marca registrada).
+- Implementación: `skin-mercado-libre.php` (renders), bloque CSS `SKIN MARKETPLACE` en `style.css` (todo prefijado `.tc-skin-marketplace`), `js/skin-toggle.js` (toggle).
+
 ---
 
 ## 🛍️ Gestión de Productos e Importación Masiva
@@ -74,7 +83,10 @@ proyecto-tienda-chile/
 │   └── themes/
 │       └── tienda-chile/                  # Tema personalizado Ultra Luxury
 │           ├── functions.php            # Lógica PHP, hooks, modales, SVG logos y widgets
-│           ├── style.css                # Estilos CSS responsive ultra luxury & mobile
+│           ├── skin-mercado-libre.php   # Renders del look Marketplace (toggle)
+│           ├── style.css                # Estilos CSS responsive ultra luxury & mobile (+ skin ML)
+│           ├── js/
+│           │   └── skin-toggle.js       # Botón flotante de cambio de apariencia
 │           └── images/                  # Fotografías de alta resolución (Hero, Beauty, Tech)
 ├── wp-config-sample.php
 └── README.md                            # Documentación del proyecto
@@ -94,6 +106,11 @@ Capturas de referencia del diseño actual en `capturas-portafolio/`:
 | `04-carrito.png` | Carrito con producto (total CLP, envío, sellos de confianza) |
 | `04-cuenta.png` | Mi Cuenta (login/registro) |
 | `05-checkout.png` | Checkout chileno (RUT, Región/Comuna, Webpay Plus, CuentaRUT) |
+| `ml-01-home.png` | Home look Marketplace (header amarillo, mosaico de categorías) |
+| `ml-02-tienda.png` | Catálogo look Marketplace (tarjetas azules, envío gratis) |
+| `ml-03-producto.png` | Ficha de producto look Marketplace |
+| `ml-04-carrito.png` | Carrito look Marketplace |
+| `ml-05-checkout.png` | Checkout look Marketplace (RUT, Webpay, stepper amarillo) |
 
 *(Las capturas fueron tomadas a 1440×900 con navegador headless.)*
 

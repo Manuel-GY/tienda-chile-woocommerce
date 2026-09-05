@@ -3973,3 +3973,1131 @@ textarea:focus-visible {
     animation: tiendaChileFadeInUp 0.5s ease both;
     animation-delay: 0.4s;
 }
+
+/* =========================================================================
+   21. SKIN MARKETPLACE (TOGGLE - ESTILO INSPIRADO EN MERCADO LIBRE)
+   Paleta: amarillo #FFE600 / azul #3483FA / verde #00A650 / gris #EDEDED
+   Regla: TODOS los selectores de este skin van prefijados con .tc-skin-marketplace
+   ========================================================================= */
+
+.tc-skin-marketplace {
+    background-color: #EDEDED;
+    color: #333333;
+}
+
+/* Ocultar chrome del look Lujo */
+.tc-skin-marketplace .site-header,
+.tc-skin-marketplace .nike-topbar,
+.tc-skin-marketplace .nike-master-header-row {
+    display: none !important;
+}
+
+/* --- Enlaces --- */
+.tc-skin-marketplace a {
+    color: #3483FA;
+}
+.tc-skin-marketplace a:hover {
+    color: #2E6FD9;
+}
+
+.tc-skin-marketplace .storefront-breadcrumb {
+    margin: 0 auto;
+    max-width: 1300px;
+    padding: 12px 24px;
+}
+
+/* =========================================================================
+   21a. HEADER MARKETPLACE
+   ========================================================================= */
+.tc-ml-header {
+    width: 100%;
+}
+
+.tc-ml-promo {
+    background-color: #1C1C1D;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 7px 16px;
+}
+
+.tc-ml-promo-text {
+    color: #FFFFFF;
+}
+
+.tc-ml-promo-text::first-letter {
+    color: #FFE600;
+}
+
+.tc-ml-header-main {
+    background-color: #FFE600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 12px 24px;
+    flex-wrap: wrap;
+}
+
+.tc-ml-logo {
+    flex: 0 0 auto;
+}
+
+.tc-ml-logo a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #18181B;
+    text-decoration: none;
+}
+
+.tc-ml-logo-mark {
+    width: 32px;
+    height: 32px;
+    display: block;
+}
+
+.tc-ml-logo-text {
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    line-height: 1;
+}
+
+.tc-ml-logo-text strong {
+    font-weight: 800;
+    color: #18181B;
+}
+
+.tc-ml-search-wrap {
+    flex: 1 1 auto;
+    max-width: 680px;
+    min-width: 260px;
+}
+
+.tc-ml-search-form {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tc-ml-search-form:focus-within {
+    border-color: #3483FA;
+    box-shadow: 0 0 0 3px rgba(52, 131, 250, 0.2);
+}
+
+.tc-ml-search-icon {
+    color: #999999;
+    margin: 0 6px 0 12px;
+    flex: 0 0 auto;
+}
+
+.tc-ml-search-input {
+    flex: 1 1 auto;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 11px 4px !important;
+    font-size: 15px !important;
+    color: #333333 !important;
+    outline: none;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+.tc-ml-search-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.tc-ml-search-btn {
+    flex: 0 0 auto;
+    background-color: #3483FA;
+    color: #FFFFFF;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 11px 22px;
+    cursor: pointer;
+    line-height: 1;
+    transition: background-color 0.15s ease;
+}
+
+.tc-ml-search-btn:hover {
+    background-color: #2E6FD9;
+}
+
+.tc-ml-header-actions {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tc-ml-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #18181B;
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.2;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+}
+
+.tc-ml-action:hover {
+    background-color: rgba(255, 255, 255, 0.55);
+    color: #18181B;
+}
+
+.tc-ml-action span strong {
+    font-weight: 700;
+}
+
+.tc-ml-action span em {
+    font-style: normal;
+    font-weight: 400;
+    opacity: 0.85;
+}
+
+.tc-ml-action svg {
+    flex: 0 0 auto;
+}
+
+.tc-ml-cart {
+    position: relative;
+}
+
+.tc-ml-cart-badge {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    background-color: #101010;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+/* Categorías */
+.tc-ml-nav {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #E0E0E0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.tc-ml-nav-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.tc-ml-nav-inner::-webkit-scrollbar {
+    display: none;
+}
+
+.tc-ml-nav-link {
+    display: inline-flex;
+    align-items: center;
+    color: #3B3B3B;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 11px 0;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+}
+
+.tc-ml-nav-link:hover {
+    color: #3483FA;
+}
+
+.tc-ml-nav-cats {
+    color: #18181B;
+    font-weight: 700;
+}
+
+.tc-ml-nav-link.tc-ml-active {
+    color: #3483FA;
+    border-bottom-color: #3483FA;
+    font-weight: 700;
+}
+
+.tc-ml-nav-extra {
+    margin-left: auto;
+    color: #7A7A7A;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 11px 0;
+}
+
+/* =========================================================================
+   21b. HOME MARKETPLACE (CATEGORÍAS + BENEFICIOS)
+   ========================================================================= */
+.tc-ml-home-cats {
+    max-width: 1300px;
+    margin: 22px auto 0;
+    padding: 0 24px;
+}
+
+.tc-ml-cat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.tc-ml-cat-tile {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #333333;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #E8E8E8;
+}
+
+.tc-ml-cat-tile:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    color: #333333;
+}
+
+.tc-ml-cat-tile img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+.tc-ml-cat-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #18181B;
+    padding: 12px 14px 2px;
+}
+
+.tc-ml-cat-cta {
+    font-size: 12px;
+    font-weight: 600;
+    color: #3483FA;
+    padding: 0 14px 12px;
+}
+
+/* Beneficios bajo las categorías */
+.tc-ml-benefits {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.tc-ml-benefit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: #333333;
+    transition: box-shadow 0.2s ease;
+}
+
+.tc-ml-benefit:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    color: #333333;
+}
+
+.tc-ml-benefit-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.tc-ml-benefit strong {
+    font-size: 13px;
+    font-weight: 700;
+    color: #18181B;
+    display: block;
+}
+
+.tc-ml-benefit span + span {
+    font-size: 12px;
+    color: #7A7A7A;
+}
+
+/* Productos destacados de la home */
+.tc-ml-home-products {
+    max-width: 1300px;
+    margin: 34px auto 0;
+    padding: 0 24px;
+}
+
+.tc-ml-sectional-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.tc-ml-sectional-header h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #18181B;
+    margin: 0;
+}
+
+.tc-ml-sectional-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #3483FA;
+    text-decoration: none;
+}
+
+.tc-ml-sectional-link:hover {
+    text-decoration: underline;
+}
+
+/* Estilos generales de la home (spacing del contenido de página) */
+.tc-skin-marketplace .home .entry-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.tc-skin-marketplace .home .entry-content h2 {
+    color: #18181B;
+}
+
+/* =========================================================================
+   21c. TARJETAS DE PRODUCTO MARKETPLACE
+   ========================================================================= */
+.tc-skin-marketplace .woocommerce ul.products li.product,
+.tc-skin-marketplace ul.products li.product {
+    background-color: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 4px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.tc-skin-marketplace .woocommerce ul.products li.product:hover,
+.tc-skin-marketplace ul.products li.product:hover {
+    transform: none;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    border-color: #3483FA;
+}
+
+.tc-skin-marketplace .woocommerce ul.products li.product img,
+.tc-skin-marketplace ul.products li.product img {
+    background-color: #FFFFFF;
+}
+
+.tc-skin-marketplace .woocommerce ul.products li.product:hover img,
+.tc-skin-marketplace ul.products li.product:hover img {
+    transform: none;
+}
+
+/* Badge de oferta: verde marketplace */
+.tc-skin-marketplace .woocommerce ul.products li.product .onsale,
+.tc-skin-marketplace .woocommerce span.onsale,
+.tc-skin-marketplace span.onsale {
+    background: #00A650 !important;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    padding: 4px 8px !important;
+    top: 8px !important;
+    left: 8px !important;
+}
+
+/* Título de producto */
+.tc-skin-marketplace .woocommerce ul.products li.product h2.woocommerce-loop-product__title,
+.tc-skin-marketplace ul.products li.product h2.woocommerce-loop-product__title,
+.tc-skin-marketplace .woocommerce ul.products li.product .woocommerce-loop-product__title,
+.tc-skin-marketplace ul.products li.product .woocommerce-loop-product__title {
+    font-size: 14px;
+    font-weight: 400;
+    color: #333333;
+    padding: 12px 16px 4px;
+}
+
+/* Precio: grande en azul, tachado gris (ins/del) */
+.tc-skin-marketplace .woocommerce ul.products li.product .price,
+.tc-skin-marketplace ul.products li.product .price {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 4px 16px 10px;
+}
+
+.tc-skin-marketplace .woocommerce ul.products li.product .price .amount,
+.tc-skin-marketplace ul.products li.product .price .amount {
+    color: #3483FA !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+}
+
+.tc-skin-marketplace .woocommerce ul.products li.product .price del,
+.tc-skin-marketplace ul.products li.product .price del {
+    color: #A0A0A0 !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+}
+
+.tc-skin-marketplace .woocommerce ul.products li.product .price ins,
+.tc-skin-marketplace ul.products li.product .price ins {
+    color: #3483FA !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+}
+
+/* Meta de tarjeta: envío gratis verde + estrellas */
+.tc-ml-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 16px 6px;
+    font-size: 12px;
+}
+
+.tc-ml-shipping-free {
+    color: #00A650;
+    font-weight: 700;
+}
+
+.tc-ml-stars {
+    color: #FF7733;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.tc-ml-stars em {
+    font-style: normal;
+    color: #999999;
+    font-weight: 500;
+    margin-left: 2px;
+}
+
+/* Descuento apilado en tarjetas */
+.tc-ml-discount {
+    display: inline-block;
+    background-color: #00A650;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin: 0 0 12px 16px;
+}
+
+/* Botón de tarjeta: azul marketplace */
+.tc-skin-marketplace .woocommerce ul.products li.product .button,
+.tc-skin-marketplace ul.products li.product .button {
+    background-color: #3483FA !important;
+    border-color: #3483FA !important;
+    border-radius: 6px !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    margin: 4px 16px 16px !important;
+    width: calc(100% - 32px) !important;
+}
+
+.tc-skin-marketplace .woocommerce ul.products li.product .button:hover,
+.tc-skin-marketplace ul.products li.product .button:hover {
+    background-color: #2E6FD9 !important;
+    border-color: #2E6FD9 !important;
+    transform: none;
+}
+
+/* =========================================================================
+   21d. HEADER DE TIENDA / CATÁLOGO
+   ========================================================================= */
+.tc-skin-marketplace .nike-shop-header-banner {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.tc-skin-marketplace .nike-shop-badge-wrapper .nike-shop-badge {
+    background-color: #FFE600;
+    color: #18181B;
+}
+
+.tc-skin-marketplace .nike-shop-title {
+    color: #18181B;
+}
+
+.tc-skin-marketplace .nike-shop-subtitle {
+    color: #7A7A7A;
+}
+
+.tc-skin-marketplace .nike-cat-nav-pill {
+    background: #F5F5F5;
+    border: 1px solid #E8E8E8;
+    color: #333333;
+}
+
+.tc-skin-marketplace .nike-cat-nav-pill.active {
+    background: #3483FA;
+    border-color: #3483FA;
+    color: #FFFFFF;
+}
+
+/* =========================================================================
+   21e. BOTONES & FORMULARIOS GLOBALES
+   ========================================================================= */
+.tc-skin-marketplace .button.alt,
+.tc-skin-marketplace .button,
+.tc-skin-marketplace button.button,
+.tc-skin-marketplace input.button,
+.tc-skin-marketplace a.button {
+    background-color: #3483FA !important;
+    border-color: #3483FA !important;
+    color: #FFFFFF !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+}
+
+.tc-skin-marketplace .button.alt:hover,
+.tc-skin-marketplace .button:hover,
+.tc-skin-marketplace button.button:hover,
+.tc-skin-marketplace input.button:hover,
+.tc-skin-marketplace a.button:hover {
+    background-color: #2E6FD9 !important;
+    border-color: #2E6FD9 !important;
+}
+
+.tc-skin-marketplace #place_order {
+    background-color: #3483FA !important;
+    border-color: #3483FA !important;
+    color: #FFFFFF !important;
+    border-radius: 6px !important;
+    font-weight: 800 !important;
+}
+
+.tc-skin-marketplace #place_order:hover {
+    background-color: #2E6FD9 !important;
+}
+
+.tc-skin-marketplace .woocommerce input[type="text"],
+.tc-skin-marketplace .woocommerce input[type="email"],
+.tc-skin-marketplace .woocommerce input[type="tel"],
+.tc-skin-marketplace .woocommerce select,
+.tc-skin-marketplace .woocommerce textarea,
+.tc-skin-marketplace .woocommerce input.input-text {
+    border: 1px solid #CCCCCC !important;
+    border-radius: 6px !important;
+    padding: 12px 14px !important;
+    box-shadow: none !important;
+    background-color: #FFFFFF !important;
+}
+
+.tc-skin-marketplace .woocommerce input:focus {
+    border-color: #3483FA !important;
+    box-shadow: 0 0 0 3px rgba(52, 131, 250, 0.15) !important;
+}
+
+/* =========================================================================
+   21f. CARRITO & CHECKOUT
+   ========================================================================= */
+.tc-skin-marketplace .nike-cart-free-shipping-box {
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+}
+
+.tc-skin-marketplace .nike-cart-fs-bar-fill {
+    background-color: #3483FA;
+}
+
+.tc-skin-marketplace .nike-cart-fs-bar-bg {
+    background-color: #E6E6E6;
+}
+
+.tc-skin-marketplace .nike-cart-trust-container {
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+}
+
+.tc-skin-marketplace .nike-cart-trust-title {
+    color: #00A650;
+}
+
+.tc-skin-marketplace .nike-cart-trust-badges .nike-cart-badge,
+.tc-skin-marketplace .nike-pay-tag {
+    background: #F0F0F0;
+    color: #333333;
+    border-radius: 4px;
+}
+
+.tc-skin-marketplace .woocommerce-cart .cart_totals table.shop_table,
+.tc-skin-marketplace .woocommerce-checkout table.shop_table,
+.tc-skin-marketplace .woocommerce-cart .cart_totals,
+.tc-skin-marketplace .woocommerce-checkout .col-1,
+.tc-skin-marketplace .woocommerce-checkout .col-2 {
+    background: #FFFFFF !important;
+    border: 1px solid #E8E8E8 !important;
+    border-radius: 8px !important;
+}
+
+/* Stepper checkout: acento amarillo/azul */
+.tc-skin-marketplace .nike-checkout-header-banner {
+    background: #FFFFFF;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.tc-skin-marketplace .nike-step-done .nike-step-num,
+.tc-skin-marketplace .nike-step-active .nike-step-num {
+    background-color: #3483FA;
+}
+
+.tc-skin-marketplace .nike-checkout-step-badge {
+    background-color: #FFE600;
+    color: #18181B;
+}
+
+/* Trust footer del checkout (compra protegida) */
+.tc-skin-marketplace .nike-checkout-trust-footer .nike-trust-badge {
+    background: #F0F0F0;
+    color: #333333;
+    border-radius: 4px;
+}
+
+/* =========================================================================
+   21g. PRODUCTO INDIVIDUAL
+   ========================================================================= */
+.tc-skin-marketplace .single-product div.product p.price,
+.tc-skin-marketplace .single-product div.product span.price {
+    color: #3483FA !important;
+    font-size: 34px !important;
+    font-weight: 800 !important;
+}
+
+.tc-skin-marketplace .single-product div.product p.price del,
+.tc-skin-marketplace .single-product div.product span.price del {
+    color: #A0A0A0 !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+}
+
+.tc-skin-marketplace .single-product div.product p.price ins,
+.tc-skin-marketplace .single-product div.product span.price ins {
+    text-decoration: none !important;
+    color: #3483FA !important;
+}
+
+.tc-skin-marketplace .nike-single-trust-box {
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+}
+
+.tc-skin-marketplace .nike-single-trust-box .nike-single-trust-info strong {
+    color: #18181B;
+}
+
+.tc-skin-marketplace .nike-single-trust-box .nike-single-trust-info span {
+    color: #7A7A7A;
+}
+
+.tc-skin-marketplace .product_title {
+    color: #18181B;
+}
+
+/* =========================================================================
+   21h. FOOTER MARKETPLACE
+   ========================================================================= */
+.tc-ml-footer {
+    margin-top: 48px;
+}
+
+/* Barra newsletter amarilla */
+.tc-ml-footer-promo {
+    background-color: #FFE600;
+    padding: 34px 24px;
+}
+
+.tc-ml-footer-promo-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.tc-ml-newsletter-badge {
+    display: inline-block;
+    background-color: #18181B;
+    color: #FFE600;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    border-radius: 4px;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+}
+
+.tc-ml-newsletter h3 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #18181B;
+    margin: 0 0 4px;
+}
+
+.tc-ml-newsletter h3 em {
+    font-style: normal;
+    color: #18181B;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+    padding: 0 6px;
+}
+
+.tc-ml-newsletter p {
+    font-size: 13px;
+    color: #6B6B6B;
+    margin: 0;
+}
+
+.tc-ml-newsletter-form {
+    flex: 1 1 360px;
+    max-width: 520px;
+}
+
+.tc-ml-newsletter-input-wrap {
+    display: flex;
+    gap: 8px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    padding: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.tc-ml-newsletter-input {
+    flex: 1 1 auto;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    outline: none !important;
+}
+
+.tc-ml-newsletter-btn {
+    background-color: #3483FA;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tc-ml-newsletter-btn:hover {
+    background-color: #2E6FD9;
+}
+
+/* Columnas del footer (azul oscuro) */
+.tc-ml-footer-cols {
+    background-color: #292B33;
+    color: #FFFFFF;
+    padding: 40px 24px 26px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.tc-ml-footer-col h4 {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.tc-ml-footer-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tc-ml-footer-menu li {
+    margin-bottom: 9px;
+}
+
+.tc-ml-footer-menu a {
+    color: #B7BAC2;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.tc-ml-footer-menu a:hover {
+    color: #FFE600;
+}
+
+.tc-ml-pay-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tc-ml-pay-badges span {
+    display: inline-block;
+    background: #3A3D46;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.tc-ml-footer-legal {
+    font-size: 11px;
+    color: #7F838D;
+    margin: 18px 0 0;
+    line-height: 1.5;
+}
+
+/* =========================================================================
+   21i. COOKIE BANNER Y TOGGLE
+   ========================================================================= */
+.tc-skin-marketplace .nike-cookie-banner {
+    background-color: #FFFFFF;
+    border-top: 3px solid #FFE600;
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tc-skin-marketplace .nike-cookie-btn-accept {
+    background-color: #3483FA;
+    color: #FFFFFF;
+    border: 1px solid #3483FA;
+}
+
+.tc-skin-marketplace .nike-cookie-btn-more {
+    background: #F0F0F0;
+    color: #333333;
+    border: 1px solid #E0E0E0;
+}
+
+/* Botón flotante toggle skin (visible en AMBOS skins) */
+.tc-skin-toggler {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid #DADADA;
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.tc-skin-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: transparent;
+    color: #555555;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 7px 13px;
+    border-radius: 999px;
+    line-height: 1;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.tc-skin-toggle-btn:hover {
+    color: #18181B;
+}
+
+.tc-skin-toggle-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #CCCCCC;
+    display: inline-block;
+}
+
+.tc-skin-toggle-btn.tc-skin-on {
+    background-color: #3483FA;
+    color: #FFFFFF;
+}
+
+.tc-skin-toggle-btn.tc-skin-on .tc-skin-toggle-dot {
+    background-color: #FFE600;
+}
+
+/* =========================================================================
+   21j. RESPONSIVE MARKETPLACE
+   ========================================================================= */
+@media (max-width: 991px) {
+    .tc-ml-cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tc-ml-benefits {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tc-ml-footer-cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tc-ml-nav-extra {
+        display: none;
+    }
+
+    .tc-ml-action-loc {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .tc-ml-header-main {
+        gap: 10px;
+        padding: 10px 14px;
+    }
+
+    .tc-ml-search-wrap {
+        order: 5;
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+    .tc-ml-logo-text {
+        font-size: 22px;
+    }
+
+    .tc-ml-action span {
+        display: none;
+    }
+
+    .tc-ml-action {
+        padding: 6px;
+    }
+
+    .tc-ml-cart-badge {
+        top: 0;
+        right: 0;
+    }
+
+    .tc-ml-promo {
+        font-size: 10px;
+        letter-spacing: 0;
+        padding: 6px 10px;
+    }
+
+    .tc-ml-nav-inner {
+        gap: 16px;
+        padding: 0 14px;
+    }
+
+    .tc-ml-nav-link {
+        font-size: 12px;
+        padding: 10px 0;
+    }
+
+    .tc-ml-home-cats {
+        padding: 0 14px;
+        margin-top: 14px;
+    }
+
+    .tc-ml-cat-grid {
+        gap: 10px;
+    }
+
+    .tc-ml-benefits {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .tc-ml-home-products {
+        padding: 0 14px;
+    }
+
+    .tc-ml-sectional-header h2 {
+        font-size: 18px;
+    }
+
+    .tc-skin-marketplace .home .entry-content {
+        padding: 0 14px;
+    }
+
+    .tc-ml-footer-cols {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 30px 18px 22px;
+    }
+
+    .tc-ml-footer-promo {
+        padding: 26px 16px;
+    }
+
+    .tc-ml-newsletter h3 {
+        font-size: 18px;
+    }
+
+    .tc-ml-newsletter-input-wrap {
+        flex-direction: column;
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .tc-ml-newsletter-input {
+        background: #FFFFFF !important;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+    }
+
+    .tc-ml-newsletter-btn {
+        width: 100%;
+    }
+
+    /* Toggle por encima de la bottom bar móvil de Tienda Chile */
+    .tc-skin-toggler {
+        bottom: 84px;
+        left: 14px;
+    }
+}
