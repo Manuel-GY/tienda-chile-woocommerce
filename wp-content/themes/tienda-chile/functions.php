@@ -1,10 +1,10 @@
 <?php
 /**
- * Nike Style - Tema hijo de Storefront
- * Estética de E-commerce Moderno, Elegante, Lujoso y de Alta Conversión (TIENDA CHILE)
+ * Tienda Chile - Tema hijo de Storefront
+ * E-commerce DTC Ultra Luxury & Mobile Responsive (TIENDA CHILE)
  * 
- * @package NikeStyle
- * @version 2.7.0
+ * @package TiendaChile
+ * @version 3.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,7 @@ function nike_style_enqueue_styles() {
     );
 
     wp_enqueue_style(
-        'nike-style',
+        'tienda-chile',
         get_stylesheet_directory_uri() . '/style.css',
         array( $parent_style ),
         wp_get_theme()->get( 'Version' )
@@ -369,7 +369,7 @@ function nike_style_cart_link_html() {
     $cart_subtotal = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_subtotal() : '$0 CLP';
     $cart_url      = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'cart' ) : home_url( '/carrito' );
     ?>
-    <a class="cart-contents" href="<?php echo esc_url( $cart_url ); ?>" title="<?php esc_attr_e( 'Ver mi Carrito de Compras', 'nike-style' ); ?>">
+    <a class="cart-contents" href="<?php echo esc_url( $cart_url ); ?>" title="<?php esc_attr_e( 'Ver mi Carrito de Compras', 'tienda-chile' ); ?>">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nike-cart-icon"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         <span class="amount"><?php echo wp_kses_post( $cart_subtotal ); ?></span>
         <span class="count"><?php echo esc_html( $cart_count ); ?></span>
@@ -625,9 +625,9 @@ add_filter( 'woocommerce_product_add_to_cart_text', 'nike_style_translate_add_to
 add_filter( 'woocommerce_product_single_add_to_cart_text', 'nike_style_translate_add_to_cart', 10, 2 );
 function nike_style_translate_add_to_cart( $text, $product = null ) {
     if ( $product && $product->is_type( 'variable' ) ) {
-        return __( 'Ver Opciones', 'nike-style' );
+        return __( 'Ver Opciones', 'tienda-chile' );
     }
-    return __( 'Agregar al Carrito', 'nike-style' );
+    return __( 'Agregar al Carrito', 'tienda-chile' );
 }
 
 // Badge de oferta con porcentaje (-25% DCTO)
@@ -896,16 +896,94 @@ function nike_style_newsletter_and_footer() {
     </div>
     <script>
     function nikeSubscribeNewsletter(form) {
-        var msg = document.getElementById('nike-newsletter-msg');
-        if (msg) {
-            msg.style.display = 'block';
+        var emailInput = form.querySelector('.nike-newsletter-input');
+        var email = emailInput ? emailInput.value : '';
+        if (!email || email.indexOf('@') === -1) return;
+        var btn = form.querySelector('.nike-newsletter-btn');
+        if (btn) { btn.disabled = true; btn.innerHTML = '<span>Enviando...</span>'; }
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            var msg = document.getElementById('nike-newsletter-msg');
+            if (msg) msg.style.display = 'block';
+            if (btn) { btn.disabled = false; btn.innerHTML = '<span>Obtener 10% DCTO</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>'; }
             form.reset();
-        }
+        };
+        xhr.onerror = function() {
+            if (btn) { btn.disabled = false; btn.innerHTML = '<span>Obtener 10% DCTO</span>'; }
+        };
+        xhr.send('action=tienda_chile_newsletter_subscribe&email=' + encodeURIComponent(email) + '&_wpnonce=' + encodeURIComponent(document.getElementById('nike-nonce') ? document.getElementById('nike-nonce').value : ''));
     }
     </script>
     <?php
 }
 add_action( 'storefront_footer', 'nike_style_newsletter_and_footer', 15 );
+
+// Newsletter AJAX handler
+add_action( 'wp_ajax_tienda_chile_newsletter_subscribe', 'tienda_chile_newsletter_handler' );
+add_action( 'wp_ajax_nopriv_tienda_chile_newsletter_subscribe', 'tienda_chile_newsletter_handler' );
+function tienda_chile_newsletter_handler() {
+    check_ajax_referer( '', '_wpnonce' );
+    $email = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
+    if ( ! is_email( $email ) ) {
+        wp_send_json_error( array( 'message' => 'Correo inválido.' ) );
+    }
+    $subscribers = get_option( 'tienda_chile_newsletter_subscribers', array() );
+    if ( in_array( $email, $subscribers, true ) ) {
+        wp_send_json_success( array( 'message' => 'Ya estás suscrito.' ) );
+    }
+    $subscribers[] = $email;
+    update_option( 'tienda_chile_newsletter_subscribers', $subscribers );
+    wp_send_json_success( array( 'message' => 'Suscripción exitosa.' ) );
+}
+
+// Add nonce field for newsletter form
+add_action( 'storefront_footer', function() {
+    echo '<input type="hidden" id="nike-nonce" value="' . esc_attr( wp_create_nonce( '' ) ) . '" />';
+}, 14 );
+
+// Toast notification when product is added to cart
+add_action( 'wp_footer', 'tienda_chile_cart_toast_notification', 22 );
+function tienda_chile_cart_toast_notification() {
+    if ( function_exists( 'is_checkout' ) && is_checkout() ) return;
+    ?>
+    <div id="tienda-chile-toast" style="display:none;position:fixed;top:24px;right:24px;z-index:99998;background:#18181b;color:#fff;padding:14px 24px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.25);font-family:var(--font-family-base);font-size:13px;font-weight:700;max-width:360px;align-items:center;gap:12px;transform:translateY(-20px);opacity:0;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <span id="tienda-chile-toast-text">Producto agregado al carrito</span>
+    </div>
+    <script>
+    function tiendaChileShowToast(msg) {
+        var t = document.getElementById('tienda-chile-toast');
+        var txt = document.getElementById('tienda-chile-toast-text');
+        if (!t) return;
+        if (txt) txt.textContent = msg || 'Producto agregado al carrito';
+        t.style.display = 'flex';
+        setTimeout(function(){ t.style.transform = 'translateY(0)'; t.style.opacity = '1'; }, 10);
+        setTimeout(function(){ t.style.transform = 'translateY(-20px)'; t.style.opacity = '0'; setTimeout(function(){ t.style.display = 'none'; }, 300); }, 2500);
+    }
+    </script>
+    <?php
+}
+
+// Hook toast into add-to-cart buttons on shop/archive pages
+add_filter( 'woocommerce_add_to_cart_fragments', function( $fragments ) {
+    ob_start();
+    ?>
+    <script>
+    document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.woocommerce ul.products li.product .button, .single_add_to_cart_button');
+        if (btn) {
+            var card = btn.closest('li.product, .summary');
+            var name = card ? (card.querySelector('.woocommerce-loop-product__title, .product_title') || {}).textContent : '';
+            tiendaChileShowToast(name ? name + ' agregado al carrito' : 'Producto agregado al carrito');
+        }
+    });
+    </script>
+    <?php
+    $fragments['script'] = ob_get_clean();
+    return $fragments;
+} );
 
 // ------------------------------------------------------------------
 // 11. BANNER DE COOKIES Y POPUPS DE POLÍTICAS LEGALES
@@ -952,37 +1030,29 @@ function nike_style_legal_and_cookies_footer() {
     });
 
     var nikeModalData = {
-        privacy: `
-            <h2>🔒 Política de Privacidad y Protección de Datos</h2>
-            <p>En <strong>Tienda Chile</strong> (conforme a la Ley N° 19.628 sobre Protección de la Vida Privada de Chile), nos comprometemos solemnemente a resguardar la confidencialidad de tus datos personales.</p>
-            <h3>1. Uso de la Información</h3>
-            <p>Los datos ingresados durante el proceso de compra (Nombre, RUT, Dirección, Correo y Teléfono) son utilizados exclusivamente para la facturación, emisión de boleta electrónica y gestión de despacho a través de Chilexpress, Starken o Blue Express.</p>
-            <h3>2. Seguridad en Pagos</h3>
-            <p>No almacenamos datos de tarjetas de crédito o débito. Todas las transacciones son procesadas a través de servidores seguros cifrados de Webpay Plus (Transbank) y Mercado Pago.</p>
-        `,
-        shipping: `
-            <h2>🚚 Política de Envíos y Entregas (Chile 🇨🇱)</h2>
-            <p>Realizamos despachos a todas las regiones y comunas de Chile de Arica a Punta Arenas.</p>
-            <h3>1. Plazos de Entrega</h3>
-            <ul>
-                <li><strong>Región Metropolitana:</strong> Entregas en 24 a 48 horas hábiles.</li>
-                <li><strong>Otras Regiones:</strong> Entregas en 2 a 4 días hábiles dependiendo del courier elegido (Chilexpress, Starken, Blue Express).</li>
-            </ul>
-            <h3>2. Envío Gratis</h3>
-            <p>Ofrecemos <strong>Envío Gratuito</strong> para compras superiores a $50.000 CLP a todo el territorio nacional.</p>
-        `,
-        returns: `
-            <h2>🔄 Política de Devoluciones, Garantía y Derecho a Retracto</h2>
-            <p>Cumplimos strictly con la Ley N° 19.496 sobre Protección de los Derechos de los Consumidores en Chile.</p>
-            <h3>1. Derecho a Retracto (10 días)</h3>
-            <p>Tienes un plazo de 10 días desde recibido el producto para retractarte de la compra, siempre que el producto esté sin uso, con sus sellos y empaque original intacto.</p>
-            <h3>2. Garantía Legal (6 meses)</h3>
-            <p>Todos nuestros productos cuentan con garantía legal de 6 meses frente a fallas o defectos de fabricación. Puedes solicitar cambio, reparación gratuita o devolución del dinero.</p>
-        `,
-        terms: `
-            <h2>📜 Términos y Condiciones Generales</h2>
-            <p>Al realizar una compra en Tienda Chile aceptas las condiciones de venta, precios exhibidos en CLP (con IVA 19% incluido) y emisión de boleta o factura electrónica oficial.</p>
-        `
+        privacy: '<h2>\uD83D\uDD12 Política de Privacidad y Protección de Datos</h2>' +
+            '<p>En <strong>Tienda Chile</strong> (conforme a la Ley N° 19.628 sobre Protección de la Vida Privada de Chile), nos comprometemos solemnemente a resguardar la confidencialidad de tus datos personales.</p>' +
+            '<h3>1. Uso de la Información</h3>' +
+            '<p>Los datos ingresados durante el proceso de compra (Nombre, RUT, Dirección, Correo y Teléfono) son utilizados exclusivamente para la facturación, emisión de boleta electrónica y gestión de despacho a través de Chilexpress, Starken o Blue Express.</p>' +
+            '<h3>2. Seguridad en Pagos</h3>' +
+            '<p>No almacenamos datos de tarjetas de crédito o débito. Todas las transacciones son procesadas a través de servidores seguros cifrados de Webpay Plus (Transbank) y Mercado Pago.</p>',
+        shipping: '<h2>\uD83D\uDE9A Política de Envíos y Entregas (Chile \uD83C\uDDF8\uD83C\uDDF1)</h2>' +
+            '<p>Realizamos despachos a todas las regiones y comunas de Chile de Arica a Punta Arenas.</p>' +
+            '<h3>1. Plazos de Entrega</h3>' +
+            '<ul>' +
+            '<li><strong>Región Metropolitana:</strong> Entregas en 24 a 48 horas hábiles.</li>' +
+            '<li><strong>Otras Regiones:</strong> Entregas en 2 a 4 días hábiles dependiendo del courier elegido (Chilexpress, Starken, Blue Express).</li>' +
+            '</ul>' +
+            '<h3>2. Envío Gratis</h3>' +
+            '<p>Ofrecemos <strong>Envío Gratuito</strong> para compras superiores a $50.000 CLP a todo el territorio nacional.</p>',
+        returns: '<h2>\uD83D\uDD04 Política de Devoluciones, Garantía y Derecho a Retracto</h2>' +
+            '<p>Cumplimos estrictamente con la Ley N° 19.496 sobre Protección de los Derechos de los Consumidores en Chile.</p>' +
+            '<h3>1. Derecho a Retracto (10 días)</h3>' +
+            '<p>Tienes un plazo de 10 días desde recibido el producto para retractarte de la compra, siempre que el producto esté sin uso, con sus sellos y empaque original intacto.</p>' +
+            '<h3>2. Garantía Legal (6 meses)</h3>' +
+            '<p>Todos nuestros productos cuentan con garantía legal de 6 meses frente a fallas o defectos de fabricación. Puedes solicitar cambio, reparación gratuita o devolución del dinero.</p>',
+        terms: '<h2>\uD83D\uDCDC Términos y Condiciones Generales</h2>' +
+            '<p>Al realizar una compra en Tienda Chile aceptas las condiciones de venta, precios exhibidos en CLP (con IVA 19% incluido) y emisión de boleta o factura electrónica oficial.</p>'
     };
 
     function nikeOpenModal(key) {
@@ -1397,10 +1467,21 @@ function tienda_chile_checkout_fields_chile( $fields ) {
     return $fields;
 }
 
+// Empty cart: show recommended products below the empty message
+add_action( 'woocommerce_after_cart', 'tienda_chile_render_empty_cart_recommendations' );
+function tienda_chile_render_empty_cart_recommendations() {
+    if ( WC()->cart->is_empty() ) {
+        echo '<div class="tienda-chile-recommended-products">';
+        echo '<h3 style="text-align:center;font-size:18px;font-weight:800;margin:32px 0 16px;color:#18181b;">Te recomendamos</h3>';
+        echo do_shortcode( '[products limit="4" columns="4" orderby="popularity" order="DESC" visibility="featured"]' );
+        echo '</div>';
+    }
+}
+
 // Validar RUT requerido en el proceso de checkout
 add_action( 'woocommerce_checkout_process', function() {
     if ( isset( $_POST['billing_rut'] ) && '' === trim( sanitize_text_field( $_POST['billing_rut'] ) ) ) {
-        wc_add_notice( __( 'El RUT es un campo obligatorio para procesar tu pedido.', 'nike-style' ), 'error' );
+        wc_add_notice( __( 'El RUT es un campo obligatorio para procesar tu pedido.', 'tienda-chile' ), 'error' );
     }
 } );
 
@@ -1577,18 +1658,6 @@ function tienda_chile_custom_shipping_rates( $rates, $package ) {
 // Ocultar campo de calle y código postal en la Calculadora de Envíos del Carrito (solo solicitar Región y Comuna)
 add_filter( 'woocommerce_shipping_calculator_enable_address', '__return_false', 999 );
 add_filter( 'woocommerce_shipping_calculator_enable_postcode', '__return_false', 999 );
-
-// Limpiar dirección de prueba heredada en la sesión del cliente
-add_action( 'template_redirect', function() {
-    if ( function_exists( 'WC' ) && WC()->customer ) {
-        $addr = (string) WC()->customer->get_shipping_address();
-        if ( strpos( strtolower( $addr ), 'suspiros' ) !== false ) {
-            WC()->customer->set_shipping_address( '' );
-            WC()->customer->set_shipping_address_1( '' );
-            WC()->customer->set_shipping_address_2( '' );
-        }
-    }
-} );
 
 // Forzar alineación simétrica en CSS Grid para Región (Columna 1) y Comuna / Ciudad (Columna 2)
 add_filter( 'woocommerce_default_address_fields', 'tienda_chile_override_address_fields', 999 );

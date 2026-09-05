@@ -1,6 +1,6 @@
 # Tienda Chile 🇨🇱 - E-Commerce DTC Ultra Luxury & Mobile Responsive
 
-**Tienda Chile** es una tienda e-commerce de clase mundial construida sobre **WordPress + WooCommerce** con un tema personalizado ultra-luxury (`nike-style`). Ofrece una experiencia de usuario DTC (Direct-To-Consumer) prémium, 100% responsiva tanto en escritorio (PC) como en dispositivos móviles (iOS / Android), optimizada para conversión en el mercado chileno.
+**Tienda Chile** es una tienda e-commerce de clase mundial construida sobre **WordPress + WooCommerce** con un tema personalizado ultra-luxury (`tienda-chile`). Ofrece una experiencia de usuario DTC (Direct-To-Consumer) prémium, 100% responsiva tanto en escritorio (PC) como en dispositivos móviles (iOS / Android), optimizada para conversión en el mercado chileno.
 
 ---
 
@@ -17,8 +17,8 @@ cd tienda-chile-woocommerce
 ### 2. Configurar en LocalWP (o Servidor Local)
 1. Instala **Local (LocalWP)** desde [https://localwp.com](https://localwp.com).
 2. Crea un nuevo sitio en Local llamado `tienda-online`.
-3. Copia la carpeta del tema `wp-content/themes/nike-style` a la ruta activa de tu sitio:
-   `...\Local Sites\tienda-online\app\public\wp-content\themes\nike-style`
+3. Copia la carpeta del tema `wp-content/themes/tienda-chile` a la ruta activa de tu sitio:
+   `...\Local Sites\tienda-online\app\public\wp-content\themes\tienda-chile`
 4. Importa la base de datos `sql/tienda-chile.sql` usando **Database > Adminer** o mediante la línea de comandos `mysql`.
 
 ### 3. Visualizar y Probar
@@ -72,13 +72,30 @@ proyecto-tienda-chile/
 ├── wp-content/
 │   ├── plugins/                         # WooCommerce + HUP Kit Chile
 │   └── themes/
-│       └── nike-style/                  # Tema personalizado Ultra Luxury
+│       └── tienda-chile/                  # Tema personalizado Ultra Luxury
 │           ├── functions.php            # Lógica PHP, hooks, modales, SVG logos y widgets
 │           ├── style.css                # Estilos CSS responsive ultra luxury & mobile
 │           └── images/                  # Fotografías de alta resolución (Hero, Beauty, Tech)
 ├── wp-config-sample.php
 └── README.md                            # Documentación del proyecto
 ```
+
+---
+
+## 📸 Capturas del Demo (Portafolio)
+
+Capturas de referencia del diseño actual en `capturas-portafolio/`:
+
+| Captura | Vista |
+|---------|-------|
+| `01-home.png` | Home ultra-luxury (hero, bento de categorías, productos destacados) |
+| `02-tienda.png` | Catálogo completo (grilla 4 columnas, precios CLP) |
+| `03-producto.png` | Ficha de producto (galería, precio, confianza, envío) |
+| `04-carrito.png` | Carrito con producto (total CLP, envío, sellos de confianza) |
+| `04-cuenta.png` | Mi Cuenta (login/registro) |
+| `05-checkout.png` | Checkout chileno (RUT, Región/Comuna, Webpay Plus, CuentaRUT) |
+
+*(Las capturas fueron tomadas a 1440×900 con navegador headless.)*
 
 ---
 

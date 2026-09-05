@@ -1,20 +1,20 @@
 /*
-Theme Name: Nike Style
+Theme Name: Tienda Chile
 Theme URI: https://github.com/Manuel-GY/tienda-chile-woocommerce
 Author: Manuel-GY
 Author URI: https://github.com/Manuel-GY
-Description: Tema hijo de Storefront con estética de e-commerce moderno, elegante, limpio, lujoso y de alta conversión para TIENDA CHILE (estilo Nike Store, DBS Beauty, Zara, Apple).
-Version: 2.7.0
+Description: Tema hijo de Storefront con estÃ©tica de e-commerce moderno, elegante, limpio, lujoso y de alta conversiÃ³n para TIENDA CHILE (estilo DTC premium, responsive mobile-first).
+Version: 3.0.0
 Template: storefront
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
-Text Domain: nike-style
+Text Domain: tienda-chile
 */
 
 /* =========================================================================
-   1. VARIABLES DE DISEÑO (DESIGN TOKENS)
+   1. VARIABLES DE DISEÃ‘O (DESIGN TOKENS)
    ========================================================================= */
 :root {
     /* Paleta de Colores Principal */
@@ -26,7 +26,7 @@ Text Domain: nike-style
     --color-border-subtle: #e2e8f0; /* Borde suave (slate-200) */
     --color-border-medium: #cbd5e1; /* Borde medio (slate-300) */
     
-    /* Tipografía y Texto */
+    /* TipografÃ­a y Texto */
     --color-text-main:     #09090b; /* Texto principal oscuro */
     --color-text-muted:    #64748b; /* Texto secundario (slate-500) */
     --color-text-light:    #94a3b8; /* Texto tenue (slate-400) */
@@ -273,7 +273,7 @@ input[type="number"].qty:focus {
     position: relative;
 }
 
-/* Ocultar definitivamente menús secundarios o duplicados de Storefront fuera del Master Header */
+/* Ocultar definitivamente menÃºs secundarios o duplicados de Storefront fuera del Master Header */
 .site-header > .main-navigation,
 .site-header > .storefront-primary-navigation,
 .site-header > #site-header-cart,
@@ -589,7 +589,7 @@ input[type="number"].qty:focus {
     margin-left: 4px;
 }
 
-/* Menú de Navegación Principal Centrado con Subrayado Animado */
+/* MenÃº de NavegaciÃ³n Principal Centrado con Subrayado Animado */
 .storefront-primary-navigation {
     width: 100%;
     background-color: transparent;
@@ -947,7 +947,7 @@ body.page-id-45 .site-content {
 }
 
 /* =========================================================================
-   6. SECCIÓN Y BENTO GRID DE CATEGORÍAS DESTACADAS (DESKTOP 3 COLUMNAS)
+   6. SECCIÃ“N Y BENTO GRID DE CATEGORÃAS DESTACADAS (DESKTOP 3 COLUMNAS)
    ========================================================================= */
 .nike-categories-section {
     max-width: 1300px;
@@ -1083,7 +1083,7 @@ body.page-id-45 .site-content {
 }
 
 /* =========================================================================
-   7. GRILLA DE PRODUCTOS DESKTOP A 4 COLUMNAS & TARJETAS DE ALTA CONVERSIÓN
+   7. GRILLA DE PRODUCTOS DESKTOP A 4 COLUMNAS & TARJETAS DE ALTA CONVERSIÃ“N
    ========================================================================= */
 .woocommerce ul.products,
 ul.products {
@@ -1161,7 +1161,7 @@ ul.products li.product:hover img {
     transform: scale(1.08);
 }
 
-/* Badge de Oferta en Español (-25% DCTO) */
+/* Badge de Oferta en EspaÃ±ol (-25% DCTO) */
 .woocommerce ul.products li.product .onsale,
 .woocommerce span.onsale,
 span.onsale {
@@ -1185,7 +1185,7 @@ span.onsale {
     z-index: 10;
 }
 
-/* Título de Producto */
+/* TÃ­tulo de Producto */
 .woocommerce ul.products li.product h2.woocommerce-loop-product__title,
 .woocommerce ul.products li.product .woocommerce-loop-product__title,
 ul.products li.product h2.woocommerce-loop-product__title {
@@ -1202,7 +1202,7 @@ ul.products li.product h2.woocommerce-loop-product__title {
     height: 2.7em;
 }
 
-/* Calificación 5 Estrellas (★★★★★) */
+/* CalificaciÃ³n 5 Estrellas (â˜…â˜…â˜…â˜…â˜…) */
 .nike-product-rating-box {
     display: flex;
     align-items: center;
@@ -1222,7 +1222,7 @@ ul.products li.product h2.woocommerce-loop-product__title {
     color: var(--color-text-muted);
 }
 
-/* Badge de Envío Rápido */
+/* Badge de EnvÃ­o RÃ¡pido */
 .nike-product-fast-ship {
     display: flex;
     align-items: center;
@@ -1260,7 +1260,7 @@ ul.products li.product .price ins {
     font-weight: 900 !important;
 }
 
-/* Botón Agregar al Carrito en Tarjeta */
+/* BotÃ³n Agregar al Carrito en Tarjeta */
 .woocommerce ul.products li.product .button,
 ul.products li.product .button {
     margin: 0 16px 16px !important;
@@ -1286,7 +1286,7 @@ ul.products li.product .button:hover {
 }
 
 /* =========================================================================
-   8. BOTÓN FLOTANTE DE WHATSAPP CON BADGE
+   8. BOTÃ“N FLOTANTE DE WHATSAPP CON BADGE
    ========================================================================= */
 .nike-wa-floating {
     position: fixed;
@@ -1339,7 +1339,7 @@ ul.products li.product .button:hover {
 }
 
 /* =========================================================================
-   9. NEWSLETTER CAPTACIÓN & FOOTER ULTRA PREMIUM (INTEGRADO SIN CORTES)
+   9. NEWSLETTER CAPTACIÃ“N & FOOTER ULTRA PREMIUM (INTEGRADO SIN CORTES)
    ========================================================================= */
 .site-footer {
     background-color: #18181b !important;
@@ -1663,7 +1663,9 @@ ul.products li.product .button:hover {
 .comments-link,
 .comments-area,
 #comments,
-.type-post {
+.home .type-post,
+.home .comments-area,
+.home #comments {
     display: none !important;
 }
 
@@ -1854,7 +1856,7 @@ button:active,
         padding: 24px 20px !important;
     }
 
-    /* Grilla Móvil a 2 Columnas */
+    /* Grilla MÃ³vil a 2 Columnas */
     .woocommerce ul.products,
     ul.products {
         grid-template-columns: repeat(2, 1fr) !important;
@@ -1899,7 +1901,7 @@ button:active,
         padding: 2px 10px 8px !important;
     }
 
-    /* Botón de compra con zona táctil mínima de 44px */
+    /* BotÃ³n de compra con zona tÃ¡ctil mÃ­nima de 44px */
     .woocommerce ul.products li.product .button,
     ul.products li.product .button {
         min-height: 44px !important;
@@ -1914,7 +1916,7 @@ button:active,
         letter-spacing: 0.02em;
     }
 
-    /* Ajuste del Botón Flotante de WhatsApp para no solaparse con la Barra Inferior */
+    /* Ajuste del BotÃ³n Flotante de WhatsApp para no solaparse con la Barra Inferior */
     .nike-wa-floating {
         bottom: 76px !important;
         right: 16px !important;
@@ -1962,7 +1964,7 @@ button:active,
 }
 
 /* =========================================================================
-   12. BANNER DE COOKIES & MODALES LEGALES OPTIMIZADOS PARA MÓVILES
+   12. BANNER DE COOKIES & MODALES LEGALES OPTIMIZADOS PARA MÃ“VILES
    ========================================================================= */
 .nike-cookie-banner {
     position: fixed;
@@ -2189,7 +2191,7 @@ button:active,
 }
 
 /* =========================================================================
-   13. BARRA DE NAVEGACIÓN INFERIOR MÓVIL (MOBILE BOTTOM BAR)
+   13. BARRA DE NAVEGACIÃ“N INFERIOR MÃ“VIL (MOBILE BOTTOM BAR)
    ========================================================================= */
 .nike-mobile-bottom-bar {
     display: none;
@@ -2284,10 +2286,10 @@ button:active,
 }
 
 /* =========================================================================
-   14. REDISEÑO MINIMALISTA DTC DE ULTRA LUJO DEL CARRITO DE COMPRAS
+   14. REDISEÃ‘O MINIMALISTA DTC DE ULTRA LUJO DEL CARRITO DE COMPRAS
    ========================================================================= */
 
-/* Barra de Envío Gratis Minimalista */
+/* Barra de EnvÃ­o Gratis Minimalista */
 .nike-cart-free-shipping-box {
     background: #f8fafc;
     border: 1px solid #e5e7eb;
@@ -2403,7 +2405,7 @@ button:active,
     color: #64748b !important;
 }
 
-/* Botón Eliminar Ítem */
+/* BotÃ³n Eliminar Ãtem */
 .woocommerce-cart table.shop_table.cart td.product-remove a.remove {
     display: inline-flex !important;
     align-items: center !important;
@@ -2451,7 +2453,7 @@ button:active,
     font-variant-numeric: tabular-nums;
 }
 
-/* Cupón y Botón de Actualización */
+/* CupÃ³n y BotÃ³n de ActualizaciÃ³n */
 .woocommerce-cart td.actions {
     background: #fafafa !important;
     padding: 16px 18px !important;
@@ -2570,7 +2572,7 @@ button:active,
     padding-top: 14px !important;
 }
 
-/* Botón Checkout Finalizar Compra */
+/* BotÃ³n Checkout Finalizar Compra */
 .woocommerce-cart .wc-proceed-to-checkout a.checkout-button {
     display: flex !important;
     align-items: center !important;
@@ -2653,7 +2655,7 @@ button:active,
     border-radius: 6px;
 }
 
-/* Estado de Carrito Vacío Minimalista */
+/* Estado de Carrito VacÃ­o Minimalista */
 .cart-empty.woocommerce-info {
     background: #ffffff !important;
     border: 1px solid #e5e7eb !important;
@@ -2685,7 +2687,7 @@ button:active,
     background: #27272a !important;
 }
 
-/* Adaptación Móvil del Carrito (< 768px) */
+/* AdaptaciÃ³n MÃ³vil del Carrito (< 768px) */
 @media (max-width: 768px) {
     .woocommerce-cart table.shop_table.cart th {
         display: none !important;
@@ -2742,556 +2744,7 @@ button:active,
 }
 
 /* =========================================================================
-   15. REDISEÑO MINIMALISTA DTC DE ULTRA LUJO DE CHECKOUT (FINALIZAR COMPRA)
-   ========================================================================= */
-
-/* Indicador de Pasos de Checkout Minimalista */
-.nike-checkout-steps-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 12px 20px;
-    margin-bottom: 28px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-}
-
-.nike-step {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    text-decoration: none !important;
-}
-
-.nike-step-num {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.nike-step-done .nike-step-num {
-    background: #f1f5f9;
-    color: #18181b;
-}
-
-.nike-step-active .nike-step-num {
-    background: #18181b;
-    color: #ffffff;
-}
-
-.nike-step-next .nike-step-num {
-    background: #fafafa;
-    color: #94a3b8;
-    border: 1px solid #e2e8f0;
-}
-
-.nike-step-label {
-    font-size: 12.5px;
-    font-weight: 600;
-}
-
-.nike-step-done .nike-step-label { color: #18181b; }
-.nike-step-active .nike-step-label { color: #18181b; font-weight: 700; }
-.nike-step-next .nike-step-label { color: #94a3b8; }
-
-.nike-step-chevron {
-    color: #cbd5e1;
-    font-size: 14px;
-    font-weight: 400;
-}
-
-/* Avisos y Mensajes de WooCommerce Elegantes */
-.woocommerce-checkout .woocommerce-info,
-.woocommerce-checkout .woocommerce-message,
-.woocommerce-checkout .woocommerce-error {
-    background: #fafafa !important;
-    border: 1px solid #e5e7eb !important;
-    border-radius: 10px !important;
-    padding: 12px 18px !important;
-    color: #18181b !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    margin-bottom: 24px !important;
-    box-shadow: none !important;
-}
-
-.woocommerce-checkout .woocommerce-info::before,
-.woocommerce-checkout .woocommerce-message::before {
-    color: #18181b !important;
-}
-
-.woocommerce-checkout .woocommerce-info a {
-    color: #18181b !important;
-    font-weight: 700 !important;
-    text-decoration: underline !important;
-}
-
-/* Formulario de Cupón Desplegable */
-.woocommerce-checkout form.checkout_coupon {
-    background: #ffffff !important;
-    border: 1px solid #e5e7eb !important;
-    border-radius: 10px !important;
-    padding: 16px !important;
-    margin-bottom: 24px !important;
-    display: flex;
-    gap: 10px;
-}
-
-.woocommerce-checkout form.checkout_coupon input[type="text"] {
-    height: 42px !important;
-    border-radius: 8px !important;
-    border: 1px solid #e2e8f0 !important;
-    background: #fafafa !important;
-    padding: 0 14px !important;
-    font-size: 13.5px !important;
-    flex: 1;
-}
-
-.woocommerce-checkout form.checkout_coupon button[type="submit"] {
-    height: 42px !important;
-    border-radius: 8px !important;
-    background: #18181b !important;
-    color: #ffffff !important;
-    font-size: 12.5px !important;
-    font-weight: 700 !important;
-    padding: 0 20px !important;
-    border: none !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.04em !important;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.woocommerce-checkout form.checkout_coupon button[type="submit"]:hover {
-    background: #27272a !important;
-}
-
-/* Layout del Formulario de Checkout (2 Columnas Equilibrado) */
-.woocommerce-checkout form.checkout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 36px;
-}
-
-@media (min-width: 992px) {
-    .woocommerce-checkout form.checkout {
-        grid-template-columns: 1fr 420px;
-        align-items: start;
-    }
-}
-
-/* Columna Izquierda: Datos del Cliente */
-.woocommerce-checkout #customer_details {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 28px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-}
-
-.woocommerce-checkout #customer_details h3 {
-    font-size: 15px !important;
-    font-weight: 700 !important;
-    color: #18181b !important;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 20px !important;
-    padding-bottom: 10px !important;
-    border-bottom: 1px solid #f1f5f9 !important;
-}
-
-/* Layout de Grilla 2 Columnas para Campos de Checkout */
-.woocommerce-checkout .woocommerce-billing-fields__field-wrapper,
-.woocommerce-checkout .woocommerce-shipping-fields__field-wrapper {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 16px !important;
-    width: 100% !important;
-}
-
-.woocommerce-checkout .form-row {
-    grid-column: span 1 !important;
-    width: 100% !important;
-    float: none !important;
-    clear: none !important;
-    margin-bottom: 0 !important;
-    padding: 0 !important;
-}
-
-/* Campos a 100% de Ancho (Correo, Dirección, Notas) */
-.woocommerce-checkout .form-row-wide,
-.woocommerce-checkout #billing_email_field,
-.woocommerce-checkout #billing_address_1_field,
-.woocommerce-checkout #billing_address_2_field,
-.woocommerce-checkout #order_comments_field {
-    grid-column: span 2 !important;
-    width: 100% !important;
-}
-
-.woocommerce-checkout #billing_first_name_field { grid-column: 1 !important; }
-.woocommerce-checkout #billing_last_name_field  { grid-column: 2 !important; }
-
-.woocommerce-checkout #billing_rut_field        { grid-column: 1 !important; }
-.woocommerce-checkout #billing_phone_field      { grid-column: 2 !important; }
-
-.woocommerce-checkout #billing_state_field      { grid-column: 1 !important; }
-.woocommerce-checkout #billing_city_field       { grid-column: 2 !important; }
-
-.woocommerce-checkout .form-row label {
-    font-size: 12.5px !important;
-    font-weight: 600 !important;
-    color: #3f3f46 !important;
-    margin-bottom: 5px !important;
-    display: block;
-}
-
-.woocommerce-checkout .form-row input[type="text"],
-.woocommerce-checkout .form-row input[type="email"],
-.woocommerce-checkout .form-row input[type="tel"],
-.woocommerce-checkout .form-row select,
-.woocommerce-checkout .form-row textarea {
-    width: 100% !important;
-    height: 44px !important;
-    border-radius: 8px !important;
-    border: 1px solid #e2e8f0 !important;
-    background: #fafafa !important;
-    padding: 0 14px !important;
-    font-size: 13.5px !important;
-    font-weight: 500 !important;
-    color: #18181b !important;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
-}
-
-.woocommerce-checkout .form-row textarea {
-    height: 90px !important;
-    padding: 10px 14px !important;
-}
-
-.woocommerce-checkout .form-row input:focus,
-.woocommerce-checkout .form-row select:focus,
-.woocommerce-checkout .form-row textarea:focus {
-    background: #ffffff !important;
-    border-color: #18181b !important;
-    box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.06) !important;
-    outline: none !important;
-}
-
-/* Fix "¿ENVIAR A UNA DIRECCIÓN DIFERENTE?" Checkbox Alignment */
-.woocommerce-checkout #ship-to-different-address,
-h3#ship-to-different-address {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 12px !important;
-    margin: 24px 0 16px !important;
-    padding: 0 !important;
-    border: none !important;
-}
-
-.woocommerce-checkout #ship-to-different-address label,
-h3#ship-to-different-address label,
-.woocommerce-checkout #ship-to-different-address span {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    font-size: 13px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.04em !important;
-    color: #18181b !important;
-    cursor: pointer !important;
-    margin: 0 !important;
-    width: auto !important;
-    float: none !important;
-}
-
-.woocommerce-checkout #ship-to-different-address input[type="checkbox"],
-h3#ship-to-different-address input[type="checkbox"] {
-    margin: 0 !important;
-    float: none !important;
-    width: 18px !important;
-    height: 18px !important;
-    accent-color: #18181b !important;
-    cursor: pointer !important;
-}
-
-/* Fix Checkout Form Layout & Validation Error Notice Banner */
-.woocommerce-checkout form.checkout {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    width: 100% !important;
-}
-
-.woocommerce-checkout .woocommerce-NoticeGroup,
-.woocommerce-checkout .woocommerce-NoticeGroup-checkout,
-.woocommerce-checkout .woocommerce-error,
-.woocommerce-checkout .woocommerce-message,
-.woocommerce-checkout .woocommerce-info {
-    width: 100% !important;
-    flex: 0 0 100% !important;
-    max-width: 100% !important;
-    clear: both !important;
-    margin: 0 0 24px 0 !important;
-    box-sizing: border-box !important;
-}
-
-.woocommerce-checkout .woocommerce-NoticeGroup-checkout .woocommerce-error,
-.woocommerce-checkout .woocommerce-error,
-.woocommerce-error {
-    border-radius: 12px !important;
-    border: 1.5px solid #fca5a5 !important;
-    border-left: 6px solid #ef4444 !important;
-    background-color: #fef2f2 !important;
-    color: #991b1b !important;
-    padding: 18px 24px !important;
-    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.1) !important;
-}
-
-.woocommerce-checkout .woocommerce-error *,
-.woocommerce-checkout .woocommerce-error li,
-.woocommerce-checkout .woocommerce-NoticeGroup *,
-.woocommerce-error *,
-.woocommerce-error li,
-.woocommerce-error a {
-    color: #991b1b !important;
-    -webkit-text-fill-color: #991b1b !important;
-    opacity: 1 !important;
-    font-size: 13.5px !important;
-    font-weight: 700 !important;
-    line-height: 1.6 !important;
-    text-shadow: none !important;
-}
-
-.woocommerce-checkout .woocommerce-error li,
-.woocommerce-error li {
-    margin-bottom: 6px !important;
-    list-style: none !important;
-}
-
-/* Fix Invalid Input Field Border & Colors */
-.woocommerce-checkout .form-row.woocommerce-invalid input[type="text"],
-.woocommerce-checkout .form-row.woocommerce-invalid input[type="email"],
-.woocommerce-checkout .form-row.woocommerce-invalid input[type="tel"],
-.woocommerce-checkout .form-row.woocommerce-invalid select,
-.woocommerce-checkout .form-row.woocommerce-invalid textarea,
-.woocommerce-checkout .form-row.woocommerce-invalid-required-field input,
-.woocommerce-checkout .form-row.woocommerce-invalid-required-field select,
-.woocommerce-invalid input[type="text"],
-.woocommerce-invalid input[type="email"],
-.woocommerce-invalid input[type="tel"],
-.woocommerce-invalid select {
-    color: #18181b !important;
-    background-color: #fef2f2 !important;
-    border: 1.5px solid #ef4444 !important;
-}
-
-.woocommerce-checkout .form-row.woocommerce-invalid label,
-.woocommerce-checkout .form-row.woocommerce-invalid-required-field label {
-    color: #991b1b !important;
-}
-
-.woocommerce-checkout .form-row.woocommerce-invalid input::placeholder,
-.woocommerce-checkout .form-row.woocommerce-invalid textarea::placeholder {
-    color: #991b1b !important;
-    opacity: 0.7 !important;
-}
-
-/* Ocultar mensajes de error duplicados debajo de cada input individual */
-.woocommerce-checkout .form-row .woocommerce-error,
-.woocommerce-checkout .form-row .woocommerce-invalid-field-message {
-    display: none !important;
-}
-
-/* Columna Derecha: Resumen de Pedido y Pasarelas de Pago */
-.woocommerce-checkout #order_review_heading {
-    display: none !important;
-}
-
-.woocommerce-checkout #order_review {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    padding: 28px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    position: sticky;
-    top: 100px;
-}
-
-.woocommerce-checkout #order_review::before {
-    content: "RESUMEN DEL PEDIDO";
-    display: block;
-    font-size: 15px;
-    font-weight: 700;
-    color: #18181b;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f1f5f9;
-}
-
-/* Tabla de Resumen de Pedido */
-.woocommerce-checkout table.shop_table.woocommerce-checkout-review-order-table {
-    border: none !important;
-    margin-bottom: 20px !important;
-    width: 100%;
-}
-
-.woocommerce-checkout table.shop_table th {
-    background: transparent !important;
-    color: #64748b !important;
-    font-size: 11.5px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    padding: 8px 0 !important;
-    border-bottom: 1px solid #f1f5f9 !important;
-}
-
-.woocommerce-checkout table.shop_table td {
-    padding: 10px 0 !important;
-    border-bottom: 1px solid #f1f5f9 !important;
-    font-size: 13.5px !important;
-    color: #18181b !important;
-}
-
-.woocommerce-checkout table.shop_table td.product-name {
-    font-weight: 600 !important;
-}
-
-.woocommerce-checkout table.shop_table td.product-total {
-    font-weight: 700 !important;
-    text-align: right !important;
-    color: #18181b !important;
-    font-variant-numeric: tabular-nums;
-}
-
-.woocommerce-checkout table.shop_table tr.cart-subtotal th,
-.woocommerce-checkout table.shop_table tr.cart-subtotal td {
-    font-weight: 700 !important;
-}
-
-.woocommerce-checkout table.shop_table tr.order-total th,
-.woocommerce-checkout table.shop_table tr.order-total td {
-    font-size: 18px !important;
-    font-weight: 800 !important;
-    color: #18181b !important;
-    border-bottom: none !important;
-    padding-top: 14px !important;
-    font-variant-numeric: tabular-nums;
-}
-
-/* Pasarelas de Pago en Checkout */
-.woocommerce-checkout #payment {
-    background: transparent !important;
-    border-radius: 0 !important;
-    padding: 0 !important;
-}
-
-.woocommerce-checkout #payment ul.payment_methods {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 0 20px 0 !important;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    border-bottom: none !important;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li.payment_method {
-    background: #fafafa;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 14px 16px;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
-    cursor: pointer;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li.payment_method:hover,
-.woocommerce-checkout #payment ul.payment_methods li.payment_method.payment_method_active {
-    border-color: #18181b;
-    background: #ffffff;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li.payment_method label {
-    font-size: 13.5px !important;
-    font-weight: 700 !important;
-    color: #18181b !important;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li.payment_method input[type="radio"] {
-    accent-color: #18181b !important;
-    width: 16px !important;
-    height: 16px !important;
-}
-
-.woocommerce-checkout #payment div.payment_box {
-    background: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    color: #475569 !important;
-    font-size: 12.5px !important;
-    line-height: 1.5 !important;
-    border-radius: 6px !important;
-    padding: 12px 14px !important;
-    margin-top: 10px !important;
-}
-
-.woocommerce-checkout #payment div.payment_box::before {
-    display: none !important;
-}
-
-/* Botón Principal Realizar el Pedido */
-.woocommerce-checkout #place_order {
-    width: 100% !important;
-    height: 50px !important;
-    background: #18181b !important;
-    color: #ffffff !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.06em !important;
-    text-transform: uppercase !important;
-    border-radius: 8px !important;
-    border: none !important;
-    box-shadow: 0 4px 12px rgba(24, 24, 27, 0.15) !important;
-    cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.2s ease !important;
-    margin-top: 16px !important;
-}
-
-.woocommerce-checkout #place_order:hover {
-    background: #27272a !important;
-    transform: translateY(-1px);
-}
-
-/* Adaptación Móvil del Checkout (< 768px) */
-@media (max-width: 768px) {
-    .nike-checkout-steps-bar {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-        padding: 12px;
-    }
-
-    .woocommerce-checkout #customer_details,
-    .woocommerce-checkout #order_review {
-        padding: 20px;
-    }
-}
-
-/* =========================================================================
-   16. REINGENIERÍA COMPLETA DE CHECKOUT ESTILO PRIMOR CHILE (DISTRACTION-FREE LUXURY CHECKOUT)
+   16. REINGENIERÃA COMPLETA DE CHECKOUT ESTILO PRIMOR CHILE (DISTRACTION-FREE LUXURY CHECKOUT)
    ========================================================================= */
 
 /* Header Distraction-Free en Checkout con Acento Dorado/Amarillo (#f1c40f) Estilo Primor */
@@ -3588,7 +3041,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     display: none !important;
 }
 
-/* Organización Simétrica en CSS Grid de 2 Columnas */
+/* OrganizaciÃ³n SimÃ©trica en CSS Grid de 2 Columnas */
 .woocommerce-checkout .woocommerce-billing-fields__field-wrapper,
 .woocommerce-checkout .woocommerce-shipping-fields__field-wrapper {
     display: grid !important;
@@ -3626,7 +3079,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     float: none !important;
 }
 
-/* Alineación Simétrica Estricta para Región (Columna 1) y Comuna / Ciudad (Columna 2) */
+/* AlineaciÃ³n SimÃ©trica Estricta para RegiÃ³n (Columna 1) y Comuna / Ciudad (Columna 2) */
 .woocommerce-checkout #billing_state_field {
     grid-column: 1 / 2 !important;
     width: 100% !important;
@@ -3764,7 +3217,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 }
 
 .woocommerce-checkout #payment::before {
-    content: "💳 ¿CÓMO QUIERES PAGAR?";
+    content: "ðŸ’³ Â¿CÃ“MO QUIERES PAGAR?";
     display: block;
     font-size: 14px;
     font-weight: 800;
@@ -3843,7 +3296,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     display: none !important;
 }
 
-/* Botón Principal Realizar el Pedido (Zinc-900 #18181b, 52px de alto, Texto Blanco en Negrita y Candado 🔒) */
+/* BotÃ³n Principal Realizar el Pedido (Zinc-900 #18181b, 52px de alto, Texto Blanco en Negrita y Candado ðŸ”’) */
 .woocommerce-checkout #place_order {
     width: 100% !important;
     height: 52px !important;
@@ -3896,7 +3349,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     border: 1px solid #e2e8f0;
 }
 
-/* Adaptación Responsiva para Móviles / Celulares / Tabletas (< 992px) */
+/* AdaptaciÃ³n Responsiva para MÃ³viles / Celulares / Tabletas (< 992px) */
 @media (max-width: 991px) {
     .woocommerce-checkout form.checkout {
         display: flex !important;
@@ -3938,7 +3391,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 }
 
 /* =========================================================================
-   17. BANNER DE CABECERA & NAVEGACIÓN POR CATEGORÍAS EN PÁGINA DE TIENDA
+   17. BANNER DE CABECERA & NAVEGACIÃ“N POR CATEGORÃAS EN PÃGINA DE TIENDA
    ========================================================================= */
 .nike-shop-header-banner {
     background: #f8fafc;
@@ -4093,7 +3546,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     float: none !important;
 }
 
-/* Estilos para selectores Select2 / SelectWoo de WooCommerce (País y Región) */
+/* Estilos para selectores Select2 / SelectWoo de WooCommerce (PaÃ­s y RegiÃ³n) */
 .select2-container--default .select2-selection--single {
     height: 44px !important;
     border-radius: 8px !important;
@@ -4130,7 +3583,7 @@ h3#ship-to-different-address input[type="checkbox"] {
 }
 
 /* =========================================================================
-   19. REINGENIERÍA DTC DE LUJO DE LA FICHA DE PRODUCTO (SINGLE PRODUCT PAGE)
+   19. REINGENIERÃA DTC DE LUJO DE LA FICHA DE PRODUCTO (SINGLE PRODUCT PAGE)
    ========================================================================= */
 .single-product .site-main,
 .single-product .col-full,
@@ -4159,7 +3612,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     }
 }
 
-/* Galería de Imágenes de Producto */
+/* GalerÃ­a de ImÃ¡genes de Producto */
 .single-product div.product div.images {
     width: 100% !important;
     float: none !important;
@@ -4174,7 +3627,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     width: 100% !important;
 }
 
-/* Resumen e Información de Producto */
+/* Resumen e InformaciÃ³n de Producto */
 .single-product div.product div.summary {
     width: 100% !important;
     float: none !important;
@@ -4311,7 +3764,7 @@ h3#ship-to-different-address input[type="checkbox"] {
     color: #64748b;
 }
 
-/* Pestañas de Descripción / Valoraciones */
+/* PestaÃ±as de DescripciÃ³n / Valoraciones */
 .single-product div.product .woocommerce-tabs {
     grid-column: 1 / -1 !important;
     margin-top: 32px !important;
@@ -4348,4 +3801,175 @@ h3#ship-to-different-address input[type="checkbox"] {
 .single-product div.product .woocommerce-tabs ul.tabs li a:hover {
     background: #18181b !important;
     color: #ffffff !important;
+}
+
+/* =========================================================================
+   18. ESTILOS DE IMPRESIÓN
+   ========================================================================= */
+@media print {
+    .nike-topbar,
+    .site-header,
+    .nike-mobile-bottom-bar,
+    .nike-wa-floating,
+    .nike-cookie-banner,
+    .nike-footer-wrapper,
+    .nike-hero-banner,
+    .nike-categories-section,
+    .nike-newsletter-card-wrap,
+    .nike-shop-header-banner,
+    #nike-legal-modal,
+    .nike-checkout-steps-bar,
+    .nike-checkout-ssl-pill {
+        display: none !important;
+    }
+
+    body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 12pt !important;
+    }
+
+    .woocommerce-cart table.cart,
+    .woocommerce-cart .cart_totals,
+    .woocommerce-checkout #customer_details,
+    .woocommerce-checkout #order_review,
+    .woocommerce .woocommerce-order {
+        max-width: 100% !important;
+        border: 1px solid #ccc !important;
+        padding: 12px !important;
+    }
+
+    .woocommerce ul.products li.product .button {
+        display: none !important;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+        color: #666;
+    }
+
+    .nike-header-cart-pill,
+    .nike-header-social-pills {
+        display: none !important;
+    }
+}
+
+/* =========================================================================
+   19. ACCESIBILIDAD - prefers-reduced-motion
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .nike-cat-bg,
+    .nike-showcase-img,
+    .woocommerce ul.products li.product img {
+        transition: none !important;
+    }
+
+    .nike-wa-badge {
+        animation: none !important;
+    }
+}
+
+/* Focus visible para accesibilidad con teclado */
+:focus-visible {
+    outline: 3px solid #18181b;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #18181b;
+    outline-offset: 2px;
+}
+
+/* Skip to content link (screen readers) */
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute !important;
+    width: 1px;
+    word-wrap: normal !important;
+}
+
+.screen-reader-text:focus {
+    background: #18181b;
+    clip: auto !important;
+    clip-path: none;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    height: auto;
+    left: 5px;
+    line-height: normal;
+    padding: 15px 23px 14px;
+    text-decoration: none;
+    top: 5px;
+    width: auto;
+    z-index: 100000;
+}
+
+/* =========================================================================
+   20. ANIMACIONES DE ENTRADA PARA TARJETAS (STAGGER)
+   ========================================================================= */
+@keyframes tiendaChileFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.woocommerce ul.products li.product,
+.nike-cat-bento-item {
+    animation: tiendaChileFadeInUp 0.5s ease both;
+}
+
+.woocommerce ul.products li.product:nth-child(1) { animation-delay: 0.05s; }
+.woocommerce ul.products li.product:nth-child(2) { animation-delay: 0.1s; }
+.woocommerce ul.products li.product:nth-child(3) { animation-delay: 0.15s; }
+.woocommerce ul.products li.product:nth-child(4) { animation-delay: 0.2s; }
+.woocommerce ul.products li.product:nth-child(5) { animation-delay: 0.25s; }
+.woocommerce ul.products li.product:nth-child(6) { animation-delay: 0.3s; }
+.woocommerce ul.products li.product:nth-child(7) { animation-delay: 0.35s; }
+.woocommerce ul.products li.product:nth-child(8) { animation-delay: 0.4s; }
+
+.nike-cat-bento-item:nth-child(1) { animation-delay: 0.05s; }
+.nike-cat-bento-item:nth-child(2) { animation-delay: 0.15s; }
+.nike-cat-bento-item:nth-child(3) { animation-delay: 0.25s; }
+
+.nike-hero-editorial {
+    animation: tiendaChileFadeInUp 0.6s ease both;
+    animation-delay: 0.1s;
+}
+
+.nike-hero-showcase {
+    animation: tiendaChileFadeInUp 0.6s ease both;
+    animation-delay: 0.25s;
+}
+
+.nike-hero-benefits-bar {
+    animation: tiendaChileFadeInUp 0.5s ease both;
+    animation-delay: 0.4s;
 }
